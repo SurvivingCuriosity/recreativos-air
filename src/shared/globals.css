@@ -5,4 +5,43 @@
         font-family: "Inter", sans-serif;
         user-select: none;
     }
+
+    .font-cool {
+        font-family: "Zen Dots", sans-serif;
+    }
+}
+
+@theme {
+
+    --color-primary: #fd730d;
+
+    --animate-fade-in-top: fade-in-top 0.7s ease-out both;
+    --animate-in-right: in-right 0.5s ease-in-out both;
+
+    @keyframes fade-in-top {
+        0% {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+
+        ,
+        to: {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes in-right {
+        0% {
+            transform: translateX(80px);
+        }
+
+        ,
+        to: {
+            transform: translateY(0);
+        }
+    }
+
+
+
 }

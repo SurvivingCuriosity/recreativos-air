@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 export const TopNav = () => {
   return (
-    <header className="h-14 p-2 border-b border-neutral-700 z-1 w-full">
+    <header className="h-14 p-2 absolute border-b border-neutral-700 z-1 w-full">
       <nav className="max-w-screen-lg mx-auto flex items-center justify-between">
         <Link to="/">
           <img src={"logo.png"} alt="logo" className="size-10" />
@@ -38,7 +38,7 @@ export const HamburgerMenu = () => {
       <button
         aria-label="Botón abrir menú lateral"
         onClick={toggleMenu}
-        className="z-3 text-neutral-200 flex size-6 flex-col justify-center gap-2 lg:hidden relative"
+        className="z-6 text-primary flex size-6 flex-col justify-center gap-2 lg:hidden relative"
       >
         <span
           className={`${
@@ -57,7 +57,7 @@ export const HamburgerMenu = () => {
         ></span>
       </button>
 
-      <ul className="hidden lg:flex lg:flex-row lg:gap-6 *:text-neutral-200">
+      <ul className="hidden lg:flex lg:flex-row lg:gap-6 *:text-primary">
         <li>
           <Link
             className="rounded-md p-2 transition-all duration-200 hover:bg-neutral-300 dark:hover:bg-neutral-800"
@@ -77,7 +77,7 @@ export const HamburgerMenu = () => {
       </ul>
 
       <div
-        className={`z-2 flex flex-col justify-between lg:hidden fixed top-0 h-dvh w-screen bg-black/95 ${
+        className={`z-5 flex flex-col justify-between lg:hidden fixed top-0 h-dvh w-screen bg-black/95 ${
           isOpen ? "left-0" : "left-full"
         } transition-all duration-200 pt-20 pb-4`}
       >

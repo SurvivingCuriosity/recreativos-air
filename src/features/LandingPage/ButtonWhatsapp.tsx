@@ -12,7 +12,7 @@ export const ButtonWhatsapp = ({ numero }: { numero: string }) => {
     );
   };
   return (
-    <button className="cursor-pointer fixed bottom-3 right-3" onClick={handleSendWhatsapp}>
+    <button style={{animationDelay: '0.5s'}} className="z-4 animate-in-right cursor-pointer fixed bottom-3 right-3" onClick={handleSendWhatsapp}>
       <svg
         viewBox="0 0 32 32"
         className={`bg-[#4dc247] rounded-full p-2 size-14`}
