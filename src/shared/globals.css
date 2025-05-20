@@ -13,7 +13,8 @@
 
 @theme {
 
-    --color-primary: #fd730d;
+    /* --color-primary: #fd730d; */
+    --color-primary: #b7650b;
 
     --animate-fade-in-top: fade-in-top 0.7s ease-out both;
     --animate-in-right: in-right 0.5s ease-in-out both;

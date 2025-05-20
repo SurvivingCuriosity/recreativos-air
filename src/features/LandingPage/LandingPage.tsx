@@ -1,8 +1,8 @@
-import fondo_text from "../../shared/assets/fondo-tsunami.jpg";
-import fondo from "../../shared/assets/fondo-tsunami-full.jpg";
-import { ButtonWhatsapp } from "./ButtonWhatsapp";
-import { TELEFONO_ALBERTO } from "../../shared/db/telefono";
 import { Link } from "react-router";
+import fondo from "../../shared/assets/fondo-tsunami-full.jpg";
+import fondo_text from "../../shared/assets/fondo-tsunami.jpg";
+import { TELEFONO_ALBERTO } from "../../shared/db/telefono";
+import { ButtonWhatsapp } from "./ButtonWhatsapp";
 
 export const LandingPage = () => {
   return (
@@ -17,7 +17,7 @@ export const LandingPage = () => {
         <h1
           className="
           mt-20
-          text-primary/80
+          text-white/20
           text-center text-5xl font-black
           bg-center bg-cover bg-no-repeat
           bg-clip-text
@@ -30,7 +30,7 @@ export const LandingPage = () => {
           style={{ backgroundImage: `url(${fondo_text})` }}
         >
           Recreativos{" "}
-          <span className="text-[40vw] md:text-[20vw] lg:text-[15vw] tracking-widest block text-primary/50">
+          <span className="text-[40vw] md:text-[20vw] lg:text-[15vw] tracking-widest block text-white/20">
             AIR
           </span>
         </h1>
@@ -72,16 +72,28 @@ export const LandingPage = () => {
 
         <ButtonWhatsapp numero={TELEFONO_ALBERTO} />
       </main>
-      <section className="flex items-center justify-center flex-col h-screen w-full text-2xl font-bold bg-neutral-900">
+      <section
+        id="seccion1"
+        className="flex items-center justify-center flex-col h-screen w-full text-2xl font-bold bg-neutral-900"
+      >
         Seccion 1
       </section>
-      <section className="flex items-center justify-center flex-col h-screen w-full text-2xl font-bold bg-neutral-950">
+      <section
+        id="seccion2"
+        className="flex items-center justify-center flex-col h-screen w-full text-2xl font-bold bg-neutral-950"
+      >
         Seccion 2
       </section>
-      <section className="flex items-center justify-center flex-col h-screen w-full text-2xl font-bold bg-neutral-900">
+      <section
+        id="seccion3"
+        className="flex items-center justify-center flex-col h-screen w-full text-2xl font-bold bg-neutral-900"
+      >
         Seccion 3
       </section>
-      <section className="flex items-center justify-center flex-col h-screen w-full text-2xl font-bold bg-neutral-950">
+      <section
+        id="seccion4"
+        className="flex items-center justify-center flex-col h-screen w-full text-2xl font-bold bg-neutral-950"
+      >
         Seccion 4
       </section>
 
@@ -92,11 +104,7 @@ export const LandingPage = () => {
               href="https://recreativosair.com/"
               className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
             >
-              <img
-                src="logo.png"
-                className="h-8"
-                alt="Recreativos AIR Logo"
-              />
+              <img src="logo.png" className="h-8" alt="Recreativos AIR Logo" />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                 Recreativos AIR
               </span>

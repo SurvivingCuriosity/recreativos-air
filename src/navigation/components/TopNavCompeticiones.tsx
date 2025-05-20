@@ -1,13 +1,22 @@
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import { useAppSelector } from "../../shared/store/hooks";
 
-export const TopNav = () => {
+export const TopNavCompeticiones = () => {
+  const { user } = useAppSelector((state) => state.auth);
+
   return (
     <header className="h-14 p-2 absolute border-b border-neutral-700 w-full block">
       <nav className="max-w-screen-lg mx-auto flex items-center justify-between z-6">
         <Link to="/" className="z-6">
           <img src={"logo.png"} alt="logo" className="size-10" />
         </Link>
+        <div className="text-neutral-400">
+          <FontAwesomeIcon icon={faUser} className="mr-1" />
+          {user?.username}
+        </div>
         <HamburgerMenu />
       </nav>
     </header>
@@ -87,38 +96,11 @@ export const HamburgerMenu = () => {
           <li
             onClick={() => {
               setIsOpen(false);
-              const element = document.getElementById('seccion1');
-              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              const element = document.getElementById("seccion1");
+              element?.scrollIntoView({ behavior: "smooth", block: "start" });
             }}
           >
-            Seccion 1
-          </li>
-           <li
-            onClick={() => {
-              setIsOpen(false);
-              const element = document.getElementById('seccion2');
-              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }}
-          >
-            Seccion 2
-          </li>
-           <li
-            onClick={() => {
-              setIsOpen(false);
-              const element = document.getElementById('seccion3');
-              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }}
-          >
-            Seccion 3
-          </li>
-           <li
-            onClick={() => {
-              setIsOpen(false);
-              const element = document.getElementById('seccion4');
-              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }}
-          >
-            Seccion 4
+            Competiciones
           </li>
         </ul>
       </div>
