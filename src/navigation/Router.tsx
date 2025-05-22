@@ -1,13 +1,17 @@
 import { Route, Routes } from "react-router";
 import { CompeticionesPage } from "../features/Competiciones/pages/CompeticionesPage";
+import { CrearLigaPage } from "../features/CrearLiga/CrearLigaPage";
+import { DetalleLigaLayout } from "../features/DetalleLiga/DetalleLigaLayout";
+import { ClasificacionLigaPage } from "../features/DetalleLiga/pages/ClasificacionLigaPage";
+import { EquiposLigaPage } from "../features/DetalleLiga/pages/EquiposLigaPage";
+import { InfoLigaPage } from "../features/DetalleLiga/pages/InfoLigaPage";
+import { JornadasLigaPage } from "../features/DetalleLiga/pages/JornadasLigaPage";
 import { LandingPage } from "../features/LandingPage/LandingPage";
 import { LoginPage } from "../features/Login/LoginPage";
 import { CompeticionesLayout } from "../shared/layouts/CompeticionesLayout";
 import { MainLayout } from "../shared/layouts/MainLayout";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { CrearLigaPage } from "../features/CrearLiga/CrearLigaPage";
 import AdminRoute from "./components/AdminRoute";
-import { DetalleLigaPage } from "../features/DetalleLiga/DetalleLigaPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export const Router = () => {
   return (
@@ -22,7 +26,12 @@ export const Router = () => {
       <Route element={<ProtectedRoute />}>
         <Route element={<CompeticionesLayout />}>
           <Route path="competiciones" element={<CompeticionesPage />} />
-          <Route path="competiciones/:id" element={<DetalleLigaPage />} />
+          <Route path="competiciones/:id" element={<DetalleLigaLayout />}>
+            <Route path="info" element={<InfoLigaPage />} />
+            <Route path="jornadas" element={<JornadasLigaPage />} />
+            <Route path="clasificacion" element={<ClasificacionLigaPage />} />
+            <Route path="equipos" element={<EquiposLigaPage />} />
+          </Route>
         </Route>
       </Route>
 
@@ -32,7 +41,6 @@ export const Router = () => {
           <Route path="crear-liga" element={<CrearLigaPage />} />
         </Route>
       </Route>
-
     </Routes>
   );
 };

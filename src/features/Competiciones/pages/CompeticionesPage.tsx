@@ -23,8 +23,10 @@ export const CompeticionesPage = () => {
         <p>No hay ligas</p>
       ) : (
         <ul className="flex flex-col gap-4 w-full h-11/12 overflow-y-auto">
-          {ligas.map((liga) => (
-            <TarjetaLiga key={liga.id} liga={liga} onClick={() => navigate(`/competiciones/${liga.id}`)} />
+          {ligas.map((liga, index) => (
+            <span style={{animationDelay: `${index * 0.1}s`}} key={liga.id} className="animate-fade-in-top">
+              <TarjetaLiga liga={liga} onClick={() => navigate(`/competiciones/${liga.id}`)} />
+            </span>
           ))}
         </ul>
       )}

@@ -15,12 +15,12 @@
 
     --color-primary: #f1da0c;
 
-    --animate-fade-in-top: fade-in-top 0.7s ease-out both;
+    --animate-fade-in-top: fade-in-top 0.5s ease-out both;
     --animate-in-right: in-right 0.5s ease-in-out both;
 
     @keyframes fade-in-top {
         0% {
-            transform: translateY(-20px);
+            transform: translateY(-15px);
             opacity: 0;
         }
 
