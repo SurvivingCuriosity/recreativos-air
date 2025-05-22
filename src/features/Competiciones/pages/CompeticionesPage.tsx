@@ -4,6 +4,7 @@ import {
   faTrophy,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router";
 import Fab from "../../../packages/components/FAB/FAB";
 import { TarjetaLiga } from "../../../shared/components/TarjetaLiga/TarjetaLiga";
 import { useAppDispatch, useAppSelector } from "../../../shared/store/hooks";
@@ -12,6 +13,7 @@ import { logout } from "../../../shared/store/slices/authSlice";
 export const CompeticionesPage = () => {
   const { ligas } = useAppSelector((state) => state.ligas);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { user } = useAppSelector((state) => state.auth);
 
@@ -20,9 +22,9 @@ export const CompeticionesPage = () => {
       {ligas.length === 0 ? (
         <p>No hay ligas</p>
       ) : (
-        <ul className="flex flex-col gap-4 w-full">
+        <ul className="flex flex-col gap-4 w-full h-11/12 overflow-y-auto">
           {ligas.map((liga) => (
-            <TarjetaLiga key={liga.id} liga={liga} />
+            <TarjetaLiga key={liga.id} liga={liga} onClick={() => navigate(`/competiciones/${liga.id}`)} />
           ))}
         </ul>
       )}
@@ -32,6 +34,7 @@ export const CompeticionesPage = () => {
             {
               label: "Nueva liga",
               icon: <FontAwesomeIcon icon={faTrophy} />,
+              onClick: () => navigate("/crear-liga"),
             },
             {
               label: "Nuevo resultado",
@@ -47,7 +50,7 @@ export const CompeticionesPage = () => {
       )}
       <button
         onClick={() => dispatch(logout())}
-        className="rounded bg-red-600 text-white px-3 py-1 mt-auto"
+        className="rounded bg-red-600 text-white px-3 py-1 mt-auto z-1"
       >
         Cerrar sesión
       </button>

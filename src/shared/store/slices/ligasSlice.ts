@@ -12,11 +12,13 @@ const initialState: LigasState = {
     {
       id: '1',
       nombre: '1ª División Infinity',
+      descripcion: "La mejor liga de Salamanca vuelve a la acción! 20€ inscripción, premio ir al país de nunca jamás a la final interplanetaria de futbolín",
       tipoFutbolin: TipoFutbolin.Infinity
     },
     {
       id: '2',
       nombre: '1ª División Tsunami',
+      descripcion: "La mejor liga de Salamanca vuelve a la acción! 20€ inscripción, premio ir al país de nunca jamás a la final interplanetaria de futbolín",
       tipoFutbolin: TipoFutbolin.Tsunami
     }
   ],

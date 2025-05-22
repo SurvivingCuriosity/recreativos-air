@@ -5,6 +5,9 @@ import { LoginPage } from "../features/Login/LoginPage";
 import { CompeticionesLayout } from "../shared/layouts/CompeticionesLayout";
 import { MainLayout } from "../shared/layouts/MainLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { CrearLigaPage } from "../features/CrearLiga/CrearLigaPage";
+import AdminRoute from "./components/AdminRoute";
+import { DetalleLigaPage } from "../features/DetalleLiga/DetalleLigaPage";
 
 export const Router = () => {
   return (
@@ -19,8 +22,17 @@ export const Router = () => {
       <Route element={<ProtectedRoute />}>
         <Route element={<CompeticionesLayout />}>
           <Route path="competiciones" element={<CompeticionesPage />} />
+          <Route path="competiciones/:id" element={<DetalleLigaPage />} />
         </Route>
       </Route>
+
+      {/* ADMIN */}
+      <Route element={<AdminRoute />}>
+        <Route element={<CompeticionesLayout />}>
+          <Route path="crear-liga" element={<CrearLigaPage />} />
+        </Route>
+      </Route>
+
     </Routes>
   );
 };

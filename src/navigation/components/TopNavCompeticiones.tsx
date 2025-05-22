@@ -13,9 +13,10 @@ export const TopNavCompeticiones = () => {
         <Link to="/" className="z-6">
           <img src={"logo.png"} alt="logo" className="size-10" />
         </Link>
-        <div className="text-neutral-400">
+        <div className="text-neutral-400 flex items-center gap-1">
           <FontAwesomeIcon icon={faUser} className="mr-1" />
           {user?.username}
+          {user?.admin ? <p className="text-green-500">admin</p> : <p className="text-red-500">no admin</p>}
         </div>
         <HamburgerMenu />
       </nav>
