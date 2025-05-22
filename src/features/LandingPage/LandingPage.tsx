@@ -5,7 +5,7 @@ import { TELEFONO_ALBERTO } from "../../shared/db/telefono";
 import { ButtonWhatsapp } from "./ButtonWhatsapp";
 
 export const LandingPage = () => {
-  // force push dev
+  // force push dev 2
   return (
     <div>
       <main className="z-0 p-4 h-[calc(100dvh-4rem)] w-full relative bg-black flex flex-col items-center justify-start">
