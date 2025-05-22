@@ -44,7 +44,7 @@ export const NavDetalleLiga = () => {
           size="md"
         />
       </nav>
-      <p style={{animationDelay: '0.4s'}} className="z-2 animate-fade-in-top font-cool text-xl py-1 font-black sticky top-8 bg-neutral-950">
+      <p style={{animationDelay: '0.4s'}} className="z-2 animate-fade-in-top font-cool text-xl py-1 font-black sticky top-9.5 bg-neutral-950">
         {labelMap[activeTab]}
       </p>
     </>

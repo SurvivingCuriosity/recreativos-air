@@ -14,7 +14,7 @@ export const DetalleLigaLayout = () => {
   return (
     <DetalleLigaContext.Provider value={{ liga, setLiga: () => {} }}>
       <div className="max-w-screen-sm mx-auto p-4 pt-0 h-full overflow-y-auto">
-        <h1 className="sticky top-0 bg-neutral-950 mt-2 z-2 font-cool text-2xl font-bold text-primary animate-fade-in-top ">
+        <h1 className="sticky top-0 bg-neutral-950 z-2 pt-2 font-cool text-2xl font-bold text-primary animate-fade-in-top ">
           {liga?.nombre}
         </h1>
         <NavDetalleLiga />
