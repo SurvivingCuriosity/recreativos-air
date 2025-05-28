@@ -5,4 +5,5 @@ export interface Enfrentamiento {
     equipoA: string;
     equipoB: string;
     partidos: Partido[]
+    fecha: Date;
 }

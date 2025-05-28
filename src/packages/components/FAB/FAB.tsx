@@ -1,4 +1,8 @@
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faXmark,
+  type IconDefinition,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, type ReactNode } from "react";
 
@@ -12,21 +16,25 @@ export interface FabProps {
   items: FabItem[];
   className?: string;
   showLabels?: boolean;
+  openIcon?: IconDefinition;
+  closeIcon?: IconDefinition;
 }
 
 export const Fab: React.FC<FabProps> = ({
   items,
   className = "",
   showLabels = true,
+  openIcon = faPlus,
+  closeIcon = faXmark,
 }) => {
   const [open, setOpen] = useState(false);
 
-    const handleClick = (callback?: () => void) => () => {
-      if (callback) {
-        callback();
-      }
-      setOpen(false);
-    };
+  const handleClick = (callback?: () => void) => () => {
+    if (callback) {
+      callback();
+    }
+    setOpen(false);
+  };
 
   return (
     <div
@@ -38,7 +46,7 @@ export const Fab: React.FC<FabProps> = ({
           open ? "opacity-100" : "opacity-0"
         } fixed top-0 left-0 -z-1 bg-black/70 w-screen h-screen`}
       ></div> */}
-      
+
       <ul
         className={`z-5 flex flex-col items-center mb-4 transition-all duration-300
         ${
@@ -47,12 +55,12 @@ export const Fab: React.FC<FabProps> = ({
             : "pointer-events-none opacity-0 translate-y-4"
         }`}
       >
-        {items.map(({ label, onClick:callback, icon }) => (
-          <li key={label} className="my-2">
+        {items.map(({ label, onClick: callback, icon }) => (
+          <li key={label} className="my-2 ml-auto">
             <button
               onClick={handleClick(callback)}
               aria-label={label}
-              className="w-44 font-medium bg-primary text-black p-2 px-3 rounded-lg flex gap-2 items-center"
+              className="min-w-44 w-full font-medium bg-primary text-black p-2 px-3 rounded-lg flex gap-2 items-center"
             >
               {icon}
 
@@ -72,10 +80,8 @@ export const Fab: React.FC<FabProps> = ({
                    focus-visible:ring-2 focus-visible:ring-primary/70"
       >
         <FontAwesomeIcon
-          icon={faXmark}
-          className={`text-2xl ${
-            open ? "" : "rotate-45"
-          } transition-transform duration-300`}
+          icon={open ? closeIcon : openIcon}
+          className={`text-2xl transition-transform duration-300`}
         />
       </button>
     </div>

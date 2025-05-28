@@ -1,11 +1,7 @@
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
-import { useAppSelector } from "../../shared/store/hooks";
+import { Link, useNavigate } from "react-router";
 
 export const TopNavCompeticiones = () => {
-  const { user } = useAppSelector((state) => state.auth);
 
   return (
     <header className="h-14 p-2 absolute border-b border-neutral-700 w-full block">
@@ -13,11 +9,6 @@ export const TopNavCompeticiones = () => {
         <Link to="/" className="z-6">
           <img src={"logo.png"} alt="logo" className="size-10" />
         </Link>
-        <div className="text-neutral-400 flex items-center gap-1">
-          <FontAwesomeIcon icon={faUser} className="mr-1" />
-          {user?.username}
-          {user?.admin ? <p className="text-green-500">admin</p> : <p className="text-red-500">no admin</p>}
-        </div>
         <HamburgerMenu />
       </nav>
     </header>
@@ -26,6 +17,8 @@ export const TopNavCompeticiones = () => {
 
 export const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isOpen) {
@@ -71,17 +64,17 @@ export const HamburgerMenu = () => {
         <li>
           <Link
             className="rounded-md p-2 transition-all duration-200 hover:bg-neutral-300 dark:hover:bg-neutral-800"
-            to="/proyectos"
+            to="/competiciones"
           >
-            Projects
+            Competiciones
           </Link>
         </li>
         <li>
           <Link
             className="rounded-md p-2 transition-all duration-200 hover:bg-neutral-300 dark:hover:bg-neutral-800"
-            to="/experiencia"
+            to="/mi-perfil"
           >
-            Work experience
+            Mi perfil
           </Link>
         </li>
       </ul>
@@ -97,11 +90,18 @@ export const HamburgerMenu = () => {
           <li
             onClick={() => {
               setIsOpen(false);
-              const element = document.getElementById("seccion1");
-              element?.scrollIntoView({ behavior: "smooth", block: "start" });
+              navigate("/competiciones");
             }}
           >
             Competiciones
+          </li>
+          <li
+            onClick={() => {
+              setIsOpen(false);
+              navigate("/mi-perfil");
+            }}
+          >
+            Mi perfil
           </li>
         </ul>
       </div>

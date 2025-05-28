@@ -24,6 +24,7 @@ export const CrearLigaPage = () => {
     nombre: "",
     descripcion: "",
     tipoFutbolin: TipoFutbolin.Infinity,
+    equipos: [],
   });
 
   const updateLigaField = (

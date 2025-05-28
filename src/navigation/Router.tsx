@@ -12,6 +12,8 @@ import { CompeticionesLayout } from "../shared/layouts/CompeticionesLayout";
 import { MainLayout } from "../shared/layouts/MainLayout";
 import AdminRoute from "./components/AdminRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { CrearEquipoPage } from "../features/CrearEquipo/CrearEquipoPage";
+import { MiPerfilPage } from "../features/MiPerfil/MiPerfilPage";
 
 export const Router = () => {
   return (
@@ -26,6 +28,8 @@ export const Router = () => {
       <Route element={<ProtectedRoute />}>
         <Route element={<CompeticionesLayout />}>
           <Route path="competiciones" element={<CompeticionesPage />} />
+          <Route path="mi-perfil" element={<MiPerfilPage />} />
+          <Route path="crear-equipo" element={<CrearEquipoPage />} />
           <Route path="competiciones/:id" element={<DetalleLigaLayout />}>
             <Route path="info" element={<InfoLigaPage />} />
             <Route path="jornadas" element={<JornadasLigaPage />} />
