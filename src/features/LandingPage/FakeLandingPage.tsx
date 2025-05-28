@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import fondo from "../../shared/assets/fondo-tsunami-full.jpg";
 import fondo_text from "../../shared/assets/fondo-tsunami.jpg";
 import { TELEFONO_ALBERTO } from "../../shared/db/telefono";
@@ -39,7 +38,6 @@ export const FakeLandingPage = () => {
           Empresa especializada en futbolines Tsunami en la provincia de
           Salamanca.
         </p>
-
 
         <ButtonWhatsapp numero={TELEFONO_ALBERTO} />
       </main>
