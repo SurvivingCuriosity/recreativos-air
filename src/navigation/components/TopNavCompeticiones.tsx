@@ -60,7 +60,7 @@ export const HamburgerMenu = () => {
         ></span>
       </button>
 
-      <ul className="hidden lg:flex lg:flex-row lg:gap-6 *:text-primary">
+      <ul className="z-7 relative hidden lg:flex lg:flex-row lg:gap-6 *:text-primary">
         <li>
           <Link
             className="rounded-md p-2 transition-all duration-200 hover:bg-neutral-300 dark:hover:bg-neutral-800"

@@ -57,22 +57,38 @@ export const HamburgerMenu = () => {
         ></span>
       </button>
 
-      <ul className="hidden lg:flex lg:flex-row lg:gap-6 *:text-primary">
+      <ul className="z-10 relative hidden lg:flex lg:flex-row lg:gap-6 *:text-primary">
         <li>
-          <Link
+          <a
             className="rounded-md p-2 transition-all duration-200 hover:bg-neutral-300 dark:hover:bg-neutral-800"
-            to="/proyectos"
+            href="#seccion1"
           >
-            Projects
-          </Link>
+            Seccion 1
+          </a>
         </li>
         <li>
-          <Link
+          <a
             className="rounded-md p-2 transition-all duration-200 hover:bg-neutral-300 dark:hover:bg-neutral-800"
-            to="/experiencia"
+            href="#seccion2"
           >
-            Work experience
-          </Link>
+            Seccion 2
+          </a>
+        </li>
+        <li>
+          <a
+            className="rounded-md p-2 transition-all duration-200 hover:bg-neutral-300 dark:hover:bg-neutral-800"
+            href="#seccion3"
+          >
+            Seccion 3
+          </a>
+        </li>
+        <li>
+          <a
+            className="rounded-md p-2 transition-all duration-200 hover:bg-neutral-300 dark:hover:bg-neutral-800"
+            href="#seccion4"
+          >
+            Seccion 4
+          </a>
         </li>
       </ul>
 
@@ -87,35 +103,35 @@ export const HamburgerMenu = () => {
           <li
             onClick={() => {
               setIsOpen(false);
-              const element = document.getElementById('seccion1');
-              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              const element = document.getElementById("seccion1");
+              element?.scrollIntoView({ behavior: "smooth", block: "start" });
             }}
           >
             Seccion 1
           </li>
-           <li
+          <li
             onClick={() => {
               setIsOpen(false);
-              const element = document.getElementById('seccion2');
-              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              const element = document.getElementById("seccion2");
+              element?.scrollIntoView({ behavior: "smooth", block: "start" });
             }}
           >
             Seccion 2
           </li>
-           <li
+          <li
             onClick={() => {
               setIsOpen(false);
-              const element = document.getElementById('seccion3');
-              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              const element = document.getElementById("seccion3");
+              element?.scrollIntoView({ behavior: "smooth", block: "start" });
             }}
           >
             Seccion 3
           </li>
-           <li
+          <li
             onClick={() => {
               setIsOpen(false);
-              const element = document.getElementById('seccion4');
-              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              const element = document.getElementById("seccion4");
+              element?.scrollIntoView({ behavior: "smooth", block: "start" });
             }}
           >
             Seccion 4

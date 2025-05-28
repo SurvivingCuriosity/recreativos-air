@@ -14,13 +14,15 @@ import AdminRoute from "./components/AdminRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { CrearEquipoPage } from "../features/CrearEquipo/CrearEquipoPage";
 import { MiPerfilPage } from "../features/MiPerfil/MiPerfilPage";
+import { FakeLandingPage } from "../features/LandingPage/FakeLandingPage";
 
 export const Router = () => {
   return (
     <Routes>
       <Route element={<MainLayout />}>
         {/* PUBLICAS */}
-        <Route index element={<LandingPage />} />
+        <Route index element={<FakeLandingPage />} />
+        <Route path="/home" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Route>
 
