@@ -9,6 +9,7 @@ import { TextArea } from "../../packages/components/TextInput/TextArea";
 import { TextInput } from "../../packages/components/TextInput/TextInput";
 import { Titulo } from "../../packages/components/Titulo/Titulo";
 import { SelectorTipoFutbolin } from "../../shared/components/SelectorTipoFutbolin/SelectorTipoFutbolin";
+import { EstadoLiga } from "../../shared/enum/EstadoLiga";
 import { TipoFutbolin } from "../../shared/enum/TipoFutbolin";
 import type { Liga } from "../../shared/interfaces/Liga";
 import { useAppDispatch } from "../../shared/store/hooks";
@@ -25,6 +26,8 @@ export const CrearLigaPage = () => {
     equipos: [],
     premio: "",
     normas: "",
+    estadoLiga: EstadoLiga.SinEmpezar,
+    ubicaciones: [],
   });
 
   const updateLigaField = (

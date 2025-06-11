@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router";
 import { CompeticionesPage } from "../features/Competiciones/pages/CompeticionesPage";
+import { CrearEquipoPage } from "../features/CrearEquipo/CrearEquipoPage";
 import { CrearLigaPage } from "../features/CrearLiga/CrearLigaPage";
 import { DetalleLigaLayout } from "../features/DetalleLiga/DetalleLigaLayout";
 import { ClasificacionLigaPage } from "../features/DetalleLiga/pages/ClasificacionLigaPage";
@@ -8,22 +9,19 @@ import { InfoLigaPage } from "../features/DetalleLiga/pages/InfoLigaPage";
 import { JornadasLigaPage } from "../features/DetalleLiga/pages/JornadasLigaPage";
 import { LandingPage } from "../features/LandingPage/LandingPage";
 import { LoginPage } from "../features/Login/LoginPage";
+import { MiPerfilPage } from "../features/MiPerfil/MiPerfilPage";
+import { RegisterPage } from "../features/Register/RegisterPage";
 import { CompeticionesLayout } from "../shared/layouts/CompeticionesLayout";
 import { MainLayout } from "../shared/layouts/MainLayout";
 import AdminRoute from "./components/AdminRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { CrearEquipoPage } from "../features/CrearEquipo/CrearEquipoPage";
-import { MiPerfilPage } from "../features/MiPerfil/MiPerfilPage";
-import { FakeLandingPage } from "../features/LandingPage/FakeLandingPage";
-import { RegisterPage } from "../features/Register/RegisterPage";
 
 export const Router = () => {
   return (
     <Routes>
       <Route element={<MainLayout />}>
         {/* PUBLICAS */}
-        <Route index element={<FakeLandingPage />} />
-        <Route path="/home" element={<LandingPage />} />
+        <Route index element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Route>
