@@ -6,9 +6,12 @@ import { Window } from "../../../packages/components/Window/Window";
 import { TarjetaEquipo } from "../../../shared/components/TarjetaEquipo/TarjetaEquipo";
 import { InscribirEquipoExistenteForm } from "../components/InscribirEquipoExistenteForm";
 import { DetalleLigaContext } from "../context/DetalleLigaContext";
+import { useAppSelector } from "../../../shared/store/hooks";
 
 export const EquiposLigaPage = () => {
   const { liga } = use(DetalleLigaContext);
+
+  const { user } = useAppSelector((state) => state.auth);
 
   const [inscribiendoEquipoExistente, setInscribiendoEquipoExistente] =
     useState(false);
@@ -44,21 +47,23 @@ export const EquiposLigaPage = () => {
           />
         ))}
       </ul>
-      <Fab
-        items={[
-          {
-            label: "Crear nuevo equipo",
-            icon: <FontAwesomeIcon icon={faPlus} />,
-            onClick: () => setCreandoNuevoEquipo(true),
-          },
-          {
-            label: "Inscribir equipo existente",
-            icon: <FontAwesomeIcon icon={faPeopleGroup} />,
-            onClick: () => setInscribiendoEquipoExistente(true),
-          },
-        ]}
-        showLabels={true}
-      />
+      {user?.admin && (
+        <Fab
+          items={[
+            {
+              label: "Crear nuevo equipo",
+              icon: <FontAwesomeIcon icon={faPlus} />,
+              onClick: () => setCreandoNuevoEquipo(true),
+            },
+            {
+              label: "Inscribir equipo existente",
+              icon: <FontAwesomeIcon icon={faPeopleGroup} />,
+              onClick: () => setInscribiendoEquipoExistente(true),
+            },
+          ]}
+          showLabels={true}
+        />
+      )}
     </>
   );
 };

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
+import { useAppSelector } from "../../shared/store/hooks";
+import { selectIsAuthenticated } from "../../shared/store/slices/authSlice";
 
 export const TopNavCompeticiones = () => {
-
   return (
     <header className="h-14 p-2 absolute border-b border-neutral-700 w-full block">
       <nav className="max-w-screen-lg mx-auto flex items-center justify-between z-6">
@@ -16,6 +17,8 @@ export const TopNavCompeticiones = () => {
 };
 
 export const HamburgerMenu = () => {
+  const isLoggedIn = useAppSelector(selectIsAuthenticated);
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -69,14 +72,16 @@ export const HamburgerMenu = () => {
             Competiciones
           </Link>
         </li>
-        <li>
-          <Link
-            className="rounded-md p-2 transition-all duration-200 hover:bg-neutral-300 dark:hover:bg-neutral-800"
-            to="/mi-perfil"
-          >
-            Mi perfil
-          </Link>
-        </li>
+        {isLoggedIn && (
+          <li>
+            <Link
+              className="rounded-md p-2 transition-all duration-200 hover:bg-neutral-300 dark:hover:bg-neutral-800"
+              to="/mi-perfil"
+            >
+              Mi perfil
+            </Link>
+          </li>
+        )}
       </ul>
 
       <div

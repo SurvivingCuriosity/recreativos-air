@@ -15,6 +15,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { CrearEquipoPage } from "../features/CrearEquipo/CrearEquipoPage";
 import { MiPerfilPage } from "../features/MiPerfil/MiPerfilPage";
 import { FakeLandingPage } from "../features/LandingPage/FakeLandingPage";
+import { RegisterPage } from "../features/Register/RegisterPage";
 
 export const Router = () => {
   return (
@@ -24,6 +25,7 @@ export const Router = () => {
         <Route index element={<FakeLandingPage />} />
         <Route path="/home" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Route>
 
       {/* PROTEGIDAS */}

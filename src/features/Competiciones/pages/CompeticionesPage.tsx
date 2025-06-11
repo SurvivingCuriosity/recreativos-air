@@ -15,11 +15,11 @@ export const CompeticionesPage = () => {
   const navigate = useNavigate();
 
   const { equiposUsuario } = useAppSelector((state) => state.user);
-
   const { user } = useAppSelector((state) => state.auth);
 
   return (
     <div className="flex flex-col items-center justify-start p-4 h-full">
+      <h1 className="text-3xl font-bold font-cool mb-3">Competiciones</h1>
       {equiposUsuario.length === 0 && (
         <Message variant="info" className="w-full mb-2">
           <>
@@ -37,7 +37,7 @@ export const CompeticionesPage = () => {
       {ligas.length === 0 ? (
         <p>No hay ligas</p>
       ) : (
-        <ul className="flex flex-col gap-4 w-full h-11/12 overflow-y-auto">
+        <ul className="flex flex-col gap-4 w-full h-11/12 overflow-y-auto pt-2">
           {ligas.map((liga, index) => (
             <span
               style={{ animationDelay: `${index * 0.1}s` }}
@@ -74,7 +74,6 @@ export const CompeticionesPage = () => {
           showLabels={true}
         />
       )}
-
     </div>
   );
 };

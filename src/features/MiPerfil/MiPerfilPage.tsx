@@ -7,7 +7,8 @@ import { logout } from "../../shared/store/slices/authSlice";
 export const MiPerfilPage = () => {
   const dispatch = useAppDispatch();
 
-  const { user, equiposUsuario } = useAppSelector((state) => state.user);
+  const { equiposUsuario } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
   const { ligas } = useAppSelector((state) => state.ligas);
 
   const ligasEnLasQueEstaInscrito = ligas.filter((liga) =>

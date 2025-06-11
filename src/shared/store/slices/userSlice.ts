@@ -1,19 +1,11 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Equipo } from "../../interfaces/Equipo";
-import type { User } from "../../interfaces/User";
 
 export interface UserState {
-  user: User | null;
   equiposUsuario: Equipo[];
 }
 
 const initialState: UserState = {
-  user: {
-    id: "1",
-    username: "alberto",
-    nombre: "Alberto",
-    admin: true,
-  },
   equiposUsuario: [],
 };
 

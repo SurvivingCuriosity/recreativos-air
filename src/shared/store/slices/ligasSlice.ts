@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { TipoFutbolin } from "../../enum/TipoFutbolin";
 import type { Liga } from "../../interfaces/Liga";
 import type { Equipo } from "../../interfaces/Equipo";
+import { EstadoLiga } from "../../enum/EstadoLiga";
 
 interface LigasState {
   ligas: Liga[];
@@ -16,6 +17,8 @@ const initialState: LigasState = {
       descripcion:
         "La mejor liga de Salamanca vuelve a la acción! 20€ inscripción, premio ir al país de nunca jamás a la final interplanetaria de futbolín",
       tipoFutbolin: TipoFutbolin.Infinity,
+      estadoLiga: EstadoLiga.EnCurso,
+      ubicaciones: ["La pinta y la loca", "Retiro del campus"],
       equipos: [
         {
           id: "1",
@@ -102,6 +105,9 @@ const initialState: LigasState = {
           ],
         },
       ],
+      normas: "Modalidad parado. Se permite violencia en el tercer partido.",
+      premio:
+        "30€ primer clasificado. 20€ segundo clasificado. 10€ tercer clasificado.",
     },
     {
       id: "2",
@@ -109,6 +115,8 @@ const initialState: LigasState = {
       descripcion:
         "La mejor liga de Salamanca vuelve a la acción! 20€ inscripción, premio ir al país de nunca jamás a la final interplanetaria de futbolín",
       tipoFutbolin: TipoFutbolin.Tsunami,
+      estadoLiga: EstadoLiga.SinEmpezar,
+      ubicaciones: ["La pinta y la loca", "Retiro del campus"],
       equipos: [
         {
           id: "1",
@@ -139,6 +147,8 @@ const initialState: LigasState = {
           ],
         },
       ],
+      normas: "",
+      premio: "",
     },
   ],
 };
@@ -167,6 +177,7 @@ export const ligasSlice = createSlice({
   },
 });
 
-export const { crearLiga, eliminarLiga, agregarEquipoALiga } = ligasSlice.actions;
+export const { crearLiga, eliminarLiga, agregarEquipoALiga } =
+  ligasSlice.actions;
 
 export const ligasReducer = ligasSlice.reducer;

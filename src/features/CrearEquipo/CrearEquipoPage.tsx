@@ -14,7 +14,7 @@ export const CrearEquipoPage = () => {
 
   const navigate = useNavigate();
 
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
 
   const [equipo, setEquipo] = useState<Equipo>({
     id: "1",

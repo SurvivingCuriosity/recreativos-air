@@ -8,9 +8,7 @@ import { FormLabel } from "../../packages/components/Form/FormLabel";
 import { TextArea } from "../../packages/components/TextInput/TextArea";
 import { TextInput } from "../../packages/components/TextInput/TextInput";
 import { Titulo } from "../../packages/components/Titulo/Titulo";
-import {
-  SelectorTipoFutbolin,
-} from "../../shared/components/SelectorTipoFutbolin/SelectorTipoFutbolin";
+import { SelectorTipoFutbolin } from "../../shared/components/SelectorTipoFutbolin/SelectorTipoFutbolin";
 import { TipoFutbolin } from "../../shared/enum/TipoFutbolin";
 import type { Liga } from "../../shared/interfaces/Liga";
 import { useAppDispatch } from "../../shared/store/hooks";
@@ -25,6 +23,8 @@ export const CrearLigaPage = () => {
     descripcion: "",
     tipoFutbolin: TipoFutbolin.Infinity,
     equipos: [],
+    premio: "",
+    normas: "",
   });
 
   const updateLigaField = (
@@ -69,13 +69,31 @@ export const CrearLigaPage = () => {
               onChange={(value) => updateLigaField("descripcion", value)}
             />
           </FormField>
-          <div className="overflow-visible">
+          <div className="overflow-visible my-2">
             <FormLabel>Tipo de futbolin</FormLabel>
-            <SelectorTipoFutbolin 
-              onSelect={()=>{}}
+            <SelectorTipoFutbolin
+              onSelect={() => {}}
               value={ligaEnCreacion.tipoFutbolin}
             />
           </div>
+
+          <FormField>
+            <FormLabel>Normas</FormLabel>
+            <TextArea
+              placeholder="Introduce normas de la liga (opcional)"
+              value={ligaEnCreacion.normas}
+              onChange={(value) => updateLigaField("normas", value)}
+            />
+          </FormField>
+
+          <FormField>
+            <FormLabel>Premio</FormLabel>
+            <TextArea
+              placeholder="Especifica premios de la liga (opcional)"
+              value={ligaEnCreacion.premio}
+              onChange={(value) => updateLigaField("premio", value)}
+            />
+          </FormField>
         </div>
         <Button onClick={handleCrearLiga} icon={faPlus}>
           Crear liga
