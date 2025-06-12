@@ -9,7 +9,7 @@ import { useNavigate } from "react-router";
 import { InlinePicker } from "../../packages/components/InlinePicker/InlinePicker";
 
 export const NavDetalleLiga = () => {
-  const [activeTab, setActiveTab] = useState(1);
+  const [activeTab, setActiveTab] = useState(getActiveTabBasedOnUrlValue());
   const navigate = useNavigate();
 
   const labelMap: Record<number, string> = {
@@ -24,6 +24,25 @@ export const NavDetalleLiga = () => {
     3: "equipos",
     4: "info",
   };
+
+  function getActiveTabBasedOnUrlValue() {
+    const urlSegments = new URL(window.location.href).toString().split("/");
+    let value = 1;
+    if (urlSegments.includes("clasificacion")) {
+      value = 1;
+    }
+    if (urlSegments.includes("jornadas")) {
+      value = 2;
+    }
+    if (urlSegments.includes("equipos")) {
+      value = 3;
+    }
+    if (urlSegments.includes("info")) {
+      value = 4;
+    }
+    console.log('Sales', value);
+    return value;
+  }
 
   const handleTabClick = (id: number) => {
     setActiveTab(id);
@@ -43,6 +62,7 @@ export const NavDetalleLiga = () => {
             { id: 3, label: "", icon: faPeopleGroup },
             { id: 4, label: "", icon: faInfoCircle },
           ]}
+          activeTabId={activeTab}
           onTabClick={handleTabClick}
           size="md"
         />

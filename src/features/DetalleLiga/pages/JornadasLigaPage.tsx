@@ -1,59 +1,72 @@
-import { useMemo, useState } from "react";
+import { use, useState } from "react";
+import { useNavigate } from "react-router";
 import { TarjetaEnfrentamiento } from "../../../shared/components/TarjetaEnfrentamiento/TarjetaEnfrentamiento";
+import { EstadoEnfrentamientoOpcionCualquiera } from "../../../shared/enum/EstadoEnfrentamiento";
 import type { Enfrentamiento } from "../../../shared/interfaces/Enfrentamiento";
-import type { Partido } from "../../../shared/interfaces/Partido";
+import { FiltrosJornadas } from "../components/FiltrosJornadas";
+import { DetalleLigaContext } from "../context/DetalleLigaContext";
 
 export const JornadasLigaPage = () => {
+  const navigate = useNavigate();
+
   const [idEnfrentamientoOpen, setIdEnfrentamientoOpen] = useState<
     number | null
   >(null);
 
-  function generarEnfrentamientos(
-    cantidadEnfrentamientos: number,
-    partidosPorEnfrentamiento: number
-  ): Enfrentamiento[] {
-    const enfrentamientos: Enfrentamiento[] = [];
+  const { liga } = use(DetalleLigaContext);
 
-    for (let i = 1; i <= cantidadEnfrentamientos; i++) {
-      const equipoA = `Equipo A ${i}`;
-      const equipoB = `Equipo B ${i}`;
+  const [enfrentamientosFiltrados, setEnfrentamientosFiltrados] = useState<
+    Enfrentamiento[]
+  >(liga.enfrentamientos);
 
-      const partidos: Partido[] = [];
-      for (let j = 1; j <= partidosPorEnfrentamiento; j++) {
-        partidos.push({
-          id: j,
-          equipoA,
-          equipoB,
-          golesA: Math.floor(Math.random() * 5).toString(),
-          golesB: Math.floor(Math.random() * 5).toString(),
-          terminado: true,
-        });
-      }
+  const handleFilterEquipos = (idEquipo: string | null) => {
+    const filtered =
+      idEquipo === "-1"
+        ? liga.enfrentamientos
+        : liga.enfrentamientos.filter(
+            (e) => e.equipoA.id === idEquipo || e.equipoB.id === idEquipo
+          );
+          console.log(filtered)
+    setEnfrentamientosFiltrados(filtered);
+  };
 
-      enfrentamientos.push({
-        id: i,
-        equipoA,
-        equipoB,
-        partidos,
-        fecha: new Date(),
-      });
-    }
+  const handleFilterEstado = (
+    estadoEnfrentamiento: EstadoEnfrentamientoOpcionCualquiera
+  ) => {
+    setEnfrentamientosFiltrados(
+      estadoEnfrentamiento === EstadoEnfrentamientoOpcionCualquiera.Cualquiera
+        ? liga.enfrentamientos
+        : liga.enfrentamientos.filter((e) => e.estado === estadoEnfrentamiento)
+    );
+  };
 
-    return enfrentamientos;
-  }
-
-  const enfrentamientos = useMemo(() => generarEnfrentamientos(12, 4), []);
+  console.log(enfrentamientosFiltrados)
 
   return (
     <div className="flex flex-col gap-3 pb-20">
-      {enfrentamientos.map((enfrentamiento) => (
-        <TarjetaEnfrentamiento
-          key={enfrentamiento.id}
-          enfrentamiento={enfrentamiento}
-          optionsOpen={idEnfrentamientoOpen === enfrentamiento.id}
-          onOptionsClick={setIdEnfrentamientoOpen}
-        />
-      ))}
+      <FiltrosJornadas
+        onChangeEquipos={handleFilterEquipos}
+        onChangeEstado={handleFilterEstado}
+      />
+      {enfrentamientosFiltrados.length === 0 ? (
+        <p className="text-center p-10">Sin resultados</p>
+      ) : (
+        enfrentamientosFiltrados.map((enfrentamiento) => (
+          <TarjetaEnfrentamiento
+            key={enfrentamiento.id}
+            enfrentamiento={enfrentamiento}
+            optionsOpen={idEnfrentamientoOpen === enfrentamiento.id}
+            onOptionsClick={setIdEnfrentamientoOpen}
+            onClick={() =>
+              navigate("/jornadas/" + enfrentamiento.id, {
+                state: {
+                  enfrentamiento,
+                },
+              })
+            }
+          />
+        ))
+      )}
     </div>
   );
 };

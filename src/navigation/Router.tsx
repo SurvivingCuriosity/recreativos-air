@@ -7,6 +7,8 @@ import { ClasificacionLigaPage } from "../features/DetalleLiga/pages/Clasificaci
 import { EquiposLigaPage } from "../features/DetalleLiga/pages/EquiposLigaPage";
 import { InfoLigaPage } from "../features/DetalleLiga/pages/InfoLigaPage";
 import { JornadasLigaPage } from "../features/DetalleLiga/pages/JornadasLigaPage";
+import { DetalleEquipoPage } from "../features/Equipos/DetalleEquipo/DetalleEquipoPage";
+import { DetalleJornadaPage } from "../features/Jornadas/DetalleJornada/DetalleJornadaPage";
 import { LandingPage } from "../features/LandingPage/LandingPage";
 import { LoginPage } from "../features/Login/LoginPage";
 import { MiPerfilPage } from "../features/MiPerfil/MiPerfilPage";
@@ -15,7 +17,6 @@ import { CompeticionesLayout } from "../shared/layouts/CompeticionesLayout";
 import { MainLayout } from "../shared/layouts/MainLayout";
 import AdminRoute from "./components/AdminRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { DetalleEquipoPage } from "../features/Equipos/DetalleEquipo/DetalleEquipoPage";
 
 export const Router = () => {
   return (
@@ -34,6 +35,7 @@ export const Router = () => {
           <Route path="mi-perfil" element={<MiPerfilPage />} />
           <Route path="crear-equipo" element={<CrearEquipoPage />} />
           <Route path="equipos/:id" element={<DetalleEquipoPage />} />
+          <Route path="jornadas/:id" element={<DetalleJornadaPage />} />
           <Route path="competiciones/:id" element={<DetalleLigaLayout />}>
             <Route path="info" element={<InfoLigaPage />} />
             <Route path="jornadas" element={<JornadasLigaPage />} />

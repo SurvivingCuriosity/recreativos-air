@@ -28,6 +28,7 @@ export const CrearLigaPage = () => {
     normas: "",
     estadoLiga: EstadoLiga.SinEmpezar,
     ubicaciones: [],
+    enfrentamientos: []
   });
 
   const updateLigaField = (

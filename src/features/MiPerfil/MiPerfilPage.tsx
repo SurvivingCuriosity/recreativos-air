@@ -3,8 +3,6 @@ import { Titulo } from "../../packages/components/Titulo/Titulo";
 import { TarjetaEquipo } from "../../shared/components/TarjetaEquipo/TarjetaEquipo";
 import { useAppDispatch, useAppSelector } from "../../shared/store/hooks";
 import { logout } from "../../shared/store/slices/authSlice";
-import { use } from "react";
-import { ThemeContext } from "../../shared/context/ThemeContext";
 
 export const MiPerfilPage = () => {
   const dispatch = useAppDispatch();
@@ -12,7 +10,7 @@ export const MiPerfilPage = () => {
   const { equiposUsuario } = useAppSelector((state) => state.user);
   const { user } = useAppSelector((state) => state.auth);
   const { ligas } = useAppSelector((state) => state.ligas);
-  const {darkMode, setDarkMode} = use(ThemeContext);
+
   const ligasEnLasQueEstaInscrito = ligas.filter((liga) =>
     equiposUsuario.find((equipo) => equipo.id === liga.id)
   );
@@ -63,13 +61,6 @@ export const MiPerfilPage = () => {
         )}
       </div>
 
-      <div className="bg-neutral-800 p-3 py-2 rounded-lg border border-neutral-700">
-        <Titulo variant="h4" className="font-cool">
-          Tema
-        </Titulo>
-        <input type="checkbox" className="mr-2" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
-        <p className="text-neutral-400">Oscuro</p>
-      </div>
 
       <button
         onClick={() => dispatch(logout())}

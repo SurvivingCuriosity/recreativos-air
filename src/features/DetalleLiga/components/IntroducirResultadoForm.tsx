@@ -33,19 +33,19 @@ export const IntroducirResultadoForm = ({
       <div className="flex my-4">
         <div className="flex flex-col w-30 gap-1 ">
           <p
-            title={enfrentamiento.equipoA}
+            title={enfrentamiento.equipoA.nombre}
             className="py-2 px-2 truncate"
           >
-            {enfrentamiento.equipoA}
+            {enfrentamiento.equipoA.nombre}
           </p>
-          <p title={enfrentamiento.equipoB} className="py-2 px-2 truncate">
-            {enfrentamiento.equipoB}
+          <p title={enfrentamiento.equipoB.nombre} className="py-2 px-2 truncate">
+            {enfrentamiento.equipoB.nombre}
           </p>
         </div>
         <div className="flex flex-row gap-1 ">
           {updatedEnfrentamiento.partidos.map((p, index) => (
             <div
-              key={index + p.equipoA + p.equipoB}
+              key={index + p.equipoA.nombre + p.equipoB.nombre}
               className="w-12 flex flex-col gap-1 text-neutral-600"
             >
               <input

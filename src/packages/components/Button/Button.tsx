@@ -24,7 +24,7 @@ export const Button = (props: ButtonProps) => {
   };
 
   const variantStyles: Record<ButtonVariant, string> = {
-    primary: "bg-primary text-black",
+    primary: "bg-primary text-neutral-700",
     outline: "bg-transparent text-primary border border-primary",
     neutral: "bg-neutral-700 text-neutral-100",
     "outline-neutral": "bg-transparent text-neutral-700 border border-neutral-700",

@@ -1,156 +1,15 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-import { TipoFutbolin } from "../../enum/TipoFutbolin";
-import type { Liga } from "../../interfaces/Liga";
 import type { Equipo } from "../../interfaces/Equipo";
-import { EstadoLiga } from "../../enum/EstadoLiga";
+import type { Liga } from "../../interfaces/Liga";
+import { ligas } from "../tmp/Ligas";
 
 interface LigasState {
   ligas: Liga[];
 }
 
 const initialState: LigasState = {
-  ligas: [
-    {
-      id: "1",
-      nombre: "1ª División Infinity",
-      descripcion:
-        "La mejor liga de Salamanca vuelve a la acción! 20€ inscripción, premio ir al país de nunca jamás a la final interplanetaria de futbolín",
-      tipoFutbolin: TipoFutbolin.Infinity,
-      estadoLiga: EstadoLiga.EnCurso,
-      ubicaciones: ["La pinta y la loca", "Retiro del campus"],
-      equipos: [
-        {
-          id: "1",
-          nombre: "Equipo 1",
-          jugadores: [
-            {
-              nombre: "Paco",
-              idUsuario: "1",
-            },
-            {
-              nombre: "Pollo",
-              idUsuario: "2",
-            },
-          ],
-        },
-        {
-          id: "2",
-          nombre: "Equipo 2",
-          jugadores: [
-            {
-              nombre: "Fer",
-              idUsuario: "1",
-            },
-            {
-              nombre: "Ruper",
-              idUsuario: "2",
-            },
-          ],
-        },
-        {
-          id: "3",
-          nombre: "Equipo 3",
-          jugadores: [
-            {
-              nombre: "Velas",
-              idUsuario: "1",
-            },
-            {
-              nombre: "Aroa",
-              idUsuario: "2",
-            },
-          ],
-        },
-        {
-          id: "4",
-          nombre: "Equipo 4",
-          jugadores: [
-            {
-              nombre: "Villa",
-              idUsuario: "1",
-            },
-            {
-              nombre: "Torres",
-              idUsuario: "2",
-            },
-          ],
-        },
-        {
-          id: "5",
-          nombre: "Equipo 5",
-          jugadores: [
-            {
-              nombre: "Jona",
-              idUsuario: "1",
-            },
-            {
-              nombre: "Najo",
-              idUsuario: "2",
-            },
-          ],
-        },
-        {
-          id: "6",
-          nombre: "Equipo 6",
-          jugadores: [
-            {
-              nombre: "Ñengo Flow",
-              idUsuario: "1",
-            },
-            {
-              nombre: "Anuel",
-              idUsuario: "2",
-            },
-          ],
-        },
-      ],
-      normas: "Modalidad parado. Se permite violencia en el tercer partido.",
-      premio:
-        "30€ primer clasificado. 20€ segundo clasificado. 10€ tercer clasificado.",
-    },
-    {
-      id: "2",
-      nombre: "1ª División Tsunami",
-      descripcion:
-        "La mejor liga de Salamanca vuelve a la acción! 20€ inscripción, premio ir al país de nunca jamás a la final interplanetaria de futbolín",
-      tipoFutbolin: TipoFutbolin.Tsunami,
-      estadoLiga: EstadoLiga.SinEmpezar,
-      ubicaciones: ["La pinta y la loca", "Retiro del campus"],
-      equipos: [
-        {
-          id: "1",
-          nombre: "Equipo 1",
-          jugadores: [
-            {
-              nombre: "Jugador 1",
-              idUsuario: "1",
-            },
-            {
-              nombre: "Jugador 2",
-              idUsuario: "2",
-            },
-          ],
-        },
-        {
-          id: "1",
-          nombre: "Equipo 1",
-          jugadores: [
-            {
-              nombre: "Jugador 1",
-              idUsuario: "1",
-            },
-            {
-              nombre: "Jugador 2",
-              idUsuario: "2",
-            },
-          ],
-        },
-      ],
-      normas: "",
-      premio: "",
-    },
-  ],
+  ligas: ligas,
 };
 
 export const ligasSlice = createSlice({

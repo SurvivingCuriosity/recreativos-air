@@ -1,5 +1,6 @@
 import type { EstadoLiga } from "../enum/EstadoLiga";
 import type { TipoFutbolin } from "../enum/TipoFutbolin";
+import type { Enfrentamiento } from "./Enfrentamiento";
 import type { Equipo } from "./Equipo";
 
 export interface Liga {
@@ -12,4 +13,5 @@ export interface Liga {
     premio: string;
     normas: string;
     ubicaciones: string[];
+    enfrentamientos: Enfrentamiento[]
 }

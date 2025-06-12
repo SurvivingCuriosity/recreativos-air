@@ -85,7 +85,7 @@ export const HamburgerMenu = () => {
       </ul>
 
       <div
-        className={`z-5 flex flex-col justify-between lg:hidden fixed top-0 h-dvh w-screen bg-black/95 ${
+        className={`z-5 flex flex-col justify-between lg:hidden fixed top-0 h-dvh w-screen bg-neutral-950/95 ${
           isOpen ? "left-0" : "left-full"
         } transition-all duration-200 pt-20 pb-4`}
       >

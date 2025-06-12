@@ -38,17 +38,38 @@
         --color-neutral-200: oklch(26.9% 0 0);
         --color-neutral-100: oklch(20.5% 0 0);
         --color-neutral-50: oklch(14.5% 0 0);
-        --color-primary: #1683e3;
+        --color-primary: #ff9100;
     }
 
 }
 
 @theme {
 
+    /* --color-neutral-950: #001f13;
+    --color-neutral-900: #003422;
+    --color-neutral-800: #004d35;
+    --color-neutral-700: #006748;
+    --color-neutral-600: #1d7a58;
+    --color-neutral-500: #439573;
+    --color-neutral-400: #60b18e;
+    --color-neutral-300: #7dcea9;
+    --color-neutral-200: #9aecc6;
+    --color-neutral-100: #dcffed;
+    --color-neutral-50: #dcffed; 
+    --color-primary: #f1da0c;*/
 
-    --color-primary: #8e780f;
+    /* --color-neutral-50: #fae6d3;
+    --color-neutral-100: #f3caa0;
+    --color-neutral-200: #eeba80;
+    --color-neutral-300: #e79b47;
+    --color-neutral-400: #e07912;
+    --color-neutral-500: #96510c;
+    --color-neutral-600: #442700;
+    --color-neutral-700: #3c2100;
+    --color-neutral-800: #281500;
+    --color-neutral-900: #1c0d00; */
+    --color-primary: #ff870f;
 
-    /* --color-primary: #f1da0c; */
 
     --animate-fade-in-top: fade-in-top 0.5s ease-out both;
     --animate-in-right: in-right 0.5s ease-in-out both;

@@ -15,12 +15,12 @@ export const InfoLigaPage = () => {
       <div>
         <p className="text-neutral-400">{liga?.descripcion}</p>
 
-        <p className="mt-4 z-2 font-cool text-xl py-1 font-black bg-neutral-950">
+        <p className="mt-4 z-2 font-cool text-xl py-1 font-neutral-950 bg-neutral-950">
           Normas
         </p>
         <p className="text-neutral-400">{liga?.normas}</p>
 
-        <p className="mt-4 z-2 font-cool text-xl py-1 font-black bg-neutral-950">
+        <p className="mt-4 z-2 font-cool text-xl py-1 font-neutral-950 bg-neutral-950">
           Ubicaciones
         </p>
         {liga?.ubicaciones.map((ubicacion, index) => (
@@ -29,7 +29,7 @@ export const InfoLigaPage = () => {
           </p>
         ))}
 
-        <p className="mt-4 z-2 font-cool text-xl py-1 font-black bg-neutral-950">
+        <p className="mt-4 z-2 font-cool text-xl py-1 font-neutral-950 bg-neutral-950">
           Premio
         </p>
         <p className="text-neutral-400">{liga?.premio}</p>

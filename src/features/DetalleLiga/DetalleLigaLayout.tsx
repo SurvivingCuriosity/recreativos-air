@@ -11,6 +11,10 @@ export const DetalleLigaLayout = () => {
     state.ligas.ligas.find((l) => l.id === idLiga)
   );
 
+  if(!liga) {
+    return <div>Liga no encontrada</div>
+  }
+
   return (
     <DetalleLigaContext.Provider value={{ liga, setLiga: () => {} }}>
       <div className="max-w-screen-sm mx-auto p-4 pt-0 h-full overflow-y-auto">

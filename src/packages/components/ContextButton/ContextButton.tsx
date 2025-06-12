@@ -62,7 +62,10 @@ export const ContextButton: React.FC<ContextButtonProps> = ({
   return (
     <div ref={ref} className={className + " relative z-1"}>
       <button
-        onClick={onClick}
+        onClick={(e)=>{
+          e.stopPropagation()
+          onClick()
+        }}
         className="size-8 text-neutral-600 z-1 relative"
       >
         <FontAwesomeIcon
@@ -78,7 +81,7 @@ export const ContextButton: React.FC<ContextButtonProps> = ({
               key={label}
               onClick={handleItemClick(callback)}
               aria-label={label}
-              className="w-60 z-80 relative font-medium bg-neutral-200 text-black p-2 px-3 rounded-lg flex gap-2 items-center"
+              className="w-60 z-80 relative font-medium bg-zinc-200 border border-neutral-800 text-black p-2 px-3 rounded-lg flex gap-2 items-center"
             >
               {icon}
               {showLabels && label}

@@ -1,6 +1,7 @@
 import { Tabla } from "../../../packages/components/Tabla/Tabla";
 import type { Column } from "../../../packages/components/Tabla/types";
 import type { Equipo } from "../../../shared/interfaces/Equipo";
+import { useAppSelector } from "../../../shared/store/hooks";
 
 export const TablaClasificacionLiga = ({
   equipos,
@@ -12,6 +13,7 @@ export const TablaClasificacionLiga = ({
   interface TableRow {
     pos: number;
     equipo: string;
+    idequipo: string;
     pj: number;
     pg: number;
     pp: number;
@@ -20,11 +22,12 @@ export const TablaClasificacionLiga = ({
     pts: number;
   }
 
-  console.log(enfrentamientos);
+  const { equiposUsuario } = useAppSelector((state) => state.user);
 
   const sampleDataClasificacion: TableRow[] = equipos.map((e, i) => ({
     pos: i + 1,
     equipo: e.nombre,
+    idequipo: e.id,
     pj: 0,
     pg: 0,
     pp: 0,
@@ -32,6 +35,8 @@ export const TablaClasificacionLiga = ({
     gc: 0,
     pts: 0,
   }));
+
+  console.log(enfrentamientos)
 
   const columns: Column<TableRow>[] = [
     {
@@ -43,11 +48,23 @@ export const TablaClasificacionLiga = ({
       cell: ({ row }) => <strong>{row.pos}</strong>,
     },
     {
-        key: "equipo",
-        header: "Equipo",
-        accessor: (row) => row.equipo,
-        sortable: false,
-        cell: ({ row }) => <div className="truncate max-w-20">{row.equipo}</div>,
+      key: "equipo",
+      header: "Equipo",
+      accessor: (row) => row.equipo,
+      sortable: false,
+      cell: ({ row }) => {
+        return (
+          <div
+            className={`truncate max-w-20 p-1 ${
+              equiposUsuario.some((e) => e.id === row.idequipo)
+                ? "text-primary"
+                : ""
+            }`}
+          >
+            {row.equipo}
+          </div>
+        );
+      },
     },
     {
       key: "pj",

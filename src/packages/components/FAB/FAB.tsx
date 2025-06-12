@@ -44,7 +44,7 @@ export const Fab: React.FC<FabProps> = ({
         onClick={() => setOpen(false)}
         className={`transition-opacity duration-300 ${
           open ? "opacity-100" : "opacity-0"
-        } fixed top-0 left-0 -z-1 bg-black/70 w-screen h-screen`}
+        } fixed top-0 left-0 -z-1 bg-neutral-950/70 w-screen h-screen`}
       ></div> */}
 
       <ul

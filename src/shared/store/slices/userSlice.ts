@@ -1,3 +1,4 @@
+import { Equipos } from "./../tmp/Equipos";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Equipo } from "../../interfaces/Equipo";
 
@@ -6,7 +7,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  equiposUsuario: [],
+  equiposUsuario: [Equipos[0]],
 };
 
 const userSlice = createSlice({

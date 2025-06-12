@@ -17,7 +17,7 @@ export const TarjetaEquipo = ({
   return (
     <div onClick={onClick} className="flex gap-4 items-center bg-neutral-900 border border-neutral-700 rounded-lg">
       <p
-        className={`font-black p-2 pr-1 w-30 truncate ${
+        className={`font-neutral-950 p-2 pr-1 w-30 truncate ${
           esEquipoDelUsuario ? "text-primary" : "text-neutral-200"
         }`}
       >

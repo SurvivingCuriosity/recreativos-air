@@ -1,7 +1,15 @@
-import { fondoFutbolinMap } from "../../db/fondoFutbolinMap";
-import { logoFutbolinMap } from "../../db/logoFutbolinMap";
+import { use } from "react";
+import {
+  fondoFutbolinMap,
+  fondoFutbolinMapLight,
+} from "../../db/fondoFutbolinMap";
+import {
+  logoFutbolinMap,
+  logoFutbolinMapLight,
+} from "../../db/logoFutbolinMap";
 import { EstadoLiga } from "../../enum/EstadoLiga";
 import type { Liga } from "../../interfaces/Liga";
+import { ThemeContext } from "../../context/ThemeContext";
 
 export interface TarjetaLigaProps {
   liga: Liga;
@@ -9,6 +17,8 @@ export interface TarjetaLigaProps {
 }
 
 export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
+  const { darkMode } = use(ThemeContext);
+
   return (
     <div
       onClick={onClick}
@@ -17,7 +27,11 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
       <div className="relative z-2">
         <div className="flex items-center gap-2">
           <img
-            src={logoFutbolinMap[liga.tipoFutbolin]}
+            src={
+              darkMode
+                ? logoFutbolinMap[liga.tipoFutbolin]
+                : logoFutbolinMapLight[liga.tipoFutbolin]
+            }
             alt={liga.nombre}
             className="size-10"
           />
@@ -41,9 +55,18 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
       </div>
 
       <img
-        src={fondoFutbolinMap[liga.tipoFutbolin]}
+        src={
+          darkMode
+            ? fondoFutbolinMap[liga.tipoFutbolin]
+            : fondoFutbolinMapLight[liga.tipoFutbolin]
+        }
         alt={liga.nombre}
-        className="h-full object-cover z-0 object-right absolute right-0 top-0"
+        className={`h-full object-cover z-0 object-right absolute right-0 top-0`}
+      />
+      <span
+        className="absolute inset-0 z-0
+               pointer-events-none
+               bg-gradient-to-r from-neutral-900 via-neutral-900/60 to-transparent"
       />
     </div>
   );

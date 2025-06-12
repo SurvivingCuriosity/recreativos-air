@@ -1,7 +1,9 @@
+import type { Equipo } from "./Equipo";
+
 export interface Partido {
     id: number
-    equipoA: string;
-    equipoB: string;
+    equipoA: Equipo;
+    equipoB: Equipo;
     golesA: string;
     golesB: string;
     terminado: boolean;

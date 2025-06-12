@@ -1,25 +1,30 @@
 import { Link } from "react-router";
 import fondo from "../../shared/assets/fondo-tsunami-full.jpg";
+import fondoLight from "../../shared/assets/fondo-tsunami-full-light.jpg";
 import fondo_text from "../../shared/assets/fondo-tsunami.jpg";
 import { TELEFONO_ALBERTO } from "../../shared/db/telefono";
 import { ButtonWhatsapp } from "./ButtonWhatsapp";
+import { use } from "react";
+import { ThemeContext } from "../../shared/context/ThemeContext";
 
 export const LandingPage = () => {
   // force push dev 2
+  const { darkMode } = use(ThemeContext);
   return (
     <div>
-      <main className="z-0 p-4 h-[calc(100dvh-4rem)] w-full relative bg-black flex flex-col items-center justify-start">
+      <main className="z-0 p-4 h-[calc(100svh-4rem)] w-full relative bg-neutral-950 flex flex-col items-center justify-start">
         <img
-          src={fondo}
+          src={darkMode ? fondo : fondoLight}
           alt="fondo"
-          className="h-[80dvh] w-full bottom-0 object-cover absolute pointer-events-none -z-1"
+          className="h-[80svh] w-full bottom-0 object-cover absolute pointer-events-none -z-1"
         />
 
         <h1
           className="
           mt-20
-          text-white/20
-          text-center text-5xl font-black
+          font-black
+          text-neutral-50/60
+          text-center text-5xl font-neutral-950
           bg-center bg-cover bg-no-repeat
           bg-clip-text
           leading-none
@@ -31,11 +36,11 @@ export const LandingPage = () => {
           style={{ backgroundImage: `url(${fondo_text})` }}
         >
           Recreativos{" "}
-          <span className="text-[40vw] md:text-[20vw] lg:text-[15vw] tracking-widest block text-white/20">
+          <span className="text-[40vw] md:text-[20vw] lg:text-[15vw] tracking-widest block text-neutral-50/60">
             AIR
           </span>
         </h1>
-        <p className="italic text-neutral-300 text-balance text-center animate-fade-in-top">
+        <p className="italic text-neutral-200 text-balance text-center animate-fade-in-top">
           Empresa especializada en futbolines Tsunami en la provincia de
           Salamanca.
         </p>
@@ -106,11 +111,11 @@ export const LandingPage = () => {
               className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
             >
               <img src="logo.png" className="h-8" alt="Recreativos AIR Logo" />
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+              <span className="self-center text-2xl font-semibold whitespace-nowrap text-neutral-50">
                 Recreativos AIR
               </span>
             </a>
-            <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+            <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-neutral-500 sm:mb-0 dark:text-neutral-400">
               <li>
                 <a href="#" className="hover:underline me-4 md:me-6">
                   Política de privacidad
@@ -123,8 +128,8 @@ export const LandingPage = () => {
               </li>
             </ul>
           </div>
-          <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-          <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
+          <hr className="my-6 border-neutral-200 sm:mx-auto dark:border-neutral-700 lg:my-8" />
+          <span className="block text-sm text-neutral-500 sm:text-center dark:text-neutral-400">
             © 2025{" "}
             <a href="https://recreativosair.com/" className="hover:underline">
               Recreativos AIR™
