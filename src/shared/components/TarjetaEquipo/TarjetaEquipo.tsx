@@ -15,7 +15,7 @@ export const TarjetaEquipo = ({
   );
 
   return (
-    <div className="flex gap-4 items-center bg-neutral-900 border border-neutral-700 rounded-lg">
+    <div onClick={onClick} className="flex gap-4 items-center bg-neutral-900 border border-neutral-700 rounded-lg">
       <p
         className={`font-black p-2 pr-1 w-30 truncate ${
           esEquipoDelUsuario ? "text-primary" : "text-neutral-200"
@@ -25,7 +25,7 @@ export const TarjetaEquipo = ({
       </p>
       <div
         className="border-l border-neutral-700 flex flex-col items-start justify-center pl-2 py-1"
-        onClick={onClick}
+        
       >
         {equipo.jugadores.map((jugador) => (
           <p key={jugador.nombre} className="text-neutral-400 text-sm py-0.5">

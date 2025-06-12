@@ -7,8 +7,11 @@ import { TarjetaEquipo } from "../../../shared/components/TarjetaEquipo/TarjetaE
 import { InscribirEquipoExistenteForm } from "../components/InscribirEquipoExistenteForm";
 import { DetalleLigaContext } from "../context/DetalleLigaContext";
 import { useAppSelector } from "../../../shared/store/hooks";
+import { useNavigate } from "react-router";
 
 export const EquiposLigaPage = () => {
+  const navigate = useNavigate()
+
   const { liga } = use(DetalleLigaContext);
 
   const { user } = useAppSelector((state) => state.auth);
@@ -43,7 +46,7 @@ export const EquiposLigaPage = () => {
           <TarjetaEquipo
             key={index}
             equipo={equipo}
-            onClick={() => console.log(equipo)}
+            onClick={() => navigate(`/equipos/${equipo.id}`)}
           />
         ))}
       </ul>

@@ -3,6 +3,8 @@ import { Titulo } from "../../packages/components/Titulo/Titulo";
 import { TarjetaEquipo } from "../../shared/components/TarjetaEquipo/TarjetaEquipo";
 import { useAppDispatch, useAppSelector } from "../../shared/store/hooks";
 import { logout } from "../../shared/store/slices/authSlice";
+import { use } from "react";
+import { ThemeContext } from "../../shared/context/ThemeContext";
 
 export const MiPerfilPage = () => {
   const dispatch = useAppDispatch();
@@ -10,14 +12,14 @@ export const MiPerfilPage = () => {
   const { equiposUsuario } = useAppSelector((state) => state.user);
   const { user } = useAppSelector((state) => state.auth);
   const { ligas } = useAppSelector((state) => state.ligas);
-
+  const {darkMode, setDarkMode} = use(ThemeContext);
   const ligasEnLasQueEstaInscrito = ligas.filter((liga) =>
     equiposUsuario.find((equipo) => equipo.id === liga.id)
   );
 
   return (
     <div className="p-4 flex flex-col gap-4 justify-between h-full">
-      <div className="bg-neutral-900 p-3 py-2 rounded-lg border border-neutral-800">
+      <div className="bg-neutral-800 p-3 py-2 rounded-lg border border-neutral-700">
         <Titulo variant="h4" className="font-cool">
           Mi perfil
         </Titulo>
@@ -25,7 +27,7 @@ export const MiPerfilPage = () => {
         <p>{user?.username}</p>
         {user?.admin ? <p className="text-green-300">admin</p> : <p className="text-red-300">no admin</p>}
       </div>
-      <div className="bg-neutral-900 p-3 py-2 rounded-lg border border-neutral-800">
+      <div className="bg-neutral-800 p-3 py-2 rounded-lg border border-neutral-700">
         <Titulo variant="h4" className="font-cool">
           Mis equipos
         </Titulo>
@@ -43,7 +45,7 @@ export const MiPerfilPage = () => {
         )}
       </div>
 
-      <div className="bg-neutral-900 p-3 py-2 rounded-lg border border-neutral-800">
+      <div className="bg-neutral-800 p-3 py-2 rounded-lg border border-neutral-700">
         <Titulo variant="h4" className="font-cool">
           Mis competiciones
         </Titulo>
@@ -59,6 +61,14 @@ export const MiPerfilPage = () => {
             </Link>
           </div>
         )}
+      </div>
+
+      <div className="bg-neutral-800 p-3 py-2 rounded-lg border border-neutral-700">
+        <Titulo variant="h4" className="font-cool">
+          Tema
+        </Titulo>
+        <input type="checkbox" className="mr-2" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
+        <p className="text-neutral-400">Oscuro</p>
       </div>
 
       <button
