@@ -1,4 +1,5 @@
 import type { Equipo } from "../../interfaces/Equipo";
+import { Users } from "./Users";
 
 export const Equipos:Equipo[] = [
     {
@@ -6,11 +7,11 @@ export const Equipos:Equipo[] = [
         nombre: "FullStack",
         jugadores: [
             {
-                nombre: "Ferchy",
+                nombre: Users.find((u) => u.id === "1")?.nombre || 'No encontrado',
                 idUsuario: "1",
             },
             {
-                nombre: "Velas",
+                nombre: Users.find((u) => u.id === "2")?.nombre || 'No encontrado',
                 idUsuario: "2",
             },
         ],
@@ -20,11 +21,11 @@ export const Equipos:Equipo[] = [
         nombre: "Makineros",
         jugadores: [
             {
-                nombre: "Ruper",
+                nombre: Users.find((u) => u.id === "3")?.nombre || 'No encontrado',
                 idUsuario: "3",
             },
             {
-                nombre: "Chechu",
+                nombre: Users.find((u) => u.id === "4")?.nombre || 'No encontrado',
                 idUsuario: "4",
             },
         ],
@@ -34,12 +35,54 @@ export const Equipos:Equipo[] = [
         nombre: "Kakatumba",
         jugadores: [
             {
-                nombre: "Aroa",
+                nombre: Users.find((u) => u.id === "5")?.nombre || 'No encontrado',
                 idUsuario: "5",
             },
             {
-                nombre: "Julián",
+                nombre: Users.find((u) => u.id === "6")?.nombre || 'No encontrado',
                 idUsuario: "6",
+            },
+        ],
+    },
+        {
+        id: "4",
+        nombre: "Cocoloco",
+        jugadores: [
+            {
+                nombre: Users.find((u) => u.id === "1")?.nombre || 'No encontrado',
+                idUsuario: "1",
+            },
+            {
+                nombre: Users.find((u) => u.id === "6")?.nombre || 'No encontrado',
+                idUsuario: "6",
+            },
+        ],
+    },
+        {
+        id: "5",
+        nombre: "Bests",
+        jugadores: [
+            {
+                nombre: Users.find((u) => u.id === "2")?.nombre || 'No encontrado',
+                idUsuario: "2",
+            },
+            {
+                nombre: Users.find((u) => u.id === "6")?.nombre || 'No encontrado',
+                idUsuario: "5",
+            },
+        ],
+    },
+        {
+        id: "6",
+        nombre: "Los mejores",
+        jugadores: [
+            {
+                nombre: Users.find((u) => u.id === "3")?.nombre || 'No encontrado',
+                idUsuario: "3",
+            },
+            {
+                nombre: Users.find((u) => u.id === "6")?.nombre || 'No encontrado',
+                idUsuario: "4",
             },
         ],
     }

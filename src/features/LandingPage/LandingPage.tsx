@@ -1,15 +1,28 @@
-import { Link } from "react-router";
-import fondo from "../../shared/assets/fondo-tsunami-full.jpg";
-import fondoLight from "../../shared/assets/fondo-tsunami-full-light.jpg";
-import fondo_text from "../../shared/assets/fondo-tsunami.jpg";
-import { TELEFONO_ALBERTO } from "../../shared/db/telefono";
-import { ButtonWhatsapp } from "./ButtonWhatsapp";
+import { faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { use } from "react";
+import { Link, useNavigate } from "react-router";
+import fondoLight from "../../shared/assets/fondo-tsunami-full-light.jpg";
+import fondo from "../../shared/assets/fondo-tsunami-full.jpg";
+import fondo_text from "../../shared/assets/fondo-tsunami.jpg";
+import { TarjetaLiga } from "../../shared/components/TarjetaLiga/TarjetaLiga";
 import { ThemeContext } from "../../shared/context/ThemeContext";
+import { TELEFONO_ALBERTO } from "../../shared/db/telefono";
+import { useAppSelector } from "../../shared/store/hooks";
+import { selectIsAuthenticated } from "../../shared/store/slices/authSlice";
+import { ButtonWhatsapp } from "./ButtonWhatsapp";
 
 export const LandingPage = () => {
   // force push dev 2
+  const navigate = useNavigate()
   const { darkMode } = use(ThemeContext);
+  const isLoggedIn = useAppSelector(selectIsAuthenticated);
+  const { ligas } = useAppSelector((state) => state.ligas);
+
+  const handleNavigateLiga = (idLiga: string) => {
+    navigate(`/competiciones/${idLiga}/clasificacion`);
+  };
+
   return (
     <div>
       <main className="z-0 p-4 h-[calc(100svh-4rem)] w-full relative bg-neutral-950 flex flex-col items-center justify-start">
@@ -21,7 +34,7 @@ export const LandingPage = () => {
 
         <h1
           className="
-          mt-20
+          sm:mt-20
           font-black
           text-neutral-50/60
           text-center text-5xl font-neutral-950
@@ -44,37 +57,32 @@ export const LandingPage = () => {
           Empresa especializada en futbolines Tsunami en la provincia de
           Salamanca.
         </p>
-
-        <Link
-          to="/competiciones"
-          style={{ boxShadow: "-1px 1px 15px -5px rgba(255,255,255,1)" }}
-          className="text-primary animate-fade-in-top flex items-center gap-2 bg-neutral-950/80 text-xl mt-10 p-2 px-4 rounded-lg border border-primary"
-        >
-          <svg
-            version="1.0"
-            id="Layer_1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 64 64"
-            enableBackground="new 0 0 64 64"
-            fill="#000000"
-            className="size-6"
+        {isLoggedIn ? (
+          <div className="max-xl mx-auto">
+            <ul className="pb-3 flex overflow-x-auto gap-4 mt-8 snap-x rounded-lg">
+              {ligas.map((l) => (
+                <div key={l.id} className="w-[87%] max-w-96 shrink-0 snap-center rounded-xl">
+                  <TarjetaLiga key={l.id} liga={l} onClick={()=>handleNavigateLiga(l.id)}/>
+                </div>
+              ))}
+            </ul>
+            <Link
+              to="/competiciones"
+              className="text-sm underline text-primary ml-auto mt-2 w-fit block"
+            >
+              Todas las ligas
+            </Link>
+          </div>
+        ) : (
+          <Link
+            to="/competiciones"
+            style={{ boxShadow: "-1px 1px 15px -5px rgba(255,255,255,1)" }}
+            className="text-primary animate-fade-in-top flex items-center gap-2 bg-neutral-950/80 text-xl mt-10 p-2 px-4 rounded-lg border border-primary"
           >
-            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-            <g
-              id="SVGRepo_tracerCarrier"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            ></g>
-            <g id="SVGRepo_iconCarrier">
-              {" "}
-              <path
-                fill="var(--color-primary)"
-                d="M60,4H48c0-2.215-1.789-4-4-4H20c-2.211,0-4,1.785-4,4H4C1.789,4,0,5.785,0,8v8c0,8.836,7.164,16,16,16 c0.188,0,0.363-0.051,0.547-0.059C17.984,37.57,22.379,41.973,28,43.43V56h-8c-2.211,0-4,1.785-4,4v4h32v-4c0-2.215-1.789-4-4-4h-8 V43.43c5.621-1.457,10.016-5.859,11.453-11.488C47.637,31.949,47.812,32,48,32c8.836,0,16-7.164,16-16V8C64,5.785,62.211,4,60,4z M8,16v-4h8v12C11.582,24,8,20.414,8,16z M56,16c0,4.414-3.582,8-8,8V12h8V16z"
-              ></path>{" "}
-            </g>
-          </svg>
-          Competiciones
-        </Link>
+            <FontAwesomeIcon icon={faTrophy} />
+            Competiciones
+          </Link>
+        )}
 
         <ButtonWhatsapp numero={TELEFONO_ALBERTO} />
       </main>

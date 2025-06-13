@@ -22,7 +22,7 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
   return (
     <div
       onClick={onClick}
-      className="hover:border-primary shrink-0 min-h-32 md:h-42 border overflow-hidden md:p-4 p-2 relative bg-neutral-900 rounded-lg border-neutral-800 z-0"
+      className="hover:border-primary shrink-0 min-h-32 md:h-42 border overflow-hidden md:p-4 p-1.5 relative bg-neutral-900 rounded-lg border-neutral-800 z-0"
     >
       <div className="relative z-2">
         <div className="flex items-center gap-2">
@@ -33,9 +33,9 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
                 : logoFutbolinMapLight[liga.tipoFutbolin]
             }
             alt={liga.nombre}
-            className="size-10"
+            className="size-9"
           />
-          <p className="text-xl md:text-3xl font-bold text-primary font-cool">
+          <p className="text-lg lg:text-2xl font-bold text-primary font-cool">
             {liga.nombre}
           </p>
         </div>
@@ -49,7 +49,7 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
             Sin empezar
           </div>
         )}
-        <p className="text-neutral-400 bg-neutral-950/50 rounded-lg p-1 text-sm md:text-base max-w-10/12">
+        <p className="text-neutral-400 bg-neutral-950/50 rounded-lg p-1 text-xs md:text-base max-w-10/12">
           {liga.descripcion}
         </p>
       </div>

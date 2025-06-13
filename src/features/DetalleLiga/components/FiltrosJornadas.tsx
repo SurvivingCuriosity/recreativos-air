@@ -28,9 +28,9 @@ export const FiltrosJornadas = ({
   }, [estadoEnfrentamiento]);
 
   return (
-    <div className="flex gap-2 items-center justify-between border-b pb-2">
+    <div className="flex gap-2 items-center justify-between">
       <div className="w-full flex flex-col gap-0.5">
-        <p className="text-xs">Equipo</p>
+        <p className="text-xs text-neutral-500">Equipo:</p>
         <SelectorEquipo
           equipos={Equipos}
           idEquipoSelected={idEquipo || "-1"}
@@ -38,7 +38,7 @@ export const FiltrosJornadas = ({
         />
       </div>
       <div className="w-full flex flex-col gap-0.5">
-        <p className="text-xs">Estado</p>
+        <p className="text-xs text-neutral-500">Estado:</p>
         <SelectorEstadoEnfrentamiento
           value={estadoEnfrentamiento}
           onSelect={setEstadoEnfrentamiento}

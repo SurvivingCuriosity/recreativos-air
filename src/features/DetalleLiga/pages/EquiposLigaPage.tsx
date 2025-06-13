@@ -28,16 +28,16 @@ export const EquiposLigaPage = () => {
           onClose={() => setInscribiendoEquipoExistente(false)}
           titulo="Buscar equipo"
         >
-          <InscribirEquipoExistenteForm />
+          <InscribirEquipoExistenteForm onCloseWindow={()=>setInscribiendoEquipoExistente(false)} />
         </Window>
       )}
 
       {creandoNuevoEquipo && (
         <Window
-          onClose={() => setInscribiendoEquipoExistente(false)}
+          onClose={() => setCreandoNuevoEquipo(false)}
           titulo="Buscar equipo"
         >
-          <InscribirEquipoExistenteForm />
+          <InscribirEquipoExistenteForm onCloseWindow={()=>setCreandoNuevoEquipo(false)} />
         </Window>
       )}
 

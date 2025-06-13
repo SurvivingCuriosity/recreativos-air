@@ -1,20 +1,22 @@
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { Titulo } from "../../packages/components/Titulo/Titulo";
 import { TarjetaEquipo } from "../../shared/components/TarjetaEquipo/TarjetaEquipo";
-import { useAppDispatch, useAppSelector } from "../../shared/store/hooks";
-import { logout } from "../../shared/store/slices/authSlice";
 import { TarjetaLiga } from "../../shared/components/TarjetaLiga/TarjetaLiga";
+import { Equipos } from "../../shared/store/tmp/Equipos";
+import { ligas } from "../../shared/store/tmp/Ligas";
+import { Users } from "../../shared/store/tmp/Users";
 
-export const MiPerfilPage = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+export const PerfilPublicoPage = () => {
+  const { id } = useParams();
+  const user = Users.find((u) => u.id === id);
 
-  const { equiposUsuario } = useAppSelector((state) => state.user);
-  const { user } = useAppSelector((state) => state.auth);
-  const { ligas } = useAppSelector((state) => state.ligas);
+  const equiposUsuario = Equipos.filter(e => e.jugadores.some(j => j.idUsuario === user?.id));
+
   const ligasEnLasQueEstaInscrito = ligas.filter((liga) =>
-    equiposUsuario.find((equipo) => equipo.id === liga.id)
+    equiposUsuario?.find((equipo) => equipo.id === liga.id)
   );
+
+  const navigate = useNavigate();
 
   const handleNavigateLiga = (idLiga: string) => {
     navigate(`/competiciones/${idLiga}/clasificacion`);
@@ -22,12 +24,6 @@ export const MiPerfilPage = () => {
 
   return (
     <div className="p-4 flex flex-col gap-4 justify-start h-full">
-      <button
-        onClick={() => dispatch(logout())}
-        className="rounded text-red-600 bg-neutral-950 border border-red-600  px-3 py-1 mt-auto z-1"
-      >
-        Cerrar sesión
-      </button>
       <div className="flex justify-between border-neutral-700 relative border p-3">
         <span>
           <Titulo variant="h2" className="font-cool">

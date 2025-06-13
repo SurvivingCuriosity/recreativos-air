@@ -7,7 +7,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  equiposUsuario: [Equipos[0]],
+  equiposUsuario: Equipos.filter((e) => e.jugadores.some((j) => j.idUsuario === "1")),
 };
 
 const userSlice = createSlice({

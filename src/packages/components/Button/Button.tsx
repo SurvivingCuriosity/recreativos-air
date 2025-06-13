@@ -11,10 +11,11 @@ export interface ButtonProps {
   href?: string;
   icon?: IconDefinition;
   variant?: ButtonVariant
+  disabled?: boolean
 }
 
 export const Button = (props: ButtonProps) => {
-  const { as = "button", onClick, children, href, icon, variant = "primary" } = props;
+  const { as = "button", onClick, children, href, icon, variant = "primary", disabled = false } = props;
 
   const Component = href ? (as === "a" ? "a" : "button") : as;
 
@@ -24,7 +25,7 @@ export const Button = (props: ButtonProps) => {
   };
 
   const variantStyles: Record<ButtonVariant, string> = {
-    primary: "bg-primary text-neutral-700",
+    primary: "bg-primary text-neutral-900",
     outline: "bg-transparent text-primary border border-primary",
     neutral: "bg-neutral-700 text-neutral-100",
     "outline-neutral": "bg-transparent text-neutral-700 border border-neutral-700",
@@ -34,7 +35,8 @@ export const Button = (props: ButtonProps) => {
     <Component
       onClick={handleClick}
       href={href}
-      className={`w-full h-9 flex items-center justify-center font-bold px-3 py-1 rounded-lg gap-2 ${variantStyles[variant]}`}
+      disabled={disabled}
+      className={`w-full h-9 flex items-center justify-center font-bold px-3 py-1 rounded-lg gap-2 ${variantStyles[variant]} disabled:bg-neutral-700! disabled:text-neutral-600!`}
     >
       {icon && <FontAwesomeIcon icon={icon} className="w-5 h-5" />}
       {children}

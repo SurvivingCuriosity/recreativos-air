@@ -1,8 +1,7 @@
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { useAppSelector } from "../../../shared/store/hooks";
 
 export const DetalleEquipoPage = () => {
-
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -17,13 +16,17 @@ export const DetalleEquipoPage = () => {
     <div className="max-w-screen-sm mx-auto p-4 h-full z-4">
       <button onClick={() => navigate(-1)}>Volver</button>
       <h1 className="text-2xl font-bold text-primary mb-4">{equipo.nombre}</h1>
-      <div className="border-l border-neutral-700 flex flex-col items-start justify-center pl-2 py-1">
+      <ul className="border-neutral-700 flex flex-col items-start justify-center gap-3">
         {equipo.jugadores.map((jugador) => (
-          <p key={jugador.nombre} className="text-neutral-400 text-sm py-0.5">
+          <Link
+            to={"/user/" + jugador.idUsuario}
+            key={jugador.nombre}
+            className="h-auto bg-neutral-800 min-w-40 p-2 px-4 rounded-md text-neutral-400"
+          >
             {jugador.nombre}
-          </p>
+          </Link>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

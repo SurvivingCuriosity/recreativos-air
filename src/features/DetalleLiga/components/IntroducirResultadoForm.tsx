@@ -42,7 +42,7 @@ export const IntroducirResultadoForm = ({
             {enfrentamiento.equipoB.nombre}
           </p>
         </div>
-        <div className="flex flex-row gap-1 ">
+        <div className="flex flex-row gap-1 overflow-x-auto p-0.5">
           {updatedEnfrentamiento.partidos.map((p, index) => (
             <div
               key={index + p.equipoA.nombre + p.equipoB.nombre}

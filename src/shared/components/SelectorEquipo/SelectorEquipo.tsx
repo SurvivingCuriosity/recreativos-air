@@ -4,7 +4,7 @@ import type { Equipo } from "../../interfaces/Equipo";
 
 export interface SelectorEquipo {
   equipos: Equipo[];
-  idEquipoSelected: string;
+  idEquipoSelected?: string;
   onSelect: (idEquipoSelected: string) => void;
   disabled?: boolean;
   incluirOpcionTodos?: boolean;
@@ -16,6 +16,7 @@ export const SelectorEquipo = memo((props: SelectorEquipo) => {
     idEquipoSelected,
     onSelect,
     disabled = false,
+    incluirOpcionTodos = true
   } = props;
 
 
@@ -36,9 +37,9 @@ export const SelectorEquipo = memo((props: SelectorEquipo) => {
       onSelect={(selectedOption) => {
         onSelect(selectedOption.value);
       }}
-      options={equiposValuesConCualquiera}
+      options={incluirOpcionTodos ? equiposValuesConCualquiera : equiposValues}
       disabled={disabled}
-      placeholder="Cualquiera"
+      placeholder="Buscar equipo"
     />
   );
 });
