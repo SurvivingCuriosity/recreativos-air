@@ -13,7 +13,7 @@ export const TopNav = ({content}:{content:TopNavItem[]}) => {
     <header className="h-14 p-2 absolute border-b border-neutral-700 w-full block">
       <nav className="max-w-screen-lg mx-auto flex items-center justify-between z-6">
         <Link to="/" className="z-6">
-          <img src={"logo.png"} alt="logo" className="size-10" />
+          <img src={"/logo.png"} alt="logo" className="size-10" />
         </Link>
         <HamburgerMenu content={content}/>
       </nav>
