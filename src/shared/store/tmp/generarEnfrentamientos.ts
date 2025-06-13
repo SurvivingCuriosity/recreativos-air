@@ -26,12 +26,17 @@ export function generarEnfrentamientos(
    * Crea un enfrentamiento entre dos equipos, generando los partidos y
    * asignando un estado aleatorio (igual que en la versión de datos de prueba).
    */
-  function crearEnfrentamiento(equipoA: Equipo, equipoB: Equipo): Enfrentamiento {
+  function crearEnfrentamiento(
+    equipoA: Equipo,
+    equipoB: Equipo
+  ): Enfrentamiento {
     // Aleatoriedad de estado exactamente igual que antes
+    const rand = Math.random();
+    console.log(rand)
     const estado =
-      Math.random() > 0.3
+      rand >= 0.0 && rand <= 0.3
         ? EstadoEnfrentamiento.Jugado
-        : Math.random() > 0.3
+        : rand > 0.3 && rand <= 0.6
         ? EstadoEnfrentamiento.SinJugar
         : EstadoEnfrentamiento.ConfirmarResultado;
 

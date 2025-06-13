@@ -118,7 +118,7 @@ export const LandingPage = () => {
               href="https://recreativosair.com/"
               className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
             >
-              <img src="logo.png" className="h-8" alt="Recreativos AIR Logo" />
+              <img src="/logo.png" className="h-8" alt="Recreativos AIR Logo" />
               <span className="self-center text-2xl font-semibold whitespace-nowrap text-neutral-50">
                 Recreativos AIR
               </span>

@@ -14,7 +14,7 @@ export const MainLayout = () => {
       <TopNav content={TopNavContent} />
       <div className="pt-14 h-full relative mx-auto">
         <img
-          src="logo.png"
+          src="/logo.png"
           alt="logo"
           className="w-full opacity-[4%] pointer-events-none fixed z-0 -bottom-1/12 left-1/3"
         />
