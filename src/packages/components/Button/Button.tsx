@@ -21,14 +21,15 @@ export const Button = (props: ButtonProps) => {
 
   const handleClick = (e: MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation()
     onClick();
   };
 
   const variantStyles: Record<ButtonVariant, string> = {
     primary: "bg-primary text-neutral-900",
-    outline: "bg-transparent text-primary border border-primary",
-    neutral: "bg-neutral-700 text-neutral-100",
-    "outline-neutral": "bg-transparent text-neutral-700 border border-neutral-700",
+    outline: "bg-neutral-900/80 text-primary border border-primary",
+    neutral: "text-neutral-900/80 bg-neutral-50 border border-neutral-50",
+    "outline-neutral": "bg-neutral-900/80 text-neutral-50 border border-neutral-50",
   };
 
   return (

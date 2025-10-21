@@ -1,16 +1,28 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { Button } from "../../../packages/components/Button/Button";
+import { useAuth } from "../../../shared/api/auth/useAuth";
+import { useGetEquiposUsuario } from "../../../shared/api/equipos/hooks/useGetEquipos";
+import {
+  useInscribirEquipo,
+  useLigaById,
+} from "../../../shared/api/ligas/useLigas";
 import { SelectorEquipo } from "../../../shared/components/SelectorEquipo/SelectorEquipo";
-import { useAppDispatch } from "../../../shared/store/hooks";
-import { agregarEquipoALiga } from "../../../shared/store/slices/ligasSlice";
-import { Equipos } from "../../../shared/store/tmp/Equipos";
-import { DetalleLigaContext } from "../context/DetalleLigaContext";
 
-export const InscribirEquipoExistenteForm = ({onCloseWindow}: {onCloseWindow: () => void}) => {
-  const dispatch = useAppDispatch();
+export const InscribirEquipoExistenteForm = ({
+  idLiga,
+  onCloseWindow,
+}: {
+  idLiga: string;
+  onCloseWindow: () => void;
+}) => {
+  const { mutate: inscribirEquipo } = useInscribirEquipo();
 
-  const { liga } = use(DetalleLigaContext);
+  const { data: liga } = useLigaById(idLiga);
+
+  const { user } = useAuth();
+
+  const { data: equipos } = useGetEquiposUsuario(user?.id || "");
 
   const [idEquipoSelected, setIdEquipoSelected] = useState<string | undefined>(
     undefined
@@ -21,32 +33,30 @@ export const InscribirEquipoExistenteForm = ({onCloseWindow}: {onCloseWindow: ()
       toast.error("No se encontró la liga");
       return;
     }
-    const equipo = Equipos.find((e) => e.id === idEquipoSelected);
+    const equipo = equipos?.find((e) => e.id === idEquipoSelected);
 
     if (!equipo) {
       toast.error("No se encontró el equipo");
       return;
     }
 
-    if(liga.equipos.find((e) => e.id === equipo.id)) {
+    if (liga.equipos.find((e) => e.equipo.id === equipo.id)) {
       toast.error("El equipo ya está en la liga");
       return;
     }
+    inscribirEquipo({
+      equipoId: equipo.id,
+      ligaId: liga.id,
+    });
 
-    dispatch(
-      agregarEquipoALiga({
-        idLiga: liga.id,
-        equipo,
-      })
-    );
-    onCloseWindow()
+    onCloseWindow();
   };
 
   return (
     <div className="h-40 flex flex-col justify-between">
       <div>
         <SelectorEquipo
-          equipos={Equipos}
+          equipos={equipos || []}
           idEquipoSelected={idEquipoSelected}
           onSelect={(id) => {
             setIdEquipoSelected(id === "-1" ? undefined : id);

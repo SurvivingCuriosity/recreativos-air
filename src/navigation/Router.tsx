@@ -12,12 +12,12 @@ import { DetalleJornadaPage } from "../features/Jornadas/DetalleJornada/DetalleJ
 import { LandingPage } from "../features/LandingPage/LandingPage";
 import { LoginPage } from "../features/Login/LoginPage";
 import { MiPerfilPage } from "../features/MiPerfil/MiPerfilPage";
-import { RegisterPage } from "../features/Register/RegisterPage";
-import { CompeticionesLayout } from "../shared/layouts/CompeticionesLayout";
-import { MainLayout } from "../shared/layouts/MainLayout";
-import AdminRoute from "./components/AdminRoute";
-import ProtectedRoute from "./components/ProtectedRoute";
 import { PerfilPublicoPage } from "../features/PerfilPublico/PerfilPublicoPage";
+import { RegisterPage } from "../features/Register/RegisterPage";
+import { VerifyEmailPage } from "../features/VerifyEmail/VerifyEmailPage";
+import { MainLayout } from "../shared/layouts/MainLayout";
+import RequireAdmin from "./components/RequireAdmin";
+import RequireAuth from "./components/RequireAuth";
 
 export const Router = () => {
   return (
@@ -27,11 +27,12 @@ export const Router = () => {
         <Route index element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
       </Route>
 
       {/* PROTEGIDAS */}
-      <Route element={<ProtectedRoute />}>
-        <Route element={<CompeticionesLayout />}>
+      <Route element={<MainLayout />}>
+        <Route element={<RequireAuth />}>
           <Route path="competiciones" element={<CompeticionesPage />} />
           <Route path="user/:id" element={<PerfilPublicoPage />} />
           <Route path="mi-perfil" element={<MiPerfilPage />} />
@@ -47,9 +48,9 @@ export const Router = () => {
         </Route>
       </Route>
 
-      {/* ADMIN */}
-      <Route element={<AdminRoute />}>
-        <Route element={<CompeticionesLayout />}>
+      <Route element={<MainLayout />}>
+        {/* ADMIN */}
+        <Route element={<RequireAdmin />}>
           <Route path="crear-liga" element={<CrearLigaPage />} />
         </Route>
       </Route>

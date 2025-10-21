@@ -1,22 +1,47 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Provider } from "react-redux";
+import { Toaster } from "react-hot-toast";
 import { BrowserRouter } from "react-router";
 import { Router } from "./navigation/Router";
-import "./shared/globals.css";
-import { store } from "./shared/store/store";
-import { Toaster } from "react-hot-toast";
+import api from "./shared/api/http";
 import { ThemeContextProvider } from "./shared/context/ThemeProvider";
+import { WindowProvider } from "./shared/context/WindowProvider";
+import "./shared/globals.css";
+
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 3 * 60_000, // 3 min
+      retry: 2, // idempotentes
+      queryFn: ({ queryKey }) => createReactQueryAdapter(queryKey),
+    },
+  },
+});
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
       <ThemeContextProvider>
         <BrowserRouter>
-          <Router />
-          <Toaster />
+          <WindowProvider>
+            <Router />
+            <Toaster
+              toastOptions={{
+                duration: 2000,
+              }}
+            />
+          </WindowProvider>
         </BrowserRouter>
       </ThemeContextProvider>
-    </Provider>
+      {import.meta.env.DEV && (
+        <ReactQueryDevtools buttonPosition={"bottom-left"} />
+      )}
+    </QueryClientProvider>
   </StrictMode>
 );
+
+export const createReactQueryAdapter = async ([
+  { method = "get", url, data },
+]: readonly any[]) => (await api.request({ method, url, data })).data;

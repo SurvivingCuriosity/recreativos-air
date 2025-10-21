@@ -41,6 +41,30 @@
         --color-primary: #ff6f00;
     }
 
+    .animate {
+        animation: tri-right linear forwards;
+        animation-timeline: view();
+    }
+
+
+    @keyframes tri-right {
+        0% {
+            opacity: 0;
+            transform: translateX(-200px)translateY(-400px)scale(100%);
+        }
+
+        70% {
+            opacity: 1;
+            transform: translateX(200px)translateY(0px)scale(110%);
+        }
+
+
+        100% {
+            opacity: 0;
+            transform: translateX(-200px)translateY(200px)scale(100%);
+        }
+    }
+
 }
 
 @theme {

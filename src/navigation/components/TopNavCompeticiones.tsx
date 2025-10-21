@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { useAppSelector } from "../../shared/store/hooks";
-import { selectIsAuthenticated } from "../../shared/store/slices/authSlice";
+import { useAuth } from "../../shared/api/auth/useAuth";
 
 export const TopNavCompeticiones = () => {
   return (
@@ -17,7 +16,7 @@ export const TopNavCompeticiones = () => {
 };
 
 export const HamburgerMenu = () => {
-  const isLoggedIn = useAppSelector(selectIsAuthenticated);
+  const { isLoggedIn } = useAuth();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 

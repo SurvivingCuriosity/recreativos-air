@@ -1,16 +1,20 @@
 export const EstadoEnfrentamiento = {
-  SinJugar: 'Sin jugar',
-  Jugado: 'Jugado',
-  ConfirmarResultado: 'Confirmar resultado',
+  SinJugar: "SIN_JUGAR",
+  CorroborarResultado: "CORROBORAR_RESULTADO",
+  ConfirmarResultado: "CONFIRMAR_RESULTADO",
+  Jugado: "JUGADO",
 } as const;
 
-export type EstadoEnfrentamiento = typeof EstadoEnfrentamiento[keyof typeof EstadoEnfrentamiento];
+export type EstadoEnfrentamiento =
+  (typeof EstadoEnfrentamiento)[keyof typeof EstadoEnfrentamiento];
 
 export const EstadoEnfrentamientoOpcionCualquiera = {
-  SinJugar: 'Sin jugar',
-  Jugado: 'Jugado',
-  ConfirmarResultado: 'Confirmar resultado',
-  Cualquiera: 'Cualquiera',
+  SinJugar: "SIN_JUGAR",
+  Jugado: "JUGADO",
+  ConfirmarResultado: "CONFIRMAR_RESULTADO",
+  Cualquiera: "CUALQUIERA",
 } as const;
 
-export type EstadoEnfrentamientoOpcionCualquiera = typeof EstadoEnfrentamientoOpcionCualquiera[keyof typeof EstadoEnfrentamientoOpcionCualquiera];
+export type EstadoEnfrentamientoOpcionCualquiera =
+  (typeof EstadoEnfrentamientoOpcionCualquiera)[keyof typeof EstadoEnfrentamientoOpcionCualquiera];
+

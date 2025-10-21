@@ -40,7 +40,6 @@ export const NavDetalleLiga = () => {
     if (urlSegments.includes("info")) {
       value = 4;
     }
-    console.log('Sales', value);
     return value;
   }
 

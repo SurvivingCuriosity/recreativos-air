@@ -1,15 +1,19 @@
-import { use } from "react";
+import { useParams } from "react-router";
+import { useClasificacionLiga } from "../../../shared/api/ligas/useLigas";
 import { TablaClasificacionLiga } from "../components/ClasificacionLiga";
-import { DetalleLigaContext } from "../context/DetalleLigaContext";
 
 export const ClasificacionLigaPage = () => {
-  const { liga } = use(DetalleLigaContext);
+  const { id } = useParams<{ id: string }>();
+  const { data: clasificacion, isLoading } = useClasificacionLiga(id!);
 
-  if (!liga) return <p>No hay liga seleccionada</p>;
+  if (isLoading) return <p className="text-neutral-500 p-10 text-center">Cargando clasificación...</p>
+
+  if (!clasificacion?.length)
+    return <p className="text-center p-10">Sin datos de clasificación</p>;
 
   return (
     <div className="animate-fade-in-top">
-      <TablaClasificacionLiga equipos={liga?.equipos} enfrentamientos={[""]} />
+      <TablaClasificacionLiga data={clasificacion} />
     </div>
   );
 };

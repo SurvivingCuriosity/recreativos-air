@@ -1,72 +1,75 @@
-import { faPeopleGroup, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { use, useState } from "react";
-import Fab from "../../../packages/components/FAB/FAB";
-import { Window } from "../../../packages/components/Window/Window";
-import { TarjetaEquipo } from "../../../shared/components/TarjetaEquipo/TarjetaEquipo";
+import { useMemo } from "react";
+import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router";
+import { Button } from "../../../packages/components/Button/Button";
+import { useAuth } from "../../../shared/api/auth/useAuth";
+import { useLigaById } from "../../../shared/api/ligas/useLigas";
+import { useWindow } from "../../../shared/context/WindowProvider";
+import { EstadoEquipoEnLiga } from "../../../shared/enum/EstadoEquipoEnLiga";
 import { InscribirEquipoExistenteForm } from "../components/InscribirEquipoExistenteForm";
-import { DetalleLigaContext } from "../context/DetalleLigaContext";
-import { useAppSelector } from "../../../shared/store/hooks";
-import { useNavigate } from "react-router";
+import { TarjetaEquipoLiga } from "../components/TarjetaEquipoLiga";
 
 export const EquiposLigaPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const { liga } = use(DetalleLigaContext);
+  const { id: idLiga } = useParams();
+  const { data: liga } = useLigaById(idLiga || "");
 
-  const { user } = useAppSelector((state) => state.auth);
+  const { user } = useAuth();
+  const { show, close } = useWindow();
 
-  const [inscribiendoEquipoExistente, setInscribiendoEquipoExistente] =
-    useState(false);
+  const handleInscribirEquipoExistente = () => {
+    if (!liga) {
+      toast.error("Error al cargar liga");
+      return;
+    }
 
-  const [creandoNuevoEquipo, setCreandoNuevoEquipo] = useState(false);
+    show(
+      <InscribirEquipoExistenteForm onCloseWindow={close} idLiga={liga.id} />,
+      "Elige un equipo"
+    );
+  };
+
+  const equiposShow = useMemo(
+    () =>
+      user?.admin
+        ? liga?.equipos || []
+        : liga?.equipos.filter(
+            (e) => e.estado === EstadoEquipoEnLiga.Aprobado
+          ) || [],
+    [liga, user]
+  );
+
+  if (!liga) return <p>Ups algo pasó</p>;
 
   return (
     <>
-      {inscribiendoEquipoExistente && (
-        <Window
-          onClose={() => setInscribiendoEquipoExistente(false)}
-          titulo="Buscar equipo"
-        >
-          <InscribirEquipoExistenteForm onCloseWindow={()=>setInscribiendoEquipoExistente(false)} />
-        </Window>
-      )}
-
-      {creandoNuevoEquipo && (
-        <Window
-          onClose={() => setCreandoNuevoEquipo(false)}
-          titulo="Buscar equipo"
-        >
-          <InscribirEquipoExistenteForm onCloseWindow={()=>setCreandoNuevoEquipo(false)} />
-        </Window>
-      )}
-
-      <ul className="flex flex-col gap-2">
-        {liga?.equipos.map((equipo, index) => (
-          <TarjetaEquipo
-            key={index}
-            equipo={equipo}
-            onClick={() => navigate(`/equipos/${equipo.id}`)}
-          />
-        ))}
-      </ul>
       {user?.admin && (
-        <Fab
-          items={[
-            {
-              label: "Crear nuevo equipo",
-              icon: <FontAwesomeIcon icon={faPlus} />,
-              onClick: () => setCreandoNuevoEquipo(true),
-            },
-            {
-              label: "Inscribir equipo existente",
-              icon: <FontAwesomeIcon icon={faPeopleGroup} />,
-              onClick: () => setInscribiendoEquipoExistente(true),
-            },
-          ]}
-          showLabels={true}
-        />
+        <div className="mb-3">
+          <Button
+            onClick={handleInscribirEquipoExistente}
+            variant="outline-neutral"
+          >
+            Inscribir equipo exitente
+          </Button>
+        </div>
       )}
+      <ul className="flex flex-col gap-2">
+        {equiposShow.length > 0 ? (
+          equiposShow.map((equipo, index) => (
+            <TarjetaEquipoLiga
+              key={index}
+              idLiga={liga.id}
+              equipoLiga={equipo}
+              onClick={() => navigate(`/equipos/${equipo.equipo.id}`)}
+            />
+          ))
+        ) : (
+          <p className="text-neutral-400 p-4 text-center">
+            Ups... no hay equipos aún
+          </p>
+        )}
+      </ul>
     </>
   );
 };

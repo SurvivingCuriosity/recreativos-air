@@ -1,9 +1,9 @@
 import { memo } from "react";
 import { CustomSelect } from "../../../packages/components/Select/Select";
-import type { Equipo } from "../../interfaces/Equipo";
+import type { EquipoDTO } from "recreativos-air-core/equipos";
 
 export interface SelectorEquipo {
-  equipos: Equipo[];
+  equipos: EquipoDTO[];
   idEquipoSelected?: string;
   onSelect: (idEquipoSelected: string) => void;
   disabled?: boolean;

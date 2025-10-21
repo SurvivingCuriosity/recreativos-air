@@ -1,26 +1,24 @@
-import {
-  faFutbol,
-  faPeopleGroup,
-  faTrophy,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router";
-import Fab from "../../../packages/components/FAB/FAB";
+import { Button } from "../../../packages/components/Button/Button";
 import { Message } from "../../../packages/components/Message/Message";
+import { useAuth } from "../../../shared/api/auth/useAuth";
+import { useGetEquiposUsuario } from "../../../shared/api/equipos/hooks/useGetEquipos";
+import { useLigas } from "../../../shared/api/ligas/useLigas";
 import { TarjetaLiga } from "../../../shared/components/TarjetaLiga/TarjetaLiga";
-import { useAppSelector } from "../../../shared/store/hooks";
 
 export const CompeticionesPage = () => {
-  const { ligas } = useAppSelector((state) => state.ligas);
   const navigate = useNavigate();
 
-  const { equiposUsuario } = useAppSelector((state) => state.user);
-  const { user } = useAppSelector((state) => state.auth);
+  const { data: ligas, isLoading, error } = useLigas();
+
+  const { user } = useAuth();
+  const { data: equiposUsuario } = useGetEquiposUsuario(user?.id || "");
 
   return (
-    <div className="flex flex-col items-center justify-start p-4 h-full">
-      <h1 className="text-3xl font-bold font-cool mb-3">Competiciones</h1>
-      {equiposUsuario.length === 0 && (
+    <div className="flex flex-col items-center justify-start p-4 h-full gap-3">
+      <h1 className="text-3xl font-bold font-cool">Competiciones</h1>
+      {equiposUsuario?.length === 0 && (
         <Message variant="info" className="w-full mb-2">
           <>
             <p>
@@ -33,12 +31,19 @@ export const CompeticionesPage = () => {
           </>
         </Message>
       )}
+      {user?.admin && (
+        <Button onClick={() => navigate("/crear-liga")} icon={faTrophy}>
+          Nueva liga
+        </Button>
+      )}
+      {isLoading && <p>Cargando...</p>}
+      {error && <p>Error al cargar {String(error)}</p>}
 
-      {ligas.length === 0 ? (
-        <p>No hay ligas</p>
+      {ligas?.length === 0 ? (
+        <p className="text-center p-10 text-neutral-400">No hay ligas</p>
       ) : (
         <ul className="flex flex-col gap-4 w-full h-11/12 overflow-y-auto pt-2">
-          {ligas.map((liga, index) => (
+          {ligas?.map((liga, index) => (
             <span
               style={{ animationDelay: `${index * 0.1}s` }}
               key={liga.id}
@@ -53,26 +58,6 @@ export const CompeticionesPage = () => {
             </span>
           ))}
         </ul>
-      )}
-      {user?.admin && (
-        <Fab
-          items={[
-            {
-              label: "Nueva liga",
-              icon: <FontAwesomeIcon icon={faTrophy} />,
-              onClick: () => navigate("/crear-liga"),
-            },
-            {
-              label: "Nuevo resultado",
-              icon: <FontAwesomeIcon icon={faFutbol} />,
-            },
-            {
-              label: "Nuevo equipo",
-              icon: <FontAwesomeIcon icon={faPeopleGroup} />,
-            },
-          ]}
-          showLabels={true}
-        />
       )}
     </div>
   );

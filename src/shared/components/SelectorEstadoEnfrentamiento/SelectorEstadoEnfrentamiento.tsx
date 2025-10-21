@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { CustomSelect } from "../../../packages/components/Select/Select";
-import { EstadoEnfrentamiento, EstadoEnfrentamientoOpcionCualquiera } from "../../enum/EstadoEnfrentamiento";
+import { EstadoEnfrentamientoOpcionCualquiera } from "../../enum/EstadoEnfrentamiento";
 
 export interface SelectorEstadoEnfrentamiento {
   value: EstadoEnfrentamientoOpcionCualquiera;
@@ -24,7 +24,7 @@ export const SelectorEstadoEnfrentamiento = memo(
       <CustomSelect
         value={estadoEnfrentamientoOptions.find((o) => o.value === value)}
         onSelect={(selectedOption) => {
-          onSelect(selectedOption.value as EstadoEnfrentamiento);
+          onSelect(selectedOption.value);
         }}
         options={estadoEnfrentamientoOptions}
         disabled={disabled}

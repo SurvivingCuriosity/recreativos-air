@@ -1,19 +1,31 @@
+import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate, useParams } from "react-router";
 import { Titulo } from "../../packages/components/Titulo/Titulo";
+import { useAuth } from "../../shared/api/auth/useAuth";
+import { useGetEquiposUsuario } from "../../shared/api/equipos/hooks/useGetEquipos";
+import { useLigas } from "../../shared/api/ligas/useLigas";
+import { useGetUserById } from "../../shared/api/user/hooks";
 import { TarjetaEquipo } from "../../shared/components/TarjetaEquipo/TarjetaEquipo";
 import { TarjetaLiga } from "../../shared/components/TarjetaLiga/TarjetaLiga";
-import { Equipos } from "../../shared/store/tmp/Equipos";
-import { ligas } from "../../shared/store/tmp/Ligas";
-import { Users } from "../../shared/store/tmp/Users";
+import { ButtonWhatsapp2 } from "../LandingPage/ButtonWhatsapp";
 
 export const PerfilPublicoPage = () => {
   const { id } = useParams();
-  const user = Users.find((u) => u.id === id);
 
-  const equiposUsuario = Equipos.filter(e => e.jugadores.some(j => j.idUsuario === user?.id));
+  const { user: loggedInUser } = useAuth();
+  const isAdmin = loggedInUser?.admin;
 
-  const ligasEnLasQueEstaInscrito = ligas.filter((liga) =>
-    equiposUsuario?.find((equipo) => equipo.id === liga.id)
+  const { data: user } = useGetUserById(id || "");
+
+  const { data: equiposUsuario } = useGetEquiposUsuario(user?.id || "");
+
+  const { data: ligas } = useLigas();
+
+  const ligasEnLasQueEstaInscrito = ligas?.filter((l) =>
+    l.equipos.some((e) =>
+      e.equipo.jugadores.some((j) => j.idUsuario === user?.id)
+    )
   );
 
   const navigate = useNavigate();
@@ -24,23 +36,36 @@ export const PerfilPublicoPage = () => {
 
   return (
     <div className="p-4 flex flex-col gap-4 justify-start h-full">
-      <div className="flex justify-between border-neutral-700 relative border p-3">
+      <div className="flex justify-between relative p-3 rounded-xl bg-neutral-900">
         <span>
           <Titulo variant="h2" className="font-cool">
             {user?.username}
           </Titulo>
-          <p>{user?.nombre}</p>
-        </span>
-        <span className="text-sm text-neutral-600 my-auto text-right">
-          <p>27 goles a favor</p>
-          <p>#1 en la liga</p>
+          <p className="text-neutral-500">{user?.nombre}</p>
+          {isAdmin && (
+            <div className="flex items-center gap-2 text-neutral-500">
+              <FontAwesomeIcon icon={faPhone} />
+              <p>{user?.movil}</p>
+            </div>
+          )}
+          {isAdmin && (
+            <div className="flex items-center gap-2 text-neutral-500">
+              <FontAwesomeIcon icon={faEnvelope} />
+              <p>{user?.email}</p>
+            </div>
+          )}
+          {isAdmin && user?.movil && (
+            <div className="absolute top-1 right-2">
+              <ButtonWhatsapp2 numero={user.movil} />
+            </div>
+          )}
         </span>
         {user?.admin && (
           <p className="text-primary text-xs absolute top-2 right-2">ADMIN</p>
         )}
       </div>
 
-      <div className="my-2">
+      {/* <div className="my-2">
         <Titulo
           variant="h4"
           className="font-cool text-neutral-600! tracking-widest underline underline-offset-2 mb-2"
@@ -67,7 +92,7 @@ export const PerfilPublicoPage = () => {
             Ganador Infinity Parado 2023
           </li>
         </ul>
-      </div>
+      </div> */}
 
       <div className="my-2">
         <Titulo
@@ -76,8 +101,8 @@ export const PerfilPublicoPage = () => {
         >
           Equipos
         </Titulo>
-        {equiposUsuario.length > 0 ? (
-          equiposUsuario.map((equipo, index) => (
+        {equiposUsuario && equiposUsuario?.length > 0 ? (
+          equiposUsuario?.map((equipo, index) => (
             <TarjetaEquipo key={index} equipo={equipo} onClick={() => {}} />
           ))
         ) : (
@@ -94,9 +119,9 @@ export const PerfilPublicoPage = () => {
         >
           Competiciones
         </Titulo>
-        {ligasEnLasQueEstaInscrito.length > 0 ? (
+        {ligasEnLasQueEstaInscrito && ligasEnLasQueEstaInscrito?.length > 0 ? (
           <ul className="pb-3 flex overflow-x-auto gap-4 mt-2 snap-x rounded-lg ">
-            {ligasEnLasQueEstaInscrito.map((l) => (
+            {ligasEnLasQueEstaInscrito?.map((l) => (
               <div
                 key={l.id}
                 className="w-[87%] max-w-96 shrink-0 snap-center rounded-xl shadow-xl shadow-neutral-800"

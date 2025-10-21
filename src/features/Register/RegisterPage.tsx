@@ -1,44 +1,68 @@
+import type { AxiosError } from "axios";
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router";
 import { Button } from "../../packages/components/Button/Button";
 import { FormField } from "../../packages/components/Form/FormField";
 import { FormLabel } from "../../packages/components/Form/FormLabel";
 import { PasswordInput } from "../../packages/components/TextInput/PasswordInput";
 import { TextInput } from "../../packages/components/TextInput/TextInput";
-import { useAppDispatch } from "../../shared/store/hooks";
-import { loginSucceeded, setearUser } from "../../shared/store/slices/authSlice";
+import { useRegister } from "../../shared/api/auth/hooks";
 
 export const RegisterPage = () => {
-
   const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [movil, setMovil] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
 
-  const dispatch = useAppDispatch();
+  const { mutate: register, isPending } = useRegister();
+
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = (location.state as { from?: string })?.from || "/competiciones";
 
   const handleSubmit = () => {
-    const fakeToken = "123abc";
-    dispatch(
-      setearUser({
-        id: "1",
-        nombre: nombre,
-        username: username,
-        admin: isAdmin,
-      })
+    register(
+      { username, nombre, email, password, movil },
+      {
+        onSuccess: (res) => {
+          if (res.success) {
+            toast.success("Te enviamos un código de verificación a tu correo");
+            navigate("/verify-email", { state: { email } });
+          } else {
+            toast.error(res.message);
+          }
+        },
+        onError: (e) => {
+          const error:AxiosError = e as AxiosError;
+          toast.error((error.response as unknown).data.error[0].message);
+        },
+      }
     );
-    dispatch(loginSucceeded(fakeToken));
-    navigate(from, { replace: true });
   };
 
   return (
     <main className="h-full w-full p-4 max-w-screen-lg mx-auto">
-      <form className="flex flex-col">
+      <form className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold text-center">Registro</h1>
+
+        <FormField>
+          <FormLabel>Email</FormLabel>
+          <TextInput
+            placeholder="test@test.com"
+            value={email}
+            onChange={(e) => setEmail(e)}
+          />
+        </FormField>
+
+        <FormField>
+          <FormLabel>Movil</FormLabel>
+          <TextInput
+            placeholder="666666666"
+            value={movil}
+            onChange={setMovil}
+          />
+        </FormField>
 
         <FormField>
           <FormLabel>Nombre</FormLabel>
@@ -50,7 +74,7 @@ export const RegisterPage = () => {
         </FormField>
 
         <FormField>
-          <FormLabel>Usuario (para iniciar sesión)</FormLabel>
+          <FormLabel>Nickname</FormLabel>
           <TextInput
             placeholder="fer99"
             value={username}
@@ -76,16 +100,7 @@ export const RegisterPage = () => {
           />
         </FormField>
 
-        <label>
-          Es admin
-          <input
-            type="checkbox"
-            checked={isAdmin}
-            onChange={(e) => setIsAdmin(e.target.checked)}
-          />
-        </label>
-
-        <Button onClick={handleSubmit}>Registrarme</Button>
+        <Button onClick={handleSubmit} disabled={isPending}>Registrarme</Button>
 
         <Link to="/login" className="mx-auto underline mt-4">
           Ya tengo una cuenta

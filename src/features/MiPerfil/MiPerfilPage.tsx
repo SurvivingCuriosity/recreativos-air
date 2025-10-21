@@ -1,126 +1,111 @@
-import { Link, useNavigate } from "react-router";
+import { faPlus, faTrophy, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router";
 import { Titulo } from "../../packages/components/Titulo/Titulo";
-import { TarjetaEquipo } from "../../shared/components/TarjetaEquipo/TarjetaEquipo";
-import { useAppDispatch, useAppSelector } from "../../shared/store/hooks";
-import { logout } from "../../shared/store/slices/authSlice";
-import { TarjetaLiga } from "../../shared/components/TarjetaLiga/TarjetaLiga";
+import { useLogout } from "../../shared/api/auth/hooks";
+import { useAuth } from "../../shared/api/auth/useAuth";
+import { MisCompeticiones } from "./components/MisCompeticiones";
+import { MisEquipos } from "./components/MisEquipos";
+import { Button } from "../../packages/components/Button/Button";
 
 export const MiPerfilPage = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { user, isLoggedIn } = useAuth();
+  const logout = useLogout();
 
-  const { equiposUsuario } = useAppSelector((state) => state.user);
-  const { user } = useAppSelector((state) => state.auth);
-  const { ligas } = useAppSelector((state) => state.ligas);
-  const ligasEnLasQueEstaInscrito = ligas.filter((liga) =>
-    equiposUsuario.find((equipo) => equipo.id === liga.id)
-  );
-
-  const handleNavigateLiga = (idLiga: string) => {
-    navigate(`/competiciones/${idLiga}/clasificacion`);
+  const handleLogout = () => {
+    logout();
+    toast.success("Sesión cerrada");
+    navigate("/login", { replace: true });
   };
 
+  if (!isLoggedIn) {
+    navigate("/login");
+    return null;
+  }
+
   return (
-    <div className="p-4 flex flex-col gap-4 justify-start h-full">
-      <button
-        onClick={() => dispatch(logout())}
-        className="rounded text-red-600 bg-neutral-950 border border-red-600  px-3 py-1 mt-auto z-1"
-      >
-        Cerrar sesión
-      </button>
-      <div className="flex justify-between border-neutral-700 relative border p-3">
+    <div className="p-3 flex flex-col gap-4 justify-start h-full">
+
+
+      <div className="flex justify-between bg-neutral-900 rounded-xl relative p-3">
         <span>
           <Titulo variant="h2" className="font-cool">
             {user?.username}
           </Titulo>
-          <p>{user?.nombre}</p>
+          <p className="text-neutral-500">{user?.nombre}</p>
+          <p className="text-neutral-500">{user?.email}</p>
+          <p className="text-neutral-500">{user?.telefono}</p>
         </span>
-        <span className="text-sm text-neutral-600 my-auto text-right">
-          <p>27 goles a favor</p>
-          <p>#1 en la liga</p>
-        </span>
+              <button
+        onClick={handleLogout}
+        className="rounded-lg text-red-600 bg-neutral-950 border border-red-600 px-3 py-1 mt-auto z-1"
+      >
+        Salir
+      </button>
         {user?.admin && (
-          <p className="text-primary text-xs absolute top-2 right-2">ADMIN</p>
+          <p className="absolute -top-2 -left-2 bg-primary text-black text-xs size-min p-0.5 px-2 rounded-md font-bold">
+            ADMIN
+          </p>
         )}
       </div>
 
-      <div className="my-2">
-        <Titulo
-          variant="h4"
-          className="font-cool text-neutral-600! tracking-widest underline underline-offset-2 mb-2"
-        >
-          Premios
-        </Titulo>
-        <ul className="flex gap-2 items-center flex-wrap">
-          <li className="p-1 px-3 text-sm rounded-xl bg-primary/10 text-primary">
-            Puto amo
-          </li>
-          <li className="p-1 px-3 text-sm rounded-xl bg-blue-400/10 text-blue-400">
-            Mejor 'L'
-          </li>
-          <li className="p-1 px-3 text-sm rounded-xl bg-green-500/10 text-green-500">
-            Ganador
-          </li>
-          <li className="p-1 px-3 text-sm rounded-xl bg-amber-500/10 text-amber-500">
-            Mejor delantero 2025
-          </li>
-          <li className="p-1 px-3 text-sm rounded-xl bg-red-500/10 text-red-500">
-            Mejor portero 2025
-          </li>
-          <li className="p-1 px-3 text-sm rounded-xl bg-neutral-400/10 text-neutral-400">
-            Ganador Infinity Parado 2023
-          </li>
-        </ul>
-      </div>
-
-      <div className="my-2">
-        <Titulo
-          variant="h4"
-          className="font-cool text-neutral-600! tracking-widest underline underline-offset-2 mb-2"
-        >
-          Equipos
-        </Titulo>
-        {equiposUsuario.length > 0 ? (
-          equiposUsuario.map((equipo, index) => (
-            <TarjetaEquipo key={index} equipo={equipo} onClick={() => {}} />
-          ))
-        ) : (
-          <div className="text-neutral-500 p-4 text-center">
-            <p>No tiene equipos</p>
+      {/* Equipos */}
+      <div className="p-3 rounded-xl">
+        <div className="flex items-center gap-2 pb-2">
+          <FontAwesomeIcon
+            icon={faUsers}
+            className="text-neutral-300"
+            size="lg"
+          />
+          <Titulo
+            variant="h4"
+            className="font-cool text-neutral-300! tracking-widest"
+          >
+            Equipos
+          </Titulo>
+          <div className="w-min ml-auto">
+            <Button
+              onClick={() => navigate("/crear-equipo")}
+              variant="outline-neutral"
+              icon={faPlus}
+            >
+              <></>
+            </Button>
           </div>
-        )}
+        </div>
+
+        <MisEquipos idUsuario={user?.id || ""} />
       </div>
 
-      <div className="my-2">
-        <Titulo
-          variant="h4"
-          className="font-cool text-neutral-600! tracking-widest underline underline-2xl!"
-        >
-          Competiciones
-        </Titulo>
-        {ligasEnLasQueEstaInscrito.length > 0 ? (
-          <ul className="pb-3 flex overflow-x-auto gap-4 mt-2 snap-x rounded-lg ">
-            {ligasEnLasQueEstaInscrito.map((l) => (
-              <div
-                key={l.id}
-                className="w-[87%] max-w-96 shrink-0 snap-center rounded-xl shadow-xl shadow-neutral-800"
+      {/* Competiciones */}
+      <div className="p-3 rounded-xl">
+        <div className="flex items-center gap-2 pb-2">
+          <FontAwesomeIcon
+            icon={faTrophy}
+            className="text-neutral-300"
+            size="lg"
+          />
+          <Titulo
+            variant="h4"
+            className="font-cool text-neutral-300! tracking-widest"
+          >
+            Competiciones
+          </Titulo>
+          {user?.admin && (
+            <div className="w-min ml-auto">
+              <Button
+                onClick={() => navigate("/crear-liga")}
+                variant="outline-neutral"
+                icon={faPlus}
               >
-                <TarjetaLiga
-                  key={l.id}
-                  liga={l}
-                  onClick={() => handleNavigateLiga(l.id)}
-                />
-              </div>
-            ))}
-          </ul>
-        ) : (
-          <div className="text-neutral-500 p-4 text-center">
-            <p>No estas inscrito a ninguna competición</p>
-            <Link to="/competiciones" className="text-primary underline">
-              Ver competiciones
-            </Link>
-          </div>
-        )}
+                <></>
+              </Button>
+            </div>
+          )}
+        </div>
+        <MisCompeticiones />
       </div>
     </div>
   );
