@@ -1,11 +1,11 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { getAccessToken } from "./authStorage";
 import { useMe } from "./hooks";
-import type { User } from "../auth/types";
+import type { UserDTO } from "recreativos-air-core/user";
 
 export function useAuth() {
   const queryClient = useQueryClient();
-  const cachedUser = queryClient.getQueryData<User>(["me"]);
+  const cachedUser = queryClient.getQueryData<UserDTO>(["me"]);
 
   const { data: user, isFetching } = useMe(!cachedUser && !!getAccessToken());
 

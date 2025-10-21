@@ -35,6 +35,7 @@ export const RegisterPage = () => {
         },
         onError: (e) => {
           const error:AxiosError = e as AxiosError;
+          // @ts-expect-error Algo con los tipos
           toast.error((error.response as unknown).data.error[0].message);
         },
       }
