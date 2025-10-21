@@ -14,9 +14,9 @@ import {
   useEnfrentamientoById,
   useRechazarResultado,
 } from "../../../shared/api/enfrentamientos/hooks";
-import { EstadoEnfrentamiento } from "../../../shared/enum/EstadoEnfrentamiento";
 import { BotonIntroducirResultado } from "./components/BotonIntroducirResultado";
 import { InfoEstadoEnfrentamiento } from "./components/InfoEstadoEnfrentamiento";
+import { EstadoEnfrentamiento } from "recreativos-air-core/enfrentamiento";
 
 export const DetalleJornadaPage = () => {
   const params = useParams();

@@ -1,10 +1,10 @@
 import { memo } from "react";
+import { EstadoEnfrentamientoConOpcionCualquiera } from "recreativos-air-core/enfrentamiento";
 import { CustomSelect } from "../../../packages/components/Select/Select";
-import { EstadoEnfrentamientoOpcionCualquiera } from "../../enum/EstadoEnfrentamiento";
 
 export interface SelectorEstadoEnfrentamiento {
-  value: EstadoEnfrentamientoOpcionCualquiera;
-  onSelect: (selectedOption: EstadoEnfrentamientoOpcionCualquiera) => void;
+  value: EstadoEnfrentamientoConOpcionCualquiera;
+  onSelect: (selectedOption: EstadoEnfrentamientoConOpcionCualquiera) => void;
   disabled?: boolean;
   incluirOpcionTodos?: boolean;
 }
@@ -14,10 +14,22 @@ export const SelectorEstadoEnfrentamiento = memo(
     const { value, onSelect, disabled = false } = props;
 
     const estadoEnfrentamientoOptions = [
-      { value: EstadoEnfrentamientoOpcionCualquiera.Cualquiera, label: "Cualquiera" }, 
-      { value: EstadoEnfrentamientoOpcionCualquiera.ConfirmarResultado, label: "Pendiente" },
-      { value: EstadoEnfrentamientoOpcionCualquiera.Jugado, label: "Jugado" },
-      { value: EstadoEnfrentamientoOpcionCualquiera.SinJugar, label: "No jugado" },
+      {
+        value: EstadoEnfrentamientoConOpcionCualquiera.Cualquiera,
+        label: "Cualquiera",
+      },
+      {
+        value: EstadoEnfrentamientoConOpcionCualquiera.ConfirmarResultado,
+        label: "Pendiente",
+      },
+      {
+        value: EstadoEnfrentamientoConOpcionCualquiera.Jugado,
+        label: "Jugado",
+      },
+      {
+        value: EstadoEnfrentamientoConOpcionCualquiera.SinJugar,
+        label: "No jugado",
+      },
     ];
 
     return (

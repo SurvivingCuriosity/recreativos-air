@@ -3,10 +3,9 @@ import {
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { EnfrentamientoDTO } from "recreativos-air-core/enfrentamiento";
+import { EstadoEnfrentamiento, type EnfrentamientoDTO } from "recreativos-air-core/enfrentamiento";
 import { useAuth } from "../../api/auth/useAuth";
 import { useGetEquiposUsuario } from "../../api/equipos/hooks/useGetEquipos";
-import { EstadoEnfrentamiento } from "../../enum/EstadoEnfrentamiento";
 
 export const TarjetaEnfrentamiento = ({
   enfrentamiento,

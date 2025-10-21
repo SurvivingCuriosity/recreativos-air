@@ -16,8 +16,8 @@ import {
   logoFutbolinMap,
   logoFutbolinMapLight,
 } from "../../shared/db/logoFutbolinMap";
-import { EstadoEquipoEnLiga } from "../../shared/enum/EstadoEquipoEnLiga";
 import { NavDetalleLiga } from "./NavDetalleLiga";
+import { EstadoEquipoEnLiga } from "recreativos-air-core/liga";
 
 export const DetalleLigaLayout = () => {
   const { id } = useParams<{ id: string }>();

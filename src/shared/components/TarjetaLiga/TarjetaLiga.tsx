@@ -13,11 +13,9 @@ import {
   logoFutbolinMap,
   logoFutbolinMapLight,
 } from "../../db/logoFutbolinMap";
-import { EstadoEquipoEnLiga } from "../../enum/EstadoEquipoEnLiga";
-import { EstadoLiga } from "../../enum/EstadoLiga";
 import { useIsInscritoALiga } from "../../hooks/useIsInscritoALiga";
 import { SelectorEquipoUsuario } from "../SelectorEquipoUsuario/SelectorEquipoUsuario";
-import type { LigaDTO } from "recreativos-air-core/liga";
+import { EstadoEquipoEnLiga, EstadoLiga, type LigaDTO } from "recreativos-air-core/liga";
 
 export interface TarjetaLigaProps {
   liga: LigaDTO;

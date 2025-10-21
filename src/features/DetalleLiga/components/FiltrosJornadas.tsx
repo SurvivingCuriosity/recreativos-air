@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { SelectorEstadoEnfrentamiento } from "../../../shared/components/SelectorEstadoEnfrentamiento/SelectorEstadoEnfrentamiento";
-import { EstadoEnfrentamientoOpcionCualquiera } from "../../../shared/enum/EstadoEnfrentamiento";
+import { EstadoEnfrentamientoConOpcionCualquiera } from "recreativos-air-core/enfrentamiento";
+
 
 type Props = {
   onChangeSoloEquiposUser: (mostrarTodos: boolean) => void;
-  onChangeEstado: (estado: EstadoEnfrentamientoOpcionCualquiera) => void;
+  onChangeEstado: (estado: EstadoEnfrentamientoConOpcionCualquiera) => void;
 };
 
 export const FiltrosJornadas = ({
@@ -12,8 +13,8 @@ export const FiltrosJornadas = ({
   onChangeEstado,
 }: Props) => {
   const [estadoEnfrentamiento, setEstadoEnfrentamiento] =
-    useState<EstadoEnfrentamientoOpcionCualquiera>(
-      EstadoEnfrentamientoOpcionCualquiera.Cualquiera
+    useState<EstadoEnfrentamientoConOpcionCualquiera>(
+      EstadoEnfrentamientoConOpcionCualquiera.Cualquiera
     );
   const [mostrarTodos, setMostrarTodos] = useState(false);
 

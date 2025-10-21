@@ -6,8 +6,7 @@ import {
   useAprobarInscripcion,
   useMarcarPagado,
 } from "../../../shared/api/ligas/useLigas";
-import { EstadoEquipoEnLiga } from "../../../shared/enum/EstadoEquipoEnLiga";
-import type { EquipoEnLigaDTO } from "recreativos-air-core/liga";
+import { EstadoEquipoEnLiga, type EquipoEnLigaDTO } from "recreativos-air-core/liga";
 
 type Props = {
   idLiga: string;

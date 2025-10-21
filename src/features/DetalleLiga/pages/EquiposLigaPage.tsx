@@ -5,9 +5,9 @@ import { Button } from "../../../packages/components/Button/Button";
 import { useAuth } from "../../../shared/api/auth/useAuth";
 import { useLigaById } from "../../../shared/api/ligas/useLigas";
 import { useWindow } from "../../../shared/context/WindowProvider";
-import { EstadoEquipoEnLiga } from "../../../shared/enum/EstadoEquipoEnLiga";
 import { InscribirEquipoExistenteForm } from "../components/InscribirEquipoExistenteForm";
 import { TarjetaEquipoLiga } from "../components/TarjetaEquipoLiga";
+import { EstadoEquipoEnLiga } from "recreativos-air-core/liga";
 
 export const EquiposLigaPage = () => {
   const navigate = useNavigate();

@@ -1,11 +1,11 @@
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { EstadoEnfrentamientoConOpcionCualquiera } from "recreativos-air-core/enfrentamiento";
 import { useAuth } from "../../../shared/api/auth/useAuth";
 import { useEnfrentamientosLiga } from "../../../shared/api/enfrentamientos/hooks";
 import { useGetEquiposUsuario } from "../../../shared/api/equipos/hooks/useGetEquipos";
 import { useLigaById } from "../../../shared/api/ligas/useLigas";
 import { TarjetaEnfrentamiento } from "../../../shared/components/TarjetaEnfrentamiento/TarjetaEnfrentamiento";
-import { EstadoEnfrentamientoOpcionCualquiera } from "../../../shared/enum/EstadoEnfrentamiento";
 import { FiltrosJornadas } from "../components/FiltrosJornadas";
 
 export const JornadasLigaPage = () => {
@@ -18,8 +18,8 @@ export const JornadasLigaPage = () => {
 
   const [mostrarTodos, setMostrarTodos] = useState(false);
   const [estadoFiltro, setEstadoFiltro] =
-    useState<EstadoEnfrentamientoOpcionCualquiera>(
-      EstadoEnfrentamientoOpcionCualquiera.Cualquiera
+    useState<EstadoEnfrentamientoConOpcionCualquiera>(
+      EstadoEnfrentamientoConOpcionCualquiera.Cualquiera
     );
 
   // 🔹 Cálculo memoizado de enfrentamientos filtrados
@@ -32,8 +32,8 @@ export const JornadasLigaPage = () => {
         equiposUsuario?.some((e) => e.id === ex.equipoB.id);
 
       const coincideEstado =
-        estadoFiltro === EstadoEnfrentamientoOpcionCualquiera.Cualquiera ||
-        ex.estado === estadoFiltro;
+        estadoFiltro === EstadoEnfrentamientoConOpcionCualquiera.Cualquiera ||
+        ex.estado === (estadoFiltro as unknown as typeof ex.estado);
 
       // si mostrarTodos es true, ignora el filtro de equipos
       return (mostrarTodos || perteneceAUser) && coincideEstado;
@@ -47,7 +47,8 @@ export const JornadasLigaPage = () => {
   );
 
   const handleFilterEstado = useCallback(
-    (estado: EstadoEnfrentamientoOpcionCualquiera) => setEstadoFiltro(estado),
+    (estado: EstadoEnfrentamientoConOpcionCualquiera) =>
+      setEstadoFiltro(estado),
     []
   );
 

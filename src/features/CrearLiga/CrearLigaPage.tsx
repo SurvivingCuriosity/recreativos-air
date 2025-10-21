@@ -10,8 +10,7 @@ import { TextInput } from "../../packages/components/TextInput/TextInput";
 import { Titulo } from "../../packages/components/Titulo/Titulo";
 import { useCrearLiga } from "../../shared/api/ligas/useLigas";
 import { SelectorTipoFutbolin } from "../../shared/components/SelectorTipoFutbolin/SelectorTipoFutbolin";
-import { EstadoLiga } from "../../shared/enum/EstadoLiga";
-import { TipoFutbolin } from "../../shared/enum/TipoFutbolin";
+import { EstadoLiga, TipoFutbolin } from "recreativos-air-core/liga";
 
 export const CrearLigaPage = () => {
   const navigate = useNavigate();

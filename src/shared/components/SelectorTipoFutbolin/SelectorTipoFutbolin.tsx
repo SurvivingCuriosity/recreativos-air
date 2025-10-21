@@ -1,6 +1,6 @@
 import { memo } from "react";
-import { TipoFutbolin } from "../../enum/TipoFutbolin";
 import { CustomSelect } from "../../../packages/components/Select/Select";
+import { TipoFutbolin } from "recreativos-air-core/liga";
 
 export interface SelectorTipoFutbolin {
   value: TipoFutbolin;

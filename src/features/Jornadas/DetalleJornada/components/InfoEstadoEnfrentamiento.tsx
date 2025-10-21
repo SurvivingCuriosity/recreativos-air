@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { EstadoEnfrentamiento } from "../../../../shared/enum/EstadoEnfrentamiento";
 import { faCheckCircle, faHand, faInfoCircle, type IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { EstadoEnfrentamiento } from "recreativos-air-core/enfrentamiento";
 
 export const InfoEstadoEnfrentamiento = ({
   estado,
