@@ -27,23 +27,23 @@ export const MiPerfilPage = () => {
 
   return (
     <div className="p-3 flex flex-col gap-4 justify-start h-full">
-
-
       <div className="flex justify-between bg-neutral-900 rounded-xl relative p-3">
         <span>
           <Titulo variant="h2" className="font-cool">
             {user?.username}
           </Titulo>
+          
           <p className="text-neutral-500">{user?.nombre}</p>
           <p className="text-neutral-500">{user?.email}</p>
-          <p className="text-neutral-500">{user?.telefono}</p>
+          <p className="text-neutral-500">{user?.movil}</p>
+
         </span>
-              <button
-        onClick={handleLogout}
-        className="rounded-lg text-red-600 bg-neutral-950 border border-red-600 px-3 py-1 mt-auto z-1"
-      >
-        Salir
-      </button>
+        <button
+          onClick={handleLogout}
+          className="rounded-lg text-red-600 bg-neutral-950 border border-red-600 px-3 py-1 mt-auto z-1"
+        >
+          Salir
+        </button>
         {user?.admin && (
           <p className="absolute -top-2 -left-2 bg-primary text-black text-xs size-min p-0.5 px-2 rounded-md font-bold">
             ADMIN
