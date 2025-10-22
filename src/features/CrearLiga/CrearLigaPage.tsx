@@ -19,7 +19,7 @@ export const CrearLigaPage = () => {
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [tipoFutbolin, setTipoFutbolin] = useState<TipoFutbolin>(
-    TipoFutbolin.Infinity
+    TipoFutbolin.Tsunami
   );
   const [normas, setNormas] = useState("");
   const [premio, setPremio] = useState("");
@@ -90,7 +90,7 @@ export const CrearLigaPage = () => {
             <TextInput
               placeholder="Nombre de la liga"
               value={nombre}
-              onChange={setNombre}
+              onChangeText={setNombre}
             />
           </FormField>
 
@@ -172,7 +172,7 @@ export const CrearLigaPage = () => {
               <TextInput
                 placeholder="Añadir ubicación..."
                 value={ubicacionActual}
-                onChange={setUbicacionActual}
+                onChangeText={setUbicacionActual}
               />
               <Button onClick={handleAgregarUbicacion} variant="outline">
                 +

@@ -15,7 +15,12 @@ import {
 } from "../../db/logoFutbolinMap";
 import { useIsInscritoALiga } from "../../hooks/useIsInscritoALiga";
 import { SelectorEquipoUsuario } from "../SelectorEquipoUsuario/SelectorEquipoUsuario";
-import { EstadoEquipoEnLiga, EstadoLiga, type LigaDTO } from "recreativos-air-core/liga";
+import {
+  EstadoEquipoEnLiga,
+  EstadoLiga,
+  type LigaDTO,
+} from "recreativos-air-core/liga";
+import { useNavigate } from "react-router";
 
 export interface TarjetaLigaProps {
   liga: LigaDTO;
@@ -24,8 +29,9 @@ export interface TarjetaLigaProps {
 
 export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
   const { darkMode } = use(ThemeContext);
-  const { user } = useAuth();
+  const { user, isLoggedIn } = useAuth();
   const { close, show } = useWindow();
+  const navigate = useNavigate()
 
   const handleClickInscribir = () => {
     if (!liga) {
@@ -60,7 +66,7 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
     <>
       <div
         onClick={onClick}
-        className="min-w-72 hover:border-neutral-700 shrink-0 justify-between border overflow-hidden md:p-4 p-1.5 relative bg-neutral-900 rounded-lg border-neutral-800 z-0"
+        className="max-w-80 h-full hover:border-neutral-700 shrink-0 justify-between border overflow-hidden md:p-4 p-1.5 relative bg-neutral-900 rounded-lg border-neutral-800 z-0"
       >
         <div className="relative z-2 flex flex-col justify-between h-full gap-1">
           <div className="flex items-center gap-2">
@@ -100,9 +106,20 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
               {liga.descripcion}
             </p>
           )}
-          {!estaInscrito && (
+          {isLoggedIn ? (
+            !estaInscrito && (
+              <div className="mt-3">
+                <Button
+                  onClick={handleClickInscribir}
+                  variant="outline-neutral"
+                >
+                  Inscribirme
+                </Button>
+              </div>
+            )
+          ) : (
             <div className="mt-3">
-              <Button onClick={handleClickInscribir} variant="outline-neutral">
+              <Button onClick={()=>navigate('/login')} variant="outline-neutral">
                 Inscribirme
               </Button>
             </div>

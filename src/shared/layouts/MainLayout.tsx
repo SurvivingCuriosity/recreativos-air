@@ -20,6 +20,7 @@ const TopNavContentAuth: TopNavItem[] = [
 const TopNavContent: TopNavItem[] = [
   { label: "Inciar sesión", href: "/login", icon: faRightToBracket },
   { label: "Crear cuenta", href: "/register", icon: faUserPlus },
+  { label: "Competiciones", href: "/competiciones", icon: faTrophy },
 ];
 
 export const MainLayout = () => {

@@ -158,7 +158,7 @@ export const CrearEquipoPage = () => {
         <TextInput
           placeholder="Ej: Los Titanes"
           value={equipoNombre}
-          onChange={setEquipoNombre}
+          onChangeText={setEquipoNombre}
         />
       </FormField>
 
@@ -219,7 +219,7 @@ export const CrearEquipoPage = () => {
               <TextInput
                 placeholder="Nombre del jugador sin cuenta"
                 value={nombreManual}
-                onChange={setNombreManual}
+                onChangeText={setNombreManual}
                 disabled={modoAgregar !== "manual"}
               />
               <div className="w-12">

@@ -28,12 +28,12 @@ export const Router = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
+        <Route path="competiciones" element={<CompeticionesPage />} />
       </Route>
 
       {/* PROTEGIDAS */}
       <Route element={<MainLayout />}>
         <Route element={<RequireAuth />}>
-          <Route path="competiciones" element={<CompeticionesPage />} />
           <Route path="user/:id" element={<PerfilPublicoPage />} />
           <Route path="mi-perfil" element={<MiPerfilPage />} />
           <Route path="crear-equipo" element={<CrearEquipoPage />} />

@@ -11,7 +11,7 @@ import { setAccessToken } from "../../shared/api/auth/authStorage";
 export const VerifyEmailPage = () => {
   const [code, setCode] = useState("");
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // El email viene desde RegisterPage (navigate("/verify-email", { state: { email } }))
   const email = (location.state as { email?: string })?.email ?? "";
 
@@ -28,12 +28,12 @@ export const VerifyEmailPage = () => {
       if (res.success) {
         toast.success("Correo verificado correctamente");
         if (res.data?.token) setAccessToken(res.data.token);
-        navigate('/')
+        navigate("/");
       } else {
         toast.error(res.message);
       }
     } catch (err) {
-      toast.error("Código inválido o expirado "+String(err));
+      toast.error("Código inválido o expirado " + String(err));
     }
   };
 
@@ -52,11 +52,15 @@ export const VerifyEmailPage = () => {
         </p>
 
         <FormField>
-          <FormLabel>Código</FormLabel>
+          <FormLabel htmlFor="verify-email-code">Código</FormLabel>
           <TextInput
+            id="verify-email-code"
+            autoComplete="one-time-code"
             placeholder="123456"
+            inputMode="numeric"
+            pattern="[0-9]*"
             value={code}
-            onChange={(e) => setCode(e)}
+            onChangeText={setCode}
             maxLength={6}
           />
         </FormField>
@@ -64,7 +68,6 @@ export const VerifyEmailPage = () => {
         <Button disabled={isPending} onClick={handleSubmit}>
           Verificar
         </Button>
-        
       </form>
     </main>
   );

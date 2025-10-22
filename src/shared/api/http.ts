@@ -3,8 +3,8 @@ import { getAccessToken } from "./auth/authStorage";
 
 const BASE_URL =
   import.meta.env.PROD
-    ? import.meta.env.VITE_API_URL // Vercel (producción)
-    : "http://192.168.0.19:3000/api"; // desarrollo local
+    ? import.meta.env.VITE_API_URL
+    : "http://192.168.0.19:8080/api";
 
 const api = axios.create({
   baseURL: BASE_URL,
