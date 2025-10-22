@@ -54,3 +54,13 @@ export const useConfirmarResultadoAdmin = () => {
     },
   });
 };
+
+export const useRechazarResultadoAdmin = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: EnfrentamientosAPI.rechazarResultadoAdmin,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["ligas"] });
+    },
+  });
+};

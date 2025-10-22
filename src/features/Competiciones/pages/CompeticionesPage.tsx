@@ -16,7 +16,7 @@ export const CompeticionesPage = () => {
   const { data: equiposUsuario } = useGetEquiposUsuario(user?.id || "");
 
   return (
-    <div className="flex flex-col items-center justify-start p-4 h-full gap-3">
+    <div className="max-w-screen-md mx-auto flex flex-col items-center justify-start p-4 h-full gap-3">
       <h1 className="text-3xl font-bold font-cool">Competiciones</h1>
       {equiposUsuario?.length === 0 && (
         <Message variant="info" className="w-full mb-2">

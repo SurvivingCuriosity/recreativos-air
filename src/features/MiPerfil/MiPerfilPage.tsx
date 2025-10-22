@@ -26,7 +26,7 @@ export const MiPerfilPage = () => {
   }
 
   return (
-    <div className="p-3 flex flex-col gap-4 justify-start h-full">
+    <div className="max-w-screen-md mx-auto p-3 flex flex-col gap-4 justify-start h-full">
       <div className="flex justify-between bg-neutral-900 rounded-xl relative p-3">
         <span>
           <Titulo variant="h2" className="font-cool">

@@ -52,7 +52,17 @@ export const EnfrentamientosAPI = {
     enfrentamientoId: string;
   }): Promise<EnfrentamientoDTO> {
     const res = await api.post(
-      `/enfrentamientos/${data.enfrentamientoId}/confirmar`,
+      `/enfrentamientos/${data.enfrentamientoId}/confirmar-admin`,
+      data
+    );
+    return res.data.data;
+  },
+
+    async rechazarResultadoAdmin(data: {
+    enfrentamientoId: string;
+  }): Promise<EnfrentamientoDTO> {
+    const res = await api.post(
+      `/enfrentamientos/${data.enfrentamientoId}/rechazar-admin`,
       data
     );
     return res.data.data;

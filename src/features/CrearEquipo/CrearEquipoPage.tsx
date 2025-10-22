@@ -1,4 +1,4 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -11,11 +11,15 @@ import { Titulo } from "../../packages/components/Titulo/Titulo";
 import { useAuth } from "../../shared/api/auth/useAuth";
 import { useCrearEquipo } from "../../shared/api/equipos/hooks/useCrearEquipo";
 import SelectorUsuario from "../../shared/components/SelectorUsuario/SelectorUsuario";
-import { EstadoJugadorEnEquipo, type CrearEquipoBody, type JugadorDTO } from "recreativos-air-core/equipos";
+import {
+  EstadoJugadorEnEquipo,
+  type CrearEquipoBody,
+  type JugadorDTO,
+} from "recreativos-air-core/equipos";
 import type { SearchUserDTO } from "recreativos-air-core/user";
 
 export const CrearEquipoPage = () => {
-  const { user } = useAuth();
+  const { user: loggedInUser } = useAuth();
   const { mutate: crearEquipo, isPending } = useCrearEquipo();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -29,21 +33,21 @@ export const CrearEquipoPage = () => {
   );
   const [nombreManual, setNombreManual] = useState("");
 
-  const esAdmin = user?.admin === true;
+  const esAdmin = loggedInUser?.admin === true;
 
   /** 🧠 Inicializa con el creador si NO es admin */
   useEffect(() => {
-    if (!esAdmin && user) {
+    if (!esAdmin && loggedInUser) {
       setJugadores([
         {
-          nombre: user.nombre || user.username || "Sin nombre",
-          idUsuario: user.id,
+          nombre: loggedInUser.nombre || loggedInUser.username || "Sin nombre",
+          idUsuario: loggedInUser.id,
           estado: EstadoJugadorEnEquipo.ACEPTADO,
           suplente: false,
         },
       ]);
     }
-  }, [user, esAdmin]);
+  }, [loggedInUser, esAdmin]);
 
   /** 🧹 Limpia nombre manual cuando cambia modo */
   useEffect(() => {
@@ -107,7 +111,7 @@ export const CrearEquipoPage = () => {
   /** ✅ Eliminar jugador */
   const handleEliminarJugador = (index: number) => {
     const jugador = jugadores[index];
-    if (!esAdmin && jugador.idUsuario === user?.id) {
+    if (!esAdmin && jugador.idUsuario === loggedInUser?.id) {
       toast.custom("No puedes eliminarte del equipo");
       return;
     }
@@ -141,7 +145,9 @@ export const CrearEquipoPage = () => {
     crearEquipo(payload, {
       onSuccess: () => {
         navigate(-1);
-        queryClient.invalidateQueries({ queryKey: ["equipos", user?.id] });
+        queryClient.invalidateQueries({
+          queryKey: ["equipos", loggedInUser?.id],
+        });
       },
     });
   };
@@ -175,7 +181,7 @@ export const CrearEquipoPage = () => {
 
       {/* JUGADORES */}
       <FormLabel>Jugadores ({jugadores.length}/3)</FormLabel>
-      <div className="bg-neutral-900 p-4 rounded-lg border border-neutral-700 space-y-3">
+      <div className="mt-2 space-y-3">
         {/* RADIO: Selección de tipo */}
         <div className="flex flex-col gap-3 mb-2">
           {/* Usuario registrado */}
@@ -240,9 +246,9 @@ export const CrearEquipoPage = () => {
             {jugadores.map((j, i) => (
               <li
                 key={i}
-                className={`flex justify-between items-center py-2 text-sm rounded-md px-2 hover:bg-neutral-800/50`}
+                className={`flex justify-between items-center py-2 text-sm rounded-md px-2 hover:bg-neutral-800/50 relative`}
               >
-                <div className="w-full">
+                <div className="">
                   <p className="text-neutral-200 font-medium">
                     {j.nombre}
                     {j.suplente && (
@@ -251,18 +257,27 @@ export const CrearEquipoPage = () => {
                       </span>
                     )}
                   </p>
+
                   <p className="text-xs text-neutral-500">
                     {j.idUsuario ? "Registrado" : "Sin cuenta"}
                   </p>
                 </div>
-                {j.idUsuario !== user?.id && (
-                  <Button
-                    onClick={() => handleEliminarJugador(i)}
-                    disabled={isPending}
-                    variant="outline"
-                  >
-                    Quitar
-                  </Button>
+                {loggedInUser?.id === j.idUsuario && (
+                  <p className="bg-primary text-black p-1 px-2 text-sm rounded mr-auto mx-2">
+                    Tú
+                  </p>
+                )}
+                {j.idUsuario !== loggedInUser?.id && (
+                  <div className="w-fit">
+                    <Button
+                      onClick={() => handleEliminarJugador(i)}
+                      disabled={isPending}
+                      variant="outline"
+                      icon={faTrash}
+                    >
+                      <></>
+                    </Button>
+                  </div>
                 )}
               </li>
             ))}

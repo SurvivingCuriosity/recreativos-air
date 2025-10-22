@@ -1,12 +1,28 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faHand, faInfoCircle, type IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import { EstadoEnfrentamiento } from "recreativos-air-core/enfrentamiento";
+import {
+  faCheckCircle,
+  faHand,
+  faInfoCircle,
+  type IconDefinition,
+} from "@fortawesome/free-solid-svg-icons";
+import { EstadoEnfrentamiento, type EnfrentamientoDTO } from "recreativos-air-core/enfrentamiento";
+import { useAuth } from "../../../../shared/api/auth/useAuth";
 
 export const InfoEstadoEnfrentamiento = ({
-  estado,
+  enfrentamiento,
 }: {
-  estado: EstadoEnfrentamiento;
+  enfrentamiento: EnfrentamientoDTO;
 }) => {
+
+  const {user:loggedInUser} = useAuth();
+  const equipoDelUsuario = enfrentamiento.equipoA.jugadores.some(
+    (j) => j.idUsuario === loggedInUser?.id
+  )
+    ? enfrentamiento.equipoA
+    : enfrentamiento.equipoB;
+
+  const propuestoPorEquipoDeUsuario = enfrentamiento.resultadoPropuestoPor !== null && enfrentamiento.resultadoPropuestoPor === equipoDelUsuario.id
+
   const containerClassName: Record<EstadoEnfrentamiento, string> = {
     [EstadoEnfrentamiento.SinJugar]: "bg-red-500/10",
     [EstadoEnfrentamiento.CorroborarResultado]: "bg-orange-500/10",
@@ -29,12 +45,14 @@ export const InfoEstadoEnfrentamiento = ({
 
   const description: Record<EstadoEnfrentamiento, string> = {
     [EstadoEnfrentamiento.SinJugar]: "Este partido no ha sido jugado aún.",
-    [EstadoEnfrentamiento.CorroborarResultado]: "El resultado debe ser confirmado por la otra pareja.",
-    [EstadoEnfrentamiento.ConfirmarResultado]: "El administrador debe confirmar finalmente el resultado.",
+    [EstadoEnfrentamiento.CorroborarResultado]:
+      propuestoPorEquipoDeUsuario ? "El resultado debe ser confirmado por la otra pareja." : "Debes aceptar o rechazar el resultado",
+    [EstadoEnfrentamiento.ConfirmarResultado]:
+      "El administrador debe confirmar finalmente el resultado.",
     [EstadoEnfrentamiento.Jugado]: "El partido ha finalizado.",
   };
 
-    const icon: Record<EstadoEnfrentamiento, IconDefinition> = {
+  const icon: Record<EstadoEnfrentamiento, IconDefinition> = {
     [EstadoEnfrentamiento.SinJugar]: faInfoCircle,
     [EstadoEnfrentamiento.CorroborarResultado]: faHand,
     [EstadoEnfrentamiento.ConfirmarResultado]: faHand,
@@ -43,13 +61,17 @@ export const InfoEstadoEnfrentamiento = ({
 
   return (
     <div
-      className={`rounded-lg p-3 ` + containerClassName[estado]}
+      className={
+        `flex items-center gap-3 rounded-lg p-2 px-4 w-fit ` + containerClassName[enfrentamiento.estado]
+      }
     >
-      <div className="flex items-center gap-2 mb-2">
-        <FontAwesomeIcon icon={icon[estado]} className={textClassName[estado]} />
-        <p className={`` + textClassName[estado]}>{title[estado]}</p>
+      <FontAwesomeIcon icon={icon[enfrentamiento.estado]} className={textClassName[enfrentamiento.estado]} />
+      <div className="flex flex-col">
+        <p className={`font-extrabold ` + textClassName[enfrentamiento.estado]}>{title[enfrentamiento.estado]}</p>
+        <p className={`text-xs ` + textClassName[enfrentamiento.estado]}>
+          {description[enfrentamiento.estado]}
+        </p>
       </div>
-      <p className={`text-sm ` + textClassName[estado]}>{description[estado]}</p>
     </div>
   );
 };

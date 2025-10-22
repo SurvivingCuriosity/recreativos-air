@@ -104,6 +104,7 @@ const resultadoValido = () => {
                       handleChange(index, "golesA", e.target.value)
                     }
                     className="rounded-md p-2 bg-neutral-700 text-neutral-100 text-center"
+                    autoFocus={index === 0}
                   />
                   <input
                     type="number"
