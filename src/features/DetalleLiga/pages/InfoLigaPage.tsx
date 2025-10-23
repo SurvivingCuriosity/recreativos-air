@@ -18,7 +18,7 @@ export const InfoLigaPage = () => {
             <p className="mt-4 z-2 font-cool text-xl py-1 font-neutral-950">
               Normas
             </p>
-            <p className="text-neutral-400">{liga?.normas}</p>
+            <p className="text-neutral-400 whitespace-pre-wrap">{liga?.normas}</p>
           </>
         )}
 
@@ -39,7 +39,7 @@ export const InfoLigaPage = () => {
             <p className="mt-4 z-2 font-cool text-xl py-1 font-neutral-950">
               Premio
             </p>
-            <p className="text-neutral-400">{liga?.premio}</p>
+            <p className="text-neutral-400 whitespace-pre-wrap">{liga?.premio}</p>
           </>
         )}
       </div>

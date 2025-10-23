@@ -28,7 +28,7 @@ export const MiPerfilPage = () => {
   return (
     <>
       <title>Mi perfil | Recreativos Air</title>
-      <div className="p-3 flex flex-col gap-4 justify-start h-full">
+      <div className="p-3 flex flex-col gap-4 justify-start h-full max-w-screen-lg mx-auto">
         <div className="flex justify-between bg-neutral-900 rounded-xl relative p-3 md:p-6">
           <span>
             <Titulo variant="h2" className="font-cool">

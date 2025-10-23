@@ -39,6 +39,7 @@ export const TarjetaUsuarioAdmin = ({ user }: { user: UserDTO }) => {
         <FontAwesomeIcon icon={faEnvelope} />
         <p>{user.email}</p>
       </div>
+      {!user.verified && <p className="absolute bottom-1 right-1 text-xs text-red-500">Debe verificar correo</p>}
     </div>
   );
 };

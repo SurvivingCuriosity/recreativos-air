@@ -36,15 +36,15 @@ export const LandingPage = () => {
           bg-center bg-cover bg-no-repeat
           bg-clip-text
           leading-none
-          md:text-6xl
-          xl:text-7xl
-          2xl:text-8xl
+          md:text-4xl
+          xl:text-5xl
+          2xl:text-6xl
           animate-fade-in-top
         "
         style={{ backgroundImage: `url(${fondo_text})` }}
       >
         Recreativos{" "}
-        <span className="text-9xl md:text-[20vw] lg:text-[15vw] tracking-widest block text-neutral-50/60">
+        <span className="text-9xl md:text-[18vw] lg:text-[10vw] tracking-widest block text-neutral-50/60">
           AIR
         </span>
       </h1>

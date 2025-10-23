@@ -51,18 +51,14 @@ export const AdminEquiposPage = () => {
         </p>
       ) : (
         <ul className="space-y-3 mt-3">
-          {equiposFiltrados?.map((e) => {
-            const ligasEnLasQueEstaInscrito = ligas?.filter((l) =>
-              l.equipos.some((e) =>
-                e.equipo.jugadores.some(
-                  (j) => j.idUsuario === e.equipo.idCreador
-                )
-              )
-            );
+          {equiposFiltrados?.map((equipo) => {
+            
+            const ligasEnLasQueEstaInscrito = ligas?.filter(liga => liga.equipos.some(e => e.equipo.id === equipo.id));
+
             return (
               <TarjetaEquipoAdmin
-                equipo={e}
-                key={e.id}
+                equipo={equipo}
+                key={equipo.id}
                 ligas={ligasEnLasQueEstaInscrito || []}
               />
             );

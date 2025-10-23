@@ -14,8 +14,35 @@ export interface TableRow {
 
 export const TablaClasificacionLiga = ({ data }: { data: TableRow[] }) => {
   const columns: Column<TableRow>[] = [
-    { key: "pos", header: "#", accessor: (r) => r.pos, sortable: true },
-    { key: "nombre", header: "Equipo", accessor: (r) => r.nombre },
+    {
+      key: "pos",
+      header: "#",
+      accessor: (r) => r.pos,
+      sortable: true,
+      cell: ({ row }) => (
+        <span
+          className={`${
+            row.pos === 1 ? "text-amber-300" : row.pos === 2 ? "text-orange-400" : row.pos === 3 ? "text-neutral-300" : ""
+          }`}
+        >
+          {row.pos}
+        </span>
+      ),
+    },
+    {
+      key: "nombre",
+      header: "Equipo",
+      accessor: (r) => r.nombre,
+      cell: ({ row }) => (
+        <span
+          className={`${
+            row.pos === 1 ? "text-amber-300" : row.pos === 2 ? "text-orange-400" : row.pos === 3 ? "text-neutral-300" : ""
+          }`}
+        >
+          {row.nombre}
+        </span>
+      ),
+    },
     { key: "jj", header: "J", accessor: (r) => r.jj, sortable: true },
     { key: "pp", header: "PP", accessor: (r) => r.pp, sortable: true },
     { key: "gf", header: "GF", accessor: (r) => r.gf, sortable: true },

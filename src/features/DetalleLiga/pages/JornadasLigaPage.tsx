@@ -7,6 +7,7 @@ import { useGetEquiposUsuario } from "../../../shared/api/equipos/hooks/useGetEq
 import { useLigaById } from "../../../shared/api/ligas/useLigas";
 import { TarjetaEnfrentamiento } from "../../../shared/components/TarjetaEnfrentamiento/TarjetaEnfrentamiento";
 import { FiltrosJornadas } from "../components/FiltrosJornadas";
+import { EstadoLiga } from "recreativos-air-core/liga";
 
 export const JornadasLigaPage = () => {
   const navigate = useNavigate();
@@ -51,6 +52,9 @@ export const JornadasLigaPage = () => {
       setEstadoFiltro(estado),
     []
   );
+
+  if(liga?.estadoLiga === EstadoLiga.SinEmpezar && !user?.admin)
+    return <p className="text-center p-10 text-neutral-500">La liga no ha comenzado</p>
 
   return (
     <div className="flex flex-col gap-3 pb-20">

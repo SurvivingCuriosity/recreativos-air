@@ -1,7 +1,6 @@
-// CustomAsyncSelect.tsx
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AsyncSelect from "react-select/async";
 import { debounce } from "../../utils/debounce";
 import { sharedSelectStyles } from "./sharedStyles";
@@ -19,9 +18,10 @@ export interface AsyncSelectProps<T extends OptionType> {
   disabled?: boolean;
   placeholder?: string;
   noOptionsMessage?: string;
+  emptyInputMessage?: string; // 👈 NUEVO
   loadingMessage?: string;
   debounceDelay?: number;
-  renderOption?: (option: T) => React.ReactNode; // 👈 NUEVO
+  renderOption?: (option: T) => React.ReactNode;
 }
 
 export function CustomAsyncSelect<T extends OptionType>(
@@ -34,10 +34,13 @@ export function CustomAsyncSelect<T extends OptionType>(
     disabled = false,
     placeholder = "Escribe para buscar",
     noOptionsMessage = "Sin resultados",
+    emptyInputMessage = "Escribe para buscar...", // 👈 NUEVO
     loadingMessage = "Cargando...",
     debounceDelay = 250,
     renderOption,
   } = props;
+
+  const [inputValue, setInputValue] = useState("");
 
   const handleSelect = (selectedOption: T | null) => {
     if (selectedOption) onSelect(selectedOption);
@@ -47,7 +50,7 @@ export function CustomAsyncSelect<T extends OptionType>(
     () =>
       debounce(
         (
-          inputValue: string,
+          input: string,
           callback: (
             options: import("react-select").OptionsOrGroups<
               T,
@@ -55,7 +58,11 @@ export function CustomAsyncSelect<T extends OptionType>(
             >
           ) => void
         ) => {
-          const result = loadOptions(inputValue);
+          if (!input.trim()) {
+            callback([]);
+            return;
+          }
+          const result = loadOptions(input);
           if (result instanceof Promise) result.then(callback);
           else callback(result);
         },
@@ -66,8 +73,8 @@ export function CustomAsyncSelect<T extends OptionType>(
 
   useEffect(() => () => debouncedLoadOptions.cancel(), [debouncedLoadOptions]);
 
-  const CustomOption = ({ innerProps, data }:OptionProps<T>) => {
-    if(!renderOption) return <></>
+  const CustomOption = ({ innerProps, data }: OptionProps<T>) => {
+    if (!renderOption) return <></>;
     return <div {...innerProps}>{renderOption(data)}</div>;
   };
 
@@ -76,10 +83,13 @@ export function CustomAsyncSelect<T extends OptionType>(
       value={value}
       placeholder={placeholder}
       loadOptions={debouncedLoadOptions}
+      onInputChange={(newValue) => setInputValue(newValue)} // 👈 guardamos el input
       onChange={handleSelect}
       isDisabled={disabled}
       styles={sharedSelectStyles}
-      noOptionsMessage={() => noOptionsMessage}
+      noOptionsMessage={() =>
+        !inputValue.trim() ? emptyInputMessage : noOptionsMessage
+      } // 👈 muestra mensaje según estado
       loadingMessage={() => loadingMessage}
       components={renderOption ? { Option: CustomOption } : undefined}
       isClearable

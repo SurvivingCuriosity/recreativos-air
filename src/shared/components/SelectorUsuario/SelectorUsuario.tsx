@@ -44,7 +44,7 @@ export default function SelectorUsuario({
       loadOptions={handleLoadOptions}
       disabled={disabled}
       placeholder={placeholder}
-      noOptionsMessage="No hay resultados"
+      emptyInputMessage="Escribe el nombre de tu compañero..."
       loadingMessage="Cargando..."
       renderOption={(e)=>{
         return (

@@ -9,6 +9,7 @@ import { FormLabel } from "../../packages/components/Form/FormLabel";
 import { PasswordInput } from "../../packages/components/TextInput/PasswordInput";
 import { TextInput } from "../../packages/components/TextInput/TextInput";
 import { useLogin } from "../../shared/api/auth/hooks";
+import type { ErrorResponse } from "../../shared/api/http";
 
 export const LoginPage = () => {
   const { mutateAsync: login, isPending } = useLogin();
@@ -45,8 +46,9 @@ export const LoginPage = () => {
       } else {
         toast.error(res.message);
       }
-    } catch (err) {
-      toast.error("Ups, hubo un error: " + String(err));
+    } catch (err:unknown) {
+      console.log(err)
+      toast.error((err as ErrorResponse).message);
     }
   };
 
