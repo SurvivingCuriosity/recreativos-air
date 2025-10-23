@@ -23,16 +23,29 @@ export const LandingPage = () => {
   };
 
   return (
-    <div>
-      <main className="z-0 p-4 h-[calc(100svh-4rem)] w-full relative bg-neutral-950 flex flex-col items-center justify-start">
-        <img
-          src={darkMode ? fondo : fondoLight}
-          alt="fondo"
-          className="h-svh w-full bottom-0 object-cover absolute pointer-events-none -z-1"
-        />
+    <>
+      <meta property="og:title" content="Recreativos AIR" />
+      <meta
+        property="og:description"
+        content="Ligas de futbolin Tsunami e Infinity en Salamanca, ¡apúntate!"
+      />
+      <meta property="og:url" content="https://recreativosair.com/" />
 
-        <h1
-          className="
+      <meta property="twitter:title" content="Recreativos AIR" />
+      <meta
+        property="twitter:description"
+        content="Ligas de futbolin Tsunami e Infinity en Salamanca, ¡apúntate!"
+      />
+      <div>
+        <main className="z-0 p-4 h-[calc(100svh-4rem)] w-full relative bg-neutral-950 flex flex-col items-center justify-start">
+          <img
+            src={darkMode ? fondo : fondoLight}
+            alt="fondo"
+            className="h-svh w-full bottom-0 object-cover absolute pointer-events-none -z-1"
+          />
+
+          <h1
+            className="
           sm:mt-20
           font-black
           text-neutral-50/60
@@ -45,53 +58,54 @@ export const LandingPage = () => {
           2xl:text-8xl
           animate-fade-in-top
         "
-          style={{ backgroundImage: `url(${fondo_text})` }}
-        >
-          Recreativos{" "}
-          <span className="text-9xl md:text-[20vw] lg:text-[15vw] tracking-widest block text-neutral-50/60">
-            AIR
-          </span>
-        </h1>
-        <p className="italic text-neutral-200 text-balance text-center animate-fade-in-top">
-          Empresa especializada en futbolines Tsunami e Infinity en la provincia de
-          Salamanca.
-        </p>
-        {isLoggedIn ? (
-          <div className="max-xl mx-auto">
-            <ul className="pb-3 flex overflow-x-auto gap-4 mt-8 snap-x rounded-lg">
-              {ligas?.map((l) => (
-                <div
-                  key={l.id}
-                  className="w-full max-w-96 shrink-0 snap-center rounded-xl"
-                >
-                  <TarjetaLiga
+            style={{ backgroundImage: `url(${fondo_text})` }}
+          >
+            Recreativos{" "}
+            <span className="text-9xl md:text-[20vw] lg:text-[15vw] tracking-widest block text-neutral-50/60">
+              AIR
+            </span>
+          </h1>
+          <p className="italic text-neutral-200 text-balance text-center animate-fade-in-top">
+            Empresa especializada en futbolines Tsunami e Infinity en la
+            provincia de Salamanca.
+          </p>
+          {isLoggedIn ? (
+            <div className="max-xl mx-auto">
+              <ul className="pb-3 flex overflow-x-auto gap-4 mt-8 snap-x rounded-lg">
+                {ligas?.map((l) => (
+                  <div
                     key={l.id}
-                    liga={l}
-                    onClick={() => handleNavigateLiga(l.id)}
-                  />
-                </div>
-              ))}
-            </ul>
+                    className="w-full max-w-96 shrink-0 snap-center rounded-xl"
+                  >
+                    <TarjetaLiga
+                      key={l.id}
+                      liga={l}
+                      onClick={() => handleNavigateLiga(l.id)}
+                    />
+                  </div>
+                ))}
+              </ul>
+              <Link
+                to="/competiciones"
+                className="text-sm underline text-primary ml-auto mt-2 w-fit block"
+              >
+                Todas las ligas
+              </Link>
+            </div>
+          ) : (
             <Link
               to="/competiciones"
-              className="text-sm underline text-primary ml-auto mt-2 w-fit block"
+              style={{ boxShadow: "-1px 1px 15px -5px rgba(255,255,255,1)" }}
+              className="text-primary animate-fade-in-top flex items-center gap-2 bg-neutral-950/80 text-xl mt-10 p-2 px-4 rounded-lg border border-primary"
             >
-              Todas las ligas
+              <FontAwesomeIcon icon={faTrophy} />
+              Competiciones
             </Link>
-          </div>
-        ) : (
-          <Link
-            to="/competiciones"
-            style={{ boxShadow: "-1px 1px 15px -5px rgba(255,255,255,1)" }}
-            className="text-primary animate-fade-in-top flex items-center gap-2 bg-neutral-950/80 text-xl mt-10 p-2 px-4 rounded-lg border border-primary"
-          >
-            <FontAwesomeIcon icon={faTrophy} />
-            Competiciones
-          </Link>
-        )}
+          )}
 
-        <ButtonWhatsapp numero={TELEFONO_ALBERTO} />
-      </main>
-    </div>
+          <ButtonWhatsapp numero={TELEFONO_ALBERTO} />
+        </main>
+      </div>
+    </>
   );
 };
