@@ -3,6 +3,12 @@ import api from "../http";
 import type { ApiResponse } from "../types";
 
 // Crear equipo
+
+export const getAllEquipos = async (): Promise<ApiResponse<EquipoDTO[]>> => {
+  const { data } = await api.get<ApiResponse<EquipoDTO[]>>("/equipos");
+  return data;
+};
+
 export const crearEquipo = async (payload: CrearEquipoBody): Promise<ApiResponse<EquipoDTO>> => {
   const { data } = await api.post<ApiResponse<EquipoDTO>>("/equipos", payload);
   return data;

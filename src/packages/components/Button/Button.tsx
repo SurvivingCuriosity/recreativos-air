@@ -11,7 +11,7 @@ export type ButtonVariant =
 export interface ButtonProps {
   as?: "button" | "a";
   onClick?: () => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   href?: string;
   icon?: IconDefinition;
   variant?: ButtonVariant;
@@ -33,6 +33,8 @@ export const Button = (props: ButtonProps) => {
 
   const Component = href ? (as === "a" ? "a" : "button") : as;
 
+  const esSoloIcon = children === undefined && icon !== undefined;
+
   const handleClick = (e: MouseEvent) => {
     if (type !== "submit") {
       e.preventDefault();
@@ -44,9 +46,9 @@ export const Button = (props: ButtonProps) => {
   const variantStyles: Record<ButtonVariant, string> = {
     primary: "bg-primary text-neutral-900",
     outline: "bg-neutral-900/80 text-primary border border-primary",
-    neutral: "text-neutral-900/80 bg-neutral-50 border border-neutral-50",
+    neutral: "text-neutral-900/80 bg-neutral-400 border border-neutral-400",
     "outline-neutral":
-      "bg-neutral-900/80 text-neutral-50 border border-neutral-50",
+      "bg-neutral-900/80 text-neutral-400 border border-neutral-400",
   };
 
   return (
@@ -55,7 +57,7 @@ export const Button = (props: ButtonProps) => {
       href={href}
       disabled={disabled}
       type={type}
-      className={`w-full h-9 flex items-center justify-center font-bold px-3 py-1 rounded-lg gap-2 ${variantStyles[variant]} disabled:bg-neutral-700! disabled:text-neutral-600!`}
+      className={`${esSoloIcon ? 'p-2' : 'px-3 py-1'} w-full h-9 flex items-center justify-center font-bold rounded-lg gap-2 ${variantStyles[variant]} disabled:bg-neutral-700! disabled:text-neutral-600!`}
     >
       {icon && <FontAwesomeIcon icon={icon} className="w-5 h-5" />}
       {children}

@@ -53,7 +53,7 @@ export const TarjetaEquipo = ({ equipo, onClick }: Props) => {
   return (
     <div
       onClick={!isMiInvitacionPendiente ? onClick : undefined}
-      className={`relative p-2 px-4 rounded-lg transition-all overflow-hidden min-w-62 
+      className={`border border-neutral-700 relative p-2 px-4 rounded-lg transition-all overflow-hidden min-w-62 
         ${
           isMiInvitacionPendiente
             ? "bg-neutral-800"
@@ -97,12 +97,13 @@ export const TarjetaEquipo = ({ equipo, onClick }: Props) => {
             key={j.idUsuario ?? j.nombre}
             className="flex justify-between items-center text-sm"
           >
-            <p className="text-neutral-300 truncate">
+            <p className={`${user.id === j.idUsuario ? 'text-primary' : 'text-neutral-300'} truncate mr-2`}>
               {j.nombre}
               {j.suplente && (
                 <span className="ml-1 text-amber-400 text-xs">(Suplente)</span>
               )}
             </p>
+            {user.id === j.idUsuario && <p className="w-min mr-auto bg-neutral-800 text-neutral-400 text-xs px-2 p-0.5 rounded">Tú</p>}
             {equipo.idCreador !== j.idUsuario && renderEstado(j.estado)}
           </div>
         ))}

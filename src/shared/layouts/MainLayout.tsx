@@ -6,6 +6,7 @@ import {
   faTrophy,
   faUser,
   faUserPlus,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../api/auth/useAuth";
 import { NetworkStatusBanner } from "../components/NetworkStatusBanner/NetworkStatusBanner";
@@ -15,6 +16,8 @@ const TopNavContentAuth: TopNavItem[] = [
   { label: "Competiciones", href: "/competiciones", icon: faTrophy },
   { label: "Crear equipo", href: "/crear-equipo", icon: faPlus },
   { label: "Crear liga", href: "/crear-liga", icon: faPlus, onlyAdmin: true },
+  { label: "Equipos", href: "/admin-equipos", icon: faUser, onlyAdmin: true },
+  { label: "Usuarios", href: "/admin-usuarios", icon: faUsers, onlyAdmin: true },
 ];
 
 const TopNavContent: TopNavItem[] = [
@@ -36,7 +39,7 @@ export const MainLayout = () => {
           <img
             src="/logo.png"
             alt="logo"
-            className="w-full opacity-[4%] pointer-events-none fixed z-1 -bottom-1/12 left-1/3 md:bg-red-200"
+            className="w-full opacity-[4%] pointer-events-none fixed z-1 -bottom-1/12 left-1/3 md:w-90 md:left-20"
           />
           <div className="z-2 relative">
             <Outlet />

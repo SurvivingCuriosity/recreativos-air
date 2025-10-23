@@ -28,8 +28,8 @@ export const MiPerfilPage = () => {
   return (
     <>
       <title>Mi perfil | Recreativos Air</title>
-      <div className="max-w-screen-md mx-auto p-3 flex flex-col gap-4 justify-start h-full">
-        <div className="flex justify-between bg-neutral-900 rounded-xl relative p-3">
+      <div className="p-3 flex flex-col gap-4 justify-start h-full">
+        <div className="flex justify-between bg-neutral-900 rounded-xl relative p-3 md:p-6">
           <span>
             <Titulo variant="h2" className="font-cool">
               {user?.username}
@@ -52,61 +52,59 @@ export const MiPerfilPage = () => {
           )}
         </div>
 
-        {/* Equipos */}
-        <div className="p-3 rounded-xl">
-          <div className="flex items-center gap-2 pb-2">
-            <FontAwesomeIcon
-              icon={faUsers}
-              className="text-neutral-300"
-              size="lg"
-            />
-            <Titulo
-              variant="h4"
-              className="font-cool text-neutral-300! tracking-widest"
-            >
-              Equipos
-            </Titulo>
-            <div className="w-min ml-auto">
-              <Button
-                onClick={() => navigate("/crear-equipo")}
-                variant="outline-neutral"
-                icon={faPlus}
+        <div className="flex flex-col md:flex-row w-full md:gap-3">
+          {/* Equipos */}
+          <div className="md:grow md:w-1/2 p-3 rounded-xl md:p-8 md:bg-neutral-900/60">
+            <div className="flex items-center gap-2 pb-2">
+              <FontAwesomeIcon
+                icon={faUsers}
+                className="text-neutral-300"
+                size="lg"
+              />
+              <Titulo
+                variant="h4"
+                className="font-cool text-neutral-300! tracking-widest"
               >
-                <></>
-              </Button>
-            </div>
-          </div>
-
-          <MisEquipos idUsuario={user?.id || ""} />
-        </div>
-
-        {/* Competiciones */}
-        <div className="p-3 rounded-xl">
-          <div className="flex items-center gap-2 pb-2">
-            <FontAwesomeIcon
-              icon={faTrophy}
-              className="text-neutral-300"
-              size="lg"
-            />
-            <Titulo
-              variant="h4"
-              className="font-cool text-neutral-300! tracking-widest"
-            >
-              Competiciones
-            </Titulo>
-            {user?.admin && (
+                Equipos
+              </Titulo>
               <div className="w-min ml-auto">
                 <Button
-                  onClick={() => navigate("/crear-liga")}
+                  onClick={() => navigate("/crear-equipo")}
                   variant="outline-neutral"
                   icon={faPlus}
-                >
-                  <></>
-                </Button>
+                />
               </div>
-            )}
+            </div>
+
+            <MisEquipos idUsuario={user?.id || ""} />
           </div>
-          <MisCompeticiones />
+
+          {/* Competiciones */}
+          <div className="md:grow md:w-1/2 p-3 rounded-xl md:p-8 md:bg-neutral-900/60">
+            <div className="flex items-center gap-2 pb-2">
+              <FontAwesomeIcon
+                icon={faTrophy}
+                className="text-neutral-300"
+                size="lg"
+              />
+              <Titulo
+                variant="h4"
+                className="font-cool text-neutral-300! tracking-widest"
+              >
+                Competiciones
+              </Titulo>
+              {user?.admin && (
+                <div className="w-min ml-auto">
+                  <Button
+                    onClick={() => navigate("/crear-liga")}
+                    variant="outline-neutral"
+                    icon={faPlus}
+                  />
+                </div>
+              )}
+            </div>
+            <MisCompeticiones />
+          </div>
         </div>
       </div>
     </>

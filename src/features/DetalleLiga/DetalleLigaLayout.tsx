@@ -1,9 +1,10 @@
-import { use } from "react";
+import { faSync } from "@fortawesome/free-solid-svg-icons";
+import { useQueryClient } from "@tanstack/react-query";
+import { use, useCallback, useRef } from "react";
 import toast from "react-hot-toast";
 import { Outlet, useParams } from "react-router";
 import { EstadoEquipoEnLiga } from "recreativos-air-core/liga";
 import { Button } from "../../packages/components/Button/Button";
-import { FullPageSpinner } from "../../packages/components/FullPageSpinner/FullPageSpinner";
 import { Titulo } from "../../packages/components/Titulo/Titulo";
 import { useAuth } from "../../shared/api/auth/useAuth";
 import {
@@ -50,10 +51,9 @@ export const DetalleLigaLayout = () => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center h-full">
-        <FullPageSpinner />
-        <p className="text-neutral-400 mt-3">Cargando liga...</p>
-      </div>
+      <p className="text-neutral-400 text-center p-10 animate-pulse">
+        Cargando liga...
+      </p>
     );
   }
 
@@ -79,7 +79,7 @@ export const DetalleLigaLayout = () => {
 
   return (
     <>
-      <div className="max-w-screen-sm mx-auto p-4 pt-2 h-full overflow-y-auto relative">
+      <div className="max-w-screen-sm mx-auto p-4 pt-2 h-full relative">
         <div className="flex items-center gap-2 sticky top-0 bg-neutral-950 z-2 pt-2 animate-fade-in-top">
           <img
             src={
@@ -113,3 +113,27 @@ export const DetalleLigaLayout = () => {
     </>
   );
 };
+
+export function BotonRefrescar({ onClick }: { onClick?: () => void }) {
+  const qc = useQueryClient();
+  const isDebouncing = useRef(false);
+
+  const handleClick = useCallback(() => {
+    onClick?.();
+    if (isDebouncing.current) return; // evita spam
+
+    isDebouncing.current = true;
+    qc.invalidateQueries();
+
+    // Permite nuevo click después de 2 segundos
+    setTimeout(() => {
+      isDebouncing.current = false;
+    }, 2000);
+  }, [qc, onClick]);
+
+  return (
+    <Button onClick={handleClick} variant="outline-neutral" icon={faSync}>
+      Actualizar
+    </Button>
+  );
+}

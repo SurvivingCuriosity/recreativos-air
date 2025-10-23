@@ -53,11 +53,11 @@ export const LoginPage = () => {
   return (
     <>
 
-      <main className="h-full w-full p-4 max-w-screen-sm mx-auto flex flex-col justify-center">
+      <main className="h-full w-full p-4 max-w-screen-lg mx-auto flex flex-col justify-center">
         <form
           autoComplete="on"
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 bg-neutral-900 shadow-md rounded-xl p-6 border border-neutral-800"
+          className="flex flex-col gap-4 bg-neutral-900 shadow-md rounded-xl p-6 border border-neutral-800 max-w-md mx-auto w-full"
         >
           <h1 className="text-2xl font-bold text-center">Iniciar sesión</h1>
 

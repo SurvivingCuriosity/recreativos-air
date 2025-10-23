@@ -18,6 +18,8 @@ import { VerifyEmailPage } from "../features/VerifyEmail/VerifyEmailPage";
 import { MainLayout } from "../shared/layouts/MainLayout";
 import RequireAdmin from "./components/RequireAdmin";
 import RequireAuth from "./components/RequireAuth";
+import { AdminEquiposPage } from "../features/Admin/AdminEquiposPage";
+import { AdminUsuariosPage } from "../features/Admin/AdminUsuariosPage";
 
 export const Router = () => {
   return (
@@ -52,6 +54,8 @@ export const Router = () => {
         {/* ADMIN */}
         <Route element={<RequireAdmin />}>
           <Route path="crear-liga" element={<CrearLigaPage />} />
+          <Route path="admin-equipos" element={<AdminEquiposPage />} />
+          <Route path="admin-usuarios" element={<AdminUsuariosPage />} />
         </Route>
       </Route>
     </Routes>

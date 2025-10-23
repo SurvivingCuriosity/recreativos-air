@@ -59,7 +59,7 @@ export const MisCompeticiones = () => {
       {ligasEnLasQueEstaInscrito.map((l) => (
         <div
           key={l.id}
-          className="w-[87%] max-w-96 shrink-0 snap-center rounded-xl shadow-xl shadow-neutral-800"
+          className="w-[87%] max-w-96 shrink-0 snap-center rounded-xl"
         >
           <TarjetaLiga
             key={l.id}

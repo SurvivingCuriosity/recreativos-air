@@ -67,19 +67,9 @@ export const RegisterPage = () => {
   return (
     <>
       <title>Registro | Recreativos Air</title>
-      <meta property="og:title" content="¡Apúntate!" />
-      <meta
-        property="og:description"
-        content="Registrate en Recreativos AIR para participar en la mejor liga de futbolín de Salamanca"
-      />
-      <meta property="og:url" content="https://recreativosair.com/" />
-
-      <meta property="twitter:title" content="¡Apúntate!" />
-      <meta property="twitter:description" content="Registrate en Recreativos AIR para participar en la mejor liga de futbolín de Salamanca" />
-
-      <main className="h-full w-full p-4 max-w-screen-lg mx-auto">
+      <main className="h-full w-full p-4 max-w-screen-lg mx-auto flex flex-col justify-center">
         <form
-          className="flex flex-col gap-4 bg-neutral-900 shadow-md rounded-xl p-6 border border-neutral-800"
+          className="flex flex-col gap-4 bg-neutral-900 shadow-md rounded-xl p-6 border border-neutral-800 max-w-md mx-auto w-full"
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit(onSubmit)();

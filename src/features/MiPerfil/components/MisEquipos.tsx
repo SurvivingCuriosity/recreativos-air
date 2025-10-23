@@ -1,6 +1,7 @@
 import { EstadoJugadorEnEquipo } from "recreativos-air-core/equipos";
 import { useGetEquiposUsuario } from "../../../shared/api/equipos/hooks/useGetEquipos";
 import { TarjetaEquipo } from "../../../shared/components/TarjetaEquipo/TarjetaEquipo";
+import { useNavigate } from "react-router";
 
 type Props = {
   idUsuario: string;
@@ -12,6 +13,8 @@ export const MisEquipos = ({ idUsuario }: Props) => {
     isLoading,
     error,
   } = useGetEquiposUsuario(idUsuario || "");
+
+  const navigate = useNavigate()
 
   if (isLoading)
     return (
@@ -37,14 +40,12 @@ export const MisEquipos = ({ idUsuario }: Props) => {
     );
 
   return (
-    <div className="relative">
       <ul className="flex items-center gap-2 overflow-x-auto w-full snap-x mb-2">
         {equiposAceptados.map((equipo, index) => (
           <div key={equipo.id + index} className="w-11/12 snap-start pb-2">
-            <TarjetaEquipo key={index} equipo={equipo} onClick={() => {}} />
+            <TarjetaEquipo key={index} equipo={equipo} onClick={() => navigate(`/equipos/${equipo.id}`)} />
           </div>
         ))}
       </ul>
-    </div>
   );
 };
