@@ -1,6 +1,7 @@
 import { use } from "react";
 import toast from "react-hot-toast";
 import { Outlet, useParams } from "react-router";
+import { EstadoEquipoEnLiga } from "recreativos-air-core/liga";
 import { Button } from "../../packages/components/Button/Button";
 import { FullPageSpinner } from "../../packages/components/FullPageSpinner/FullPageSpinner";
 import { Titulo } from "../../packages/components/Titulo/Titulo";
@@ -17,7 +18,6 @@ import {
   logoFutbolinMapLight,
 } from "../../shared/db/logoFutbolinMap";
 import { NavDetalleLiga } from "./NavDetalleLiga";
-import { EstadoEquipoEnLiga } from "recreativos-air-core/liga";
 
 export const DetalleLigaLayout = () => {
   const { id } = useParams<{ id: string }>();
@@ -77,12 +77,8 @@ export const DetalleLigaLayout = () => {
     e.equipo.jugadores?.some((j) => j.idUsuario === user?.id)
   );
 
-  const nombre = liga.nombre;
-  console.log(nombre);
-
   return (
     <>
-      <title>{nombre} | Recreativos Air</title>
       <div className="max-w-screen-sm mx-auto p-4 pt-2 h-full overflow-y-auto relative">
         <div className="flex items-center gap-2 sticky top-0 bg-neutral-950 z-2 pt-2 animate-fade-in-top">
           <img

@@ -24,18 +24,6 @@ export const LandingPage = () => {
 
   return (
     <>
-      <meta property="og:title" content="Recreativos AIR" />
-      <meta
-        property="og:description"
-        content="Ligas de futbolin Tsunami e Infinity en Salamanca, ¡apúntate!"
-      />
-      <meta property="og:url" content="https://recreativosair.com/" />
-
-      <meta property="twitter:title" content="Recreativos AIR" />
-      <meta
-        property="twitter:description"
-        content="Ligas de futbolin Tsunami e Infinity en Salamanca, ¡apúntate!"
-      />
       <div>
         <main className="z-0 p-4 h-[calc(100svh-4rem)] w-full relative bg-neutral-950 flex flex-col items-center justify-start">
           <img

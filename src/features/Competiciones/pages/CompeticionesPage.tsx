@@ -18,18 +18,6 @@ export const CompeticionesPage = () => {
   return (
     <>
       <title>Competiciones | Recreativos Air</title>
-      <meta property="og:title" content="Ligas Futbolin en Salamanca" />
-      <meta
-        property="og:description"
-        content="Aquí encontrarás las ligas de futbolín disponibles en Salamanca"
-      />
-      <meta property="og:url" content="https://recreativosair.com/" />
-
-      <meta property="twitter:title" content="Ligas Futbolin en Salamanca" />
-      <meta
-        property="twitter:description"
-        content="Aquí encontrarás las ligas de futbolín disponibles en Salamanca"
-      />
       <div className="max-w-screen-md mx-auto flex flex-col items-center justify-start p-4 h-full gap-3">
         <h1 className="text-3xl font-bold font-cool">Competiciones</h1>
         {equiposUsuario?.length === 0 && (
