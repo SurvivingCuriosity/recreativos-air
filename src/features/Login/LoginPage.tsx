@@ -52,16 +52,7 @@ export const LoginPage = () => {
 
   return (
     <>
-      <title>Iniciar sesión | Recreativos Air</title>
-            <meta property="og:title" content="Bienvenido" />
-      <meta
-        property="og:description"
-        content="Accede a tu cuenta para ver las competiciones disponibles y tus resultados"
-      />
-      <meta property="og:url" content="https://recreativosair.com/" />
 
-      <meta property="twitter:title" content="Bienvenido" />
-      <meta property="twitter:description" content="Accede a tu cuenta para ver las competiciones disponibles y tus resultados" />
       <main className="h-full w-full p-4 max-w-screen-sm mx-auto flex flex-col justify-center">
         <form
           autoComplete="on"
