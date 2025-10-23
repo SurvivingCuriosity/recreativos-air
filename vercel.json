@@ -1,27 +1,20 @@
 {
-    "routes": [
-        {
-            "src": "/[^.]+",
-            "dest": "/",
-            "status": 200
-        }
-    ],
-    "rewrites": [
-        {
-            "source": "/login",
-            "destination": "/login.html"
-        },
-        {
-            "source": "/register",
-            "destination": "/register.html"
-        },
-        {
-            "source": "/competiciones",
-            "destination": "/competiciones.html"
-        },
-        {
-            "source": "/(.*)",
-            "destination": "/"
-        }
-    ]
+  "rewrites": [
+    {
+      "source": "/login",
+      "destination": "/login.html"
+    },
+    {
+      "source": "/register",
+      "destination": "/register.html"
+    },
+    {
+      "source": "/competiciones",
+      "destination": "/competiciones.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
 }
