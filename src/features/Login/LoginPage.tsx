@@ -2,13 +2,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router";
+import { LoginSchema, type LoginBody } from "recreativos-air-core/auth";
 import { Button } from "../../packages/components/Button/Button";
 import { FormField } from "../../packages/components/Form/FormField";
 import { FormLabel } from "../../packages/components/Form/FormLabel";
 import { PasswordInput } from "../../packages/components/TextInput/PasswordInput";
 import { TextInput } from "../../packages/components/TextInput/TextInput";
 import { useLogin } from "../../shared/api/auth/hooks";
-import { LoginSchema, type LoginBody } from "recreativos-air-core/auth";
 
 export const LoginPage = () => {
   const { mutateAsync: login, isPending } = useLogin();
@@ -51,70 +51,73 @@ export const LoginPage = () => {
   };
 
   return (
-    <main className="h-full w-full p-4 max-w-screen-sm mx-auto flex flex-col justify-center">
-      <form
-        autoComplete="on"
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 bg-neutral-900 shadow-md rounded-xl p-6 border border-neutral-800"
-      >
-        <h1 className="text-2xl font-bold text-center">Iniciar sesión</h1>
-
-        <FormField>
-          <FormLabel htmlFor="login-email">Email</FormLabel>
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <TextInput
-                id="login-email"
-                name="email"
-                placeholder="test@test.com"
-                autoComplete="email"
-                value={field.value}
-                onChangeText={field.onChange}
-                hasError={!!errors.email}
-                autoFocus
-              />
-            )}
-          />
-          {errors.email && (
-            <p className="text-red-500 text-xs">{errors.email.message}</p>
-          )}
-        </FormField>
-
-        <FormField>
-          <FormLabel htmlFor="login-password">Contraseña</FormLabel>
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <PasswordInput
-                id="login-password"
-                name="password"
-                placeholder="********"
-                autoComplete="current-password"
-                value={field.value}
-                onChangeText={field.onChange}
-                hasError={!!errors.password}
-              />
-            )}
-          />
-          {errors.password && (
-            <p className="text-red-500 text-xs">{errors.password.message}</p>
-          )}
-        </FormField>
-
-        <Button disabled={isPending} type="submit">
-          Entrar
-        </Button>
-
-        <Link
-          to="/register"
-          className="mx-auto underline text-sm text-gray-600 mt-2"
+    <>
+      <title>Iniciar sesión | Recreativos Air</title>
+      <main className="h-full w-full p-4 max-w-screen-sm mx-auto flex flex-col justify-center">
+        <form
+          autoComplete="on"
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-4 bg-neutral-900 shadow-md rounded-xl p-6 border border-neutral-800"
         >
-          ¿No tienes cuenta? Regístrate
-        </Link>
-      </form>
-    </main>
+          <h1 className="text-2xl font-bold text-center">Iniciar sesión</h1>
+
+          <FormField>
+            <FormLabel htmlFor="login-email">Email</FormLabel>
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <TextInput
+                  id="login-email"
+                  name="email"
+                  placeholder="test@test.com"
+                  autoComplete="email"
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  hasError={!!errors.email}
+                  autoFocus
+                />
+              )}
+            />
+            {errors.email && (
+              <p className="text-red-500 text-xs">{errors.email.message}</p>
+            )}
+          </FormField>
+
+          <FormField>
+            <FormLabel htmlFor="login-password">Contraseña</FormLabel>
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <PasswordInput
+                  id="login-password"
+                  name="password"
+                  placeholder="********"
+                  autoComplete="current-password"
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  hasError={!!errors.password}
+                />
+              )}
+            />
+            {errors.password && (
+              <p className="text-red-500 text-xs">{errors.password.message}</p>
+            )}
+          </FormField>
+
+          <Button disabled={isPending} type="submit">
+            Entrar
+          </Button>
+
+          <Link
+            to="/register"
+            className="mx-auto underline text-sm text-gray-600 mt-2"
+          >
+            ¿No tienes cuenta? Regístrate
+          </Link>
+        </form>
+      </main>
+    </>
   );
 };

@@ -77,37 +77,43 @@ export const DetalleLigaLayout = () => {
     e.equipo.jugadores?.some((j) => j.idUsuario === user?.id)
   );
 
+  const nombre = liga.nombre;
+  console.log(nombre);
+
   return (
-    <div className="max-w-screen-sm mx-auto p-4 pt-2 h-full overflow-y-auto relative">
-      <div className="flex items-center gap-2 sticky top-0 bg-neutral-950 z-2 pt-2 animate-fade-in-top">
-        <img
-          src={
-            darkMode
-              ? logoFutbolinMap[liga.tipoFutbolin]
-              : logoFutbolinMapLight[liga.tipoFutbolin]
-          }
-          alt={liga.nombre}
-          className="size-9"
-        />
-        <h1 className="font-cool text-2xl font-bold text-primary">
-          {liga.nombre}
-        </h1>
-      </div>
-      {userYaInscrito ? (
-        equipoUsuario?.estado === EstadoEquipoEnLiga.Pendiente && (
-          <p className="p-1 bg-neutral-500/20 w-fit rounded text-sm text-primary my-2">
-            Esperando confirmación...
-          </p>
-        )
-      ) : (
-        <div className="flex justify-center my-4">
-          <Button onClick={handleClickInscribir} disabled={isPending}>
-            Inscribirme
-          </Button>
+    <>
+      <title>{nombre} | Recreativos Air</title>
+      <div className="max-w-screen-sm mx-auto p-4 pt-2 h-full overflow-y-auto relative">
+        <div className="flex items-center gap-2 sticky top-0 bg-neutral-950 z-2 pt-2 animate-fade-in-top">
+          <img
+            src={
+              darkMode
+                ? logoFutbolinMap[liga.tipoFutbolin]
+                : logoFutbolinMapLight[liga.tipoFutbolin]
+            }
+            alt={liga.nombre}
+            className="size-9"
+          />
+          <h1 className="font-cool text-2xl font-bold text-primary">
+            {liga.nombre}
+          </h1>
         </div>
-      )}
-      <NavDetalleLiga />
-      <Outlet />
-    </div>
+        {userYaInscrito ? (
+          equipoUsuario?.estado === EstadoEquipoEnLiga.Pendiente && (
+            <p className="p-1 bg-neutral-500/20 w-fit rounded text-sm text-primary my-2">
+              Esperando confirmación...
+            </p>
+          )
+        ) : (
+          <div className="flex justify-center my-4">
+            <Button onClick={handleClickInscribir} disabled={isPending}>
+              Inscribirme
+            </Button>
+          </div>
+        )}
+        <NavDetalleLiga />
+        <Outlet />
+      </div>
+    </>
   );
 };

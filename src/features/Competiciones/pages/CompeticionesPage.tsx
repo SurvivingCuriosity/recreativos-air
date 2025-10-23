@@ -16,49 +16,60 @@ export const CompeticionesPage = () => {
   const { data: equiposUsuario } = useGetEquiposUsuario(user?.id || "");
 
   return (
-    <div className="max-w-screen-md mx-auto flex flex-col items-center justify-start p-4 h-full gap-3">
-      <h1 className="text-3xl font-bold font-cool">Competiciones</h1>
-      {equiposUsuario?.length === 0 && (
-        <Message variant="info" className="w-full mb-2">
-          <>
-            <p>
-              No perteneces a ningún equipo. Debes crear un equipo para poder
-              inscribirte a las competiciones
-            </p>
-            <Link to="/crear-equipo" className="text-primary underline text-sm">
-              Crear equipo
-            </Link>
-          </>
-        </Message>
-      )}
-      {user?.admin && (
-        <Button onClick={() => navigate("/crear-liga")} icon={faTrophy}>
-          Nueva liga
-        </Button>
-      )}
-      {isLoading && <p>Cargando...</p>}
-      {error && <p>Error al cargar {String(error)}</p>}
+    <>
+      <title>Competiciones | Recreativos Air</title>
+      <meta property="og:title" content="Liga Futbolín Salamanca" />
+      <meta
+        property="og:description"
+        content="Liga Futbolín en Salamanca"
+      />
+      <div className="max-w-screen-md mx-auto flex flex-col items-center justify-start p-4 h-full gap-3">
+        <h1 className="text-3xl font-bold font-cool">Competiciones</h1>
+        {equiposUsuario?.length === 0 && (
+          <Message variant="info" className="w-full mb-2">
+            <>
+              <p>
+                No perteneces a ningún equipo. Debes crear un equipo para poder
+                inscribirte a las competiciones
+              </p>
+              <Link
+                to="/crear-equipo"
+                className="text-primary underline text-sm"
+              >
+                Crear equipo
+              </Link>
+            </>
+          </Message>
+        )}
+        {user?.admin && (
+          <Button onClick={() => navigate("/crear-liga")} icon={faTrophy}>
+            Nueva liga
+          </Button>
+        )}
+        {isLoading && <p>Cargando...</p>}
+        {error && <p>Error al cargar {String(error)}</p>}
 
-      {ligas?.length === 0 ? (
-        <p className="text-center p-10 text-neutral-400">No hay ligas</p>
-      ) : (
-        <ul className="flex flex-col gap-4 w-full h-11/12 overflow-y-auto pt-2">
-          {ligas?.map((liga, index) => (
-            <span
-              style={{ animationDelay: `${index * 0.1}s` }}
-              key={liga.id}
-              className="animate-fade-in-top"
-            >
-              <TarjetaLiga
-                liga={liga}
-                onClick={() =>
-                  navigate(`/competiciones/${liga.id}/clasificacion`)
-                }
-              />
-            </span>
-          ))}
-        </ul>
-      )}
-    </div>
+        {ligas?.length === 0 ? (
+          <p className="text-center p-10 text-neutral-400">No hay ligas</p>
+        ) : (
+          <ul className="flex flex-col gap-4 w-full h-11/12 overflow-y-auto pt-2">
+            {ligas?.map((liga, index) => (
+              <span
+                style={{ animationDelay: `${index * 0.1}s` }}
+                key={liga.id}
+                className="animate-fade-in-top"
+              >
+                <TarjetaLiga
+                  liga={liga}
+                  onClick={() =>
+                    navigate(`/competiciones/${liga.id}/clasificacion`)
+                  }
+                />
+              </span>
+            ))}
+          </ul>
+        )}
+      </div>
+    </>
   );
 };
