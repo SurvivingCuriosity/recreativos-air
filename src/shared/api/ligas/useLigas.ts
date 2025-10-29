@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { LigasAPI } from "./api";
 import type { CrearLigaBody, LigaDTO } from "recreativos-air-core/liga";
+import { LigasAPI } from "./api";
 
 // 🔁 Obtener todas las ligas
 export const useLigas = () => {
@@ -91,6 +91,20 @@ export const useCambiarEstadoLiga = () => {
       queryClient.invalidateQueries({ queryKey: ["ligas", ligaId] });
     },
     onError: () => toast.error("Error al cambiar el estado de la liga"),
+  });
+};
+
+export const useEliminarEquipoDeLiga = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ ligaId, equipoId }: { ligaId: string; equipoId: string }) =>
+      LigasAPI.eliminarEquipoLiga(ligaId, equipoId),
+    onSuccess: (_, { ligaId }) => {
+      toast.success("Equipo eliminado correctamente");
+      queryClient.invalidateQueries({ queryKey: ["ligas", ligaId] });
+    },
+    onError: () => toast.error("Error al eliminar el equipo de la liga"),
   });
 };
 

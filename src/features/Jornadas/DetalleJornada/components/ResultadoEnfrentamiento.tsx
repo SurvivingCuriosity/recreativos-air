@@ -32,11 +32,11 @@ export const ResultadoEnfrentamiento = ({
   return (
     <div className="flex flex-col gap-2">
       <div className="flex text-xl justify-between w-full">
-        <div className="border-neutral-700 flex flex-col">
-          <p className="border-b border-neutral-700 py-2 px-2 truncate font-semibold">
+        <div className="border-neutral-700 flex flex-col max-w-40">
+          <p className="border-b border-neutral-700 py-2 truncate font-semibold">
             {enfrentamiento.equipoA.nombre}
           </p>
-          <p className="py-2 px-2 truncate font-semibold">
+          <p className="py-2 truncate font-semibold">
             {enfrentamiento.equipoB.nombre}
           </p>
         </div>

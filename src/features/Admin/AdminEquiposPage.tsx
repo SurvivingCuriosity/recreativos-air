@@ -34,7 +34,10 @@ export const AdminEquiposPage = () => {
     if (!search.trim()) return equipos;
 
     const term = normalize(search);
-    return equipos.filter((u) => normalize(u.nombre).includes(term));
+    return equipos.filter(
+      (u) =>
+        normalize(u.id).includes(term) || normalize(u.nombre).includes(term)
+    );
   }, [equipos, search]);
 
   return (
@@ -52,8 +55,9 @@ export const AdminEquiposPage = () => {
       ) : (
         <ul className="space-y-3 mt-3">
           {equiposFiltrados?.map((equipo) => {
-            
-            const ligasEnLasQueEstaInscrito = ligas?.filter(liga => liga.equipos.some(e => e.equipo.id === equipo.id));
+            const ligasEnLasQueEstaInscrito = ligas?.filter((liga) =>
+              liga.equipos.some((e) => e.equipo.id === equipo.id)
+            );
 
             return (
               <TarjetaEquipoAdmin

@@ -17,7 +17,6 @@ export interface TopNavItem {
 export const TopNav = ({ content }: { content: TopNavItem[] }) => {
   const { user } = useAuth();
   const isAdmin = user?.admin;
-
   return (
     <header
       className={`h-14 p-2 border-b ${

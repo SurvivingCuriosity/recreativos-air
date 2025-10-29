@@ -28,8 +28,8 @@ export const DetalleJornadaPage = () => {
 
   return (
     <div className="p-4 flex flex-col gap-3 max-w-screen-md mx-auto">
-      <h1 className="text-3xl font-black font-cool text-primary underline underline-offset-2">
-        {enfrentamiento.equipoA.nombre} vs {enfrentamiento.equipoB.nombre}
+      <h1 className="text-2xl font-black font-cool text-primary">
+        {enfrentamiento.equipoA.nombre} <span className="text-white font-cool">vs</span> {enfrentamiento.equipoB.nombre}
       </h1>
 
       {/* Datos básicos */}

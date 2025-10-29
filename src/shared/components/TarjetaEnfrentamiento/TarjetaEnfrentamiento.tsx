@@ -53,7 +53,7 @@ export const TarjetaEnfrentamiento = ({
         </div>
         <div className="flex text-sm justify-between">
           <div className={`flex flex-col min-w-28`}>
-            <div className="relative">
+            <div className="relative w-45 truncate">
               <p
                 title={enfrentamiento.equipoA.nombre}
                 className={`${
@@ -71,7 +71,7 @@ export const TarjetaEnfrentamiento = ({
                 className="absolute top-0 left-0 h-full w-1"
               ></div>
             </div>
-            <div className="relative">
+            <div className="relative w-45 truncate">
               <p
                 title={enfrentamiento.equipoB.nombre}
                 className={`${

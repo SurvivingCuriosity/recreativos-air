@@ -6,9 +6,10 @@ import type { LigaDTO } from "recreativos-air-core/liga";
 export const TarjetaEquipoAdmin = ({ equipo, ligas }: { equipo: EquipoDTO, ligas: LigaDTO[] }) => {
 
 
-
   return (
     <div className="bg-neutral-900 p-2 px-4 rounded-lg relative">
+      
+      <p className="text-xs text-neutral-500">{equipo.id}</p>
       <p className="font-cool text-xl text-primary">{equipo.nombre}</p>
       <div className="flex items-start justify-between">
 

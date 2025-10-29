@@ -35,6 +35,14 @@ export const LigasAPI = {
     return res.data.data;
   },
 
+  async eliminarEquipoLiga(
+    ligaId: string,
+    equipoId: string,
+  ): Promise<LigaDTO> {
+    const res = await api.delete(`/ligas/${ligaId}/equipo/${equipoId}`);
+    return res.data.data;
+  },
+
   async cambiarEstado(ligaId: string, nuevoEstado: string): Promise<LigaDTO> {
     const res = await api.patch(`/ligas/${ligaId}/estado`, { nuevoEstado });
     return res.data.data;

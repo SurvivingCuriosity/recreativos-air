@@ -84,12 +84,12 @@ const resultadoValido = () => {
       {open && (
         <Window titulo="Proponer resultado" onClose={() => setOpen(false)}>
           <div className="flex flex-col gap-3">
-            <div className="flex flex-row gap-1 overflow-x-auto p-2">
-              <div className="flex flex-col justify-between gap-1">
-                <p className="bg-neutral-800 h-full truncate max-w-23 flex items-center justify-center px-3 text-sm rounded-lg">
+            <div className="flex flex-row gap-1 overflow-x-auto w-full">
+              <div className="flex flex-col justify-between gap-1 w-40">
+                <p className="bg-neutral-800 h-full truncate w-full max-w-32 flex items-center justify-start px-3 pl-1 text-sm rounded-lg">
                   {enfrentamiento.equipoA.nombre}
                 </p>
-                <p className="bg-neutral-800 h-full truncate max-w-23 flex items-center justify-center px-3 text-sm rounded-lg">
+                <p className="bg-neutral-800 h-full truncate w-full max-w-32 flex items-center justify-start px-3 pl-1 text-sm rounded-lg">
                   {enfrentamiento.equipoB.nombre}
                 </p>
               </div>

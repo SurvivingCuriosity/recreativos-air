@@ -19,6 +19,7 @@ import {
   logoFutbolinMapLight,
 } from "../../shared/db/logoFutbolinMap";
 import { NavDetalleLiga } from "./NavDetalleLiga";
+import { BotonArrancarLiga } from "./components/BotonArrancarLiga";
 
 export const DetalleLigaLayout = () => {
   const { id } = useParams<{ id: string }>();
@@ -107,6 +108,9 @@ export const DetalleLigaLayout = () => {
             </Button>
           </div>
         )}
+        {user?.admin && 
+          <BotonArrancarLiga liga={liga} />
+        }
         <NavDetalleLiga />
         <Outlet />
       </div>

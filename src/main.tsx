@@ -9,6 +9,7 @@ import api from "./shared/api/http";
 import { ThemeContextProvider } from "./shared/context/ThemeProvider";
 import { WindowProvider } from "./shared/context/WindowProvider";
 import "./shared/globals.css";
+import { UIProvider } from "./shared/context/UIProvider/components/UIProviders";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,18 +24,20 @@ export const queryClient = new QueryClient({
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThemeContextProvider>
-        <BrowserRouter>
-          <WindowProvider>
-            <Router />
-            <Toaster
-              toastOptions={{
-                duration: 2000,
-              }}
-            />
-          </WindowProvider>
-        </BrowserRouter>
-      </ThemeContextProvider>
+      <UIProvider>
+        <ThemeContextProvider>
+          <BrowserRouter>
+            <WindowProvider>
+              <Router />
+              <Toaster
+                toastOptions={{
+                  duration: 2000,
+                }}
+              />
+            </WindowProvider>
+          </BrowserRouter>
+        </ThemeContextProvider>
+      </UIProvider>
       {import.meta.env.DEV && (
         <ReactQueryDevtools buttonPosition={"bottom-left"} />
       )}
