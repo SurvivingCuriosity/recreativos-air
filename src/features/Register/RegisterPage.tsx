@@ -10,8 +10,6 @@ import { PasswordInput } from "../../packages/components/TextInput/PasswordInput
 import { TextInput } from "../../packages/components/TextInput/TextInput";
 import { useRegister } from "../../shared/api/auth/hooks";
 import { handleApiErrors } from "../../shared/api/utils";
-import type { ApiResponse } from "../../shared/api/types";
-import type { AxiosError } from "axios";
 
 export const RegisterPage = () => {
   const { mutate: registerUser, isPending } = useRegister();
@@ -53,16 +51,15 @@ export const RegisterPage = () => {
         }
       },
       onError: (error) => {
-        const axiosError = error as AxiosError;
-        const errorMessage = axiosError.response!
-          .data as unknown as ApiResponse<null>;
         toast.error(
-          errorMessage.message ??
+          error.message ??
             "Error del servidor. Inténtalo de nuevo más tarde."
         );
       },
     });
   };
+
+  console.log(isPending)
 
   return (
     <>

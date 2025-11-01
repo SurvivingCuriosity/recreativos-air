@@ -55,7 +55,7 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
 
   const estaInscrito = useIsInscritoALiga(liga);
   const equipoUsuario = liga.equipos?.find((e) =>
-    e.equipo.jugadores?.some((j) => j.idUsuario === user?.id)
+    e.equipo?.jugadores?.some((j) => j.idUsuario === user?.id)
   );
   const pendienteDeAceptar =
     equipoUsuario?.estado === EstadoEquipoEnLiga.Pendiente;

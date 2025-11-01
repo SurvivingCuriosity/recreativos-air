@@ -4,9 +4,10 @@ import { useAuth } from "../api/auth/useAuth";
 export const useIsInscritoALiga = (liga: LigaDTO) => {
   const { user } = useAuth();
 
-  const userYaInscrito = liga.equipos?.some((e) =>
-    e.equipo.jugadores?.some((j) => j.idUsuario === user?.id)
-  );
+  const userYaInscrito = liga.equipos?.some((e) => {
+    if (e.equipo===null) return false;
+    return e.equipo.jugadores?.some((j) => j.idUsuario === user?.id);
+  });
 
   return userYaInscrito;
 };
