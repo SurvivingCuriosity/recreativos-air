@@ -19,7 +19,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // ---- Confirm ----
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogOptions, setDialogOptions] = useState<any>({});
+  const [dialogOptions, setDialogOptions] = useState({});
   const [resolver, setResolver] = useState<(result: boolean) => void>();
 
   const confirm = (options = {}): Promise<boolean> => {
@@ -91,7 +91,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   // Render del contenido (si es render-prop le pasamos controles)
   const renderedModalContent = useMemo(() => {
     if (typeof modalContent === "function") {
-      return (modalContent as any)({
+      return (modalContent)({
         close: closeModal,
         resolve: (value: unknown) => {
           setModalOpen(false);

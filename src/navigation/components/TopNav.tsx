@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router";
 import { BotonRefrescar } from "../../features/DetalleLiga/DetalleLigaLayout";
 import { useAuth } from "../../shared/api/auth/useAuth";
 import { ThemeSwitcher } from "../../shared/components/ThemeSwitcher/ThemeSwitcher";
-
 export interface TopNavItem {
   label: string;
   href: string;
@@ -97,6 +96,7 @@ export const HamburgerMenu = ({ content }: { content: TopNavItem[] }) => {
           <Link to="/competiciones">Competiciones</Link>
         </ul>
       )}
+      
 
       <div
         className={`z-5 flex flex-col justify-between lg:hidden fixed top-0 h-dvh w-screen bg-neutral-950/95 ${
@@ -130,6 +130,9 @@ export const HamburgerMenu = ({ content }: { content: TopNavItem[] }) => {
               </div>
             );
           })}
+          <a href="https://www.futbolin.app" target="_blank" className="bg-neutral-900 block rounded-xl mt-8">
+            <img src="/logo-futbol-in.png" alt="logo" className="w-50 mx-auto" />
+          </a>
         </ul>
         <ThemeSwitcher />
       </div>
