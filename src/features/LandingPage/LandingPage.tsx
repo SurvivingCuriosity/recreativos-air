@@ -32,10 +32,11 @@ export const LandingPage = () => {
         className="
           font-black
           text-neutral-50/60
-          text-center text-5xl font-neutral-950
+          text-center font-neutral-950
           bg-center bg-cover bg-no-repeat
           bg-clip-text
           leading-none
+          text-3xl
           md:text-4xl
           xl:text-5xl
           2xl:text-6xl
@@ -44,11 +45,11 @@ export const LandingPage = () => {
         style={{ backgroundImage: `url(${fondo_text})` }}
       >
         Recreativos{" "}
-        <span className="text-9xl md:text-[18vw] lg:text-[10vw] tracking-widest block text-neutral-50/60">
+        <span className="text-8xl md:text-[18vw] lg:text-[10vw] tracking-widest block text-neutral-50/60">
           AIR
         </span>
       </h1>
-      <p className="italic text-neutral-200 text-balance text-center animate-fade-in-top">
+      <p className="italic text-neutral-200 text-balance text-center animate-fade-in-top text-sm">
         Empresa especializada en futbolines Tsunami e Infinity en la provincia
         de Salamanca.
       </p>
@@ -71,6 +72,14 @@ export const LandingPage = () => {
             </div>
           ))}
         </ul>
+        <a
+          href="https://www.futbolin.app"
+          target="_blank"
+          className="bg-neutral-900 block rounded-xl mt-4 font-cool p-3 text-center text-sm"
+        >
+          ¡ Encuentra futbolines cerca !
+          <img src="/logo-futbol-in.png" alt="logo" className="w-fit max-w-42 mx-auto" />
+        </a>
       </div>
 
       {!isLoggedIn && <ButtonWhatsapp numero={TELEFONO_ALBERTO} />}
