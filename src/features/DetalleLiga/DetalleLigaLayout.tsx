@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { use, useCallback, useRef } from "react";
 import toast from "react-hot-toast";
 import { Outlet, useParams } from "react-router";
-import { EstadoEquipoEnLiga } from "recreativos-air-core/liga";
+import { EstadoEquipoEnLiga, EstadoLiga } from "recreativos-air-core/liga";
 import { Button } from "../../packages/components/Button/Button";
 import { Titulo } from "../../packages/components/Titulo/Titulo";
 import { useAuth } from "../../shared/api/auth/useAuth";
@@ -101,7 +101,7 @@ export const DetalleLigaLayout = () => {
               Esperando confirmación...
             </p>
           )
-        ) : (
+        ) : liga.estadoLiga === EstadoLiga.SinEmpezar && (
           <div className="flex justify-center my-4">
             <Button onClick={handleClickInscribir} disabled={isPending}>
               Inscribirme
