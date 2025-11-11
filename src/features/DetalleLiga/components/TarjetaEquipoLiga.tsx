@@ -81,13 +81,15 @@ export const TarjetaEquipoLiga = ({ idLiga, equipoLiga, onClick }: Props) => {
         <p className="font-cool text-primary tracking-tight font-extrabold text-lg grow w-full">
           {equipoLiga.equipo.nombre}
         </p>
-        <div className="w-min">
-          <Button
-            icon={faTrash}
-            variant="outline-neutral"
-            onClick={handleEliminarEquipoDeLiga}
-          ></Button>
-        </div>
+        {isAdmin && (
+          <div className="w-min">
+            <Button
+              icon={faTrash}
+              variant="outline-neutral"
+              onClick={handleEliminarEquipoDeLiga}
+            ></Button>
+          </div>
+        )}
       </div>
       <div
         style={{
