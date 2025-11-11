@@ -107,7 +107,7 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
             </p>
           )}
           {isLoggedIn ? (
-            !estaInscrito && (
+            !estaInscrito && liga.estadoLiga === EstadoLiga.SinEmpezar && (
               <div className="mt-3">
                 <Button
                   onClick={handleClickInscribir}
