@@ -2,7 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Button } from "../../../packages/components/Button/Button";
 import { useAuth } from "../../../shared/api/auth/useAuth";
-import { useGetEquiposUsuario } from "../../../shared/api/equipos/hooks/useGetEquipos";
+import { useGetAllEquipos, useGetEquiposUsuario } from "../../../shared/api/equipos/hooks/useGetEquipos";
 import {
   useInscribirEquipo,
   useLigaById,
@@ -16,13 +16,14 @@ export const InscribirEquipoExistenteForm = ({
   idLiga: string;
   onCloseWindow: () => void;
 }) => {
+
+  const {user} = useAuth()
+
   const { mutate: inscribirEquipo } = useInscribirEquipo();
 
   const { data: liga } = useLigaById(idLiga);
-
-  const { user } = useAuth();
-
-  const { data: equipos } = useGetEquiposUsuario(user?.id || "");
+  
+  const { data: equipos } = useGetAllEquipos();
 
   const [idEquipoSelected, setIdEquipoSelected] = useState<string | undefined>(
     undefined
@@ -51,6 +52,8 @@ export const InscribirEquipoExistenteForm = ({
 
     onCloseWindow();
   };
+
+  if(!user?.admin) return <p>No eres admin </p>
 
   return (
     <div className="h-40 flex flex-col justify-between">
