@@ -2,7 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Button } from "../../../packages/components/Button/Button";
 import { useAuth } from "../../../shared/api/auth/useAuth";
-import { useGetAllEquipos, useGetEquiposUsuario } from "../../../shared/api/equipos/hooks/useGetEquipos";
+import { useGetAllEquipos } from "../../../shared/api/equipos/hooks/useGetEquipos";
 import {
   useInscribirEquipo,
   useLigaById,
