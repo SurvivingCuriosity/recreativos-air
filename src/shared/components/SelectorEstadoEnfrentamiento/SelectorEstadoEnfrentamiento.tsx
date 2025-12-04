@@ -20,7 +20,11 @@ export const SelectorEstadoEnfrentamiento = memo(
       },
       {
         value: EstadoEnfrentamientoConOpcionCualquiera.ConfirmarResultado,
-        label: "Pendiente",
+        label: "Esperar admin",
+      },
+      {
+        value: EstadoEnfrentamientoConOpcionCualquiera.CorroborarResultado,
+        label: "Esperar rival",
       },
       {
         value: EstadoEnfrentamientoConOpcionCualquiera.Jugado,
