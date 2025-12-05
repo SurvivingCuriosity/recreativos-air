@@ -40,6 +40,7 @@ export const SelectorEquipo = memo((props: SelectorEquipo) => {
       options={incluirOpcionTodos ? equiposValuesConCualquiera : equiposValues}
       disabled={disabled}
       placeholder="Buscar equipo"
+      searchable
     />
   );
 });
