@@ -1,18 +1,14 @@
-import { use } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../shared/api/auth/useAuth";
-import fondoLight from "../../shared/assets/fondo-tsunami-full-light.jpg";
 import fondo from "../../shared/assets/fondo-tsunami-full.jpg";
 import fondo_text from "../../shared/assets/fondo-tsunami.jpg";
 import { TarjetaLiga } from "../../shared/components/TarjetaLiga/TarjetaLiga";
-import { ThemeContext } from "../../shared/context/ThemeContext";
 import { TELEFONO_ALBERTO } from "../../shared/db/telefono";
 import { useLigasDeUsuario } from "../../shared/hooks/useLigasDeUsuario";
 import { ButtonWhatsapp } from "./ButtonWhatsapp";
 
 export const LandingPage = () => {
   const navigate = useNavigate();
-  const { darkMode } = use(ThemeContext);
 
   const { ligas, loadingLigas } = useLigasDeUsuario();
   const { isLoggedIn } = useAuth();
@@ -24,7 +20,7 @@ export const LandingPage = () => {
   return (
     <main className="z-0 p-4 h-full w-full relative bg-neutral-950 flex flex-col items-center justify-start">
       <img
-        src={darkMode ? fondo : fondoLight}
+        src={fondo}
         alt="fondo"
         className="h-svh w-full bottom-0 object-cover fixed pointer-events-none -z-1"
       />

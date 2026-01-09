@@ -1,6 +1,6 @@
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 import { useQueryClient } from "@tanstack/react-query";
-import { use, useCallback, useRef } from "react";
+import { useCallback, useRef } from "react";
 import toast from "react-hot-toast";
 import { Outlet, useParams } from "react-router";
 import { EstadoEquipoEnLiga, EstadoLiga } from "recreativos-air-core/liga";
@@ -12,11 +12,9 @@ import {
   useLigaById,
 } from "../../shared/api/ligas/useLigas";
 import { SelectorEquipoUsuario } from "../../shared/components/SelectorEquipoUsuario/SelectorEquipoUsuario";
-import { ThemeContext } from "../../shared/context/ThemeContext";
 import { useWindow } from "../../shared/context/WindowProvider";
 import {
   logoFutbolinMap,
-  logoFutbolinMapLight,
 } from "../../shared/db/logoFutbolinMap";
 import { NavDetalleLiga } from "./NavDetalleLiga";
 import { BotonArrancarLiga } from "./components/BotonArrancarLiga";
@@ -24,7 +22,6 @@ import { BotonArrancarLiga } from "./components/BotonArrancarLiga";
 export const DetalleLigaLayout = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
-  const { darkMode } = use(ThemeContext);
   const { close, show } = useWindow();
 
   const { data: liga, isLoading, error } = useLigaById(id!);
@@ -84,9 +81,7 @@ export const DetalleLigaLayout = () => {
         <div className="flex items-center gap-2 sticky top-0 bg-neutral-950 z-2 pt-2 animate-fade-in-top">
           <img
             src={
-              darkMode
-                ? logoFutbolinMap[liga.tipoFutbolin]
-                : logoFutbolinMapLight[liga.tipoFutbolin]
+              logoFutbolinMap[liga.tipoFutbolin]
             }
             alt={liga.nombre}
             className="size-9"
@@ -108,7 +103,7 @@ export const DetalleLigaLayout = () => {
             </Button>
           </div>
         )}
-        {user?.admin && 
+        {user?.admin &&
           <BotonArrancarLiga liga={liga} />
         }
         <NavDetalleLiga />

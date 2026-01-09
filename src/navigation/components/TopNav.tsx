@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { BotonRefrescar } from "../../features/DetalleLiga/DetalleLigaLayout";
 import { useAuth } from "../../shared/api/auth/useAuth";
-import { ThemeSwitcher } from "../../shared/components/ThemeSwitcher/ThemeSwitcher";
 export interface TopNavItem {
   label: string;
   href: string;
@@ -18,9 +17,8 @@ export const TopNav = ({ content }: { content: TopNavItem[] }) => {
   const isAdmin = user?.admin;
   return (
     <header
-      className={`h-14 p-2 border-b ${
-        isAdmin ? "border-primary" : "border-neutral-700"
-      } w-full block`}
+      className={`h-14 p-2 border-b ${isAdmin ? "border-primary" : "border-neutral-700"
+        } w-full block`}
     >
       <nav className="max-w-screen-lg mx-auto flex items-center justify-between z-6">
         <Link to="/" className="z-6 relative">
@@ -62,25 +60,19 @@ export const HamburgerMenu = ({ content }: { content: TopNavItem[] }) => {
         className="z-6 text-primary flex size-6 flex-col justify-center gap-2 lg:hidden relative"
       >
         <span
-          className={`${
-            isOpen ? "rotate-[45deg] scale-[120%]" : "rotate-0"
-          } h-[3px] w-full rounded-lg transition-all duration-200 origin-top-left ${
-            isAdmin ? "bg-primary" : "bg-neutral-200"
-          } `}
+          className={`${isOpen ? "rotate-[45deg] scale-[120%]" : "rotate-0"
+            } h-[3px] w-full rounded-lg transition-all duration-200 origin-top-left ${isAdmin ? "bg-primary" : "bg-neutral-200"
+            } `}
         ></span>
         <span
-          className={`${
-            isOpen ? "opacity-0" : "opacity-100"
-          } h-[3px] w-full rounded-lg transition-all duration-200 origin-bottom-left ${
-            isAdmin ? "bg-primary" : "bg-neutral-200"
-          } `}
+          className={`${isOpen ? "opacity-0" : "opacity-100"
+            } h-[3px] w-full rounded-lg transition-all duration-200 origin-bottom-left ${isAdmin ? "bg-primary" : "bg-neutral-200"
+            } `}
         ></span>
         <span
-          className={`${
-            isOpen ? "-rotate-[45deg] scale-[120%]" : "rotate-0"
-          } h-[3px] w-full rounded-lg transition-all duration-200 origin-bottom-left ${
-            isAdmin ? "bg-primary" : "bg-neutral-200"
-          } `}
+          className={`${isOpen ? "-rotate-[45deg] scale-[120%]" : "rotate-0"
+            } h-[3px] w-full rounded-lg transition-all duration-200 origin-bottom-left ${isAdmin ? "bg-primary" : "bg-neutral-200"
+            } `}
         ></span>
       </button>
 
@@ -96,15 +88,14 @@ export const HamburgerMenu = ({ content }: { content: TopNavItem[] }) => {
           <Link to="/competiciones">Competiciones</Link>
         </ul>
       )}
-      
+
 
       <div
-        className={`z-5 flex flex-col justify-between lg:hidden fixed top-0 h-dvh w-screen bg-neutral-950/95 ${
-          isOpen ? "left-0" : "left-full"
-        } transition-all duration-200 pt-20 pb-4`}
+        className={`z-5 flex flex-col justify-between lg:hidden fixed top-0 h-dvh w-screen bg-neutral-950/95 ${isOpen ? "left-0" : "left-full"
+          } transition-all duration-200 pt-20 pb-4`}
       >
         <ul className={`w-full px-7 space-y-2 *:text-xl text-neutral-300`}>
-          <BotonRefrescar onClick={()=>setIsOpen(false)} />
+          <BotonRefrescar onClick={() => setIsOpen(false)} />
           {content.map((item, index) => {
             if (item.onlyAdmin && !isAdmin) return null;
             return (
@@ -134,7 +125,7 @@ export const HamburgerMenu = ({ content }: { content: TopNavItem[] }) => {
             <img src="/logo-futbol-in.png" alt="logo" className="w-50 mx-auto" />
           </a>
         </ul>
-        <ThemeSwitcher />
+
       </div>
     </div>
   );

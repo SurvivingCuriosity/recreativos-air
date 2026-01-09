@@ -6,7 +6,6 @@ import { Toaster } from "react-hot-toast";
 import { BrowserRouter } from "react-router";
 import { Router } from "./navigation/Router";
 import api from "./shared/api/http";
-import { ThemeContextProvider } from "./shared/context/ThemeProvider";
 import { WindowProvider } from "./shared/context/WindowProvider";
 import "./shared/globals.css";
 import { UIProvider } from "./shared/context/UIProvider/components/UIProviders";
@@ -25,18 +24,16 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <UIProvider>
-        <ThemeContextProvider>
-          <BrowserRouter>
-            <WindowProvider>
-              <Router />
-              <Toaster
-                toastOptions={{
-                  duration: 2000,
-                }}
-              />
-            </WindowProvider>
-          </BrowserRouter>
-        </ThemeContextProvider>
+        <BrowserRouter>
+          <WindowProvider>
+            <Router />
+            <Toaster
+              toastOptions={{
+                duration: 2000,
+              }}
+            />
+          </WindowProvider>
+        </BrowserRouter>
       </UIProvider>
       {import.meta.env.DEV && (
         <ReactQueryDevtools buttonPosition={"bottom-left"} />

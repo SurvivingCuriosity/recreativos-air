@@ -23,23 +23,6 @@
         -moz-appearance: textfield;
     }
 
-    html.light {
-        /* Si solo quieres “desactivar” estos neutros, sustitúyelos por     */
-        /* valores que ya no uses; p.ej. negro puro o lo que prefieras.     */
-        /* Aquí los pongo invertidos como ejemplo rápido:                   */
-        --color-neutral-950: oklch(98.5% 0 0);
-        --color-neutral-900: oklch(97% 0 0);
-        --color-neutral-800: oklch(92.2% 0 0);
-        --color-neutral-700: oklch(87% 0 0);
-        --color-neutral-600: oklch(70.8% 0 0);
-        --color-neutral-500: oklch(55.6% 0 0);
-        --color-neutral-400: oklch(43.9% 0 0);
-        --color-neutral-300: oklch(37.1% 0 0);
-        --color-neutral-200: oklch(26.9% 0 0);
-        --color-neutral-100: oklch(20.5% 0 0);
-        --color-neutral-50: oklch(14.5% 0 0);
-        --color-primary: #ff6f00;
-    }
 
     .animate {
         animation: tri-right linear forwards;
@@ -64,7 +47,6 @@
             transform: translateX(-200px)translateY(200px)scale(100%);
         }
     }
-
 }
 
 @theme {

@@ -1,17 +1,13 @@
-import { use } from "react";
 import toast from "react-hot-toast";
 import { Button } from "../../../packages/components/Button/Button";
 import { useAuth } from "../../api/auth/useAuth";
 import { useInscribirEquipo } from "../../api/ligas/useLigas";
-import { ThemeContext } from "../../context/ThemeContext";
 import { useWindow } from "../../context/WindowProvider";
 import {
   fondoFutbolinMap,
-  fondoFutbolinMapLight,
 } from "../../db/fondoFutbolinMap";
 import {
   logoFutbolinMap,
-  logoFutbolinMapLight,
 } from "../../db/logoFutbolinMap";
 import { useIsInscritoALiga } from "../../hooks/useIsInscritoALiga";
 import { SelectorEquipoUsuario } from "../SelectorEquipoUsuario/SelectorEquipoUsuario";
@@ -31,7 +27,6 @@ export interface TarjetaLigaProps {
 }
 
 export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
-  const { darkMode } = use(ThemeContext);
   const { user, isLoggedIn } = useAuth();
   const { close, show } = useWindow();
   const navigate = useNavigate()
@@ -75,9 +70,7 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
           <div className="flex items-center gap-2">
             <img
               src={
-                darkMode
-                  ? logoFutbolinMap[liga.tipoFutbolin]
-                  : logoFutbolinMapLight[liga.tipoFutbolin]
+                logoFutbolinMap[liga.tipoFutbolin]
               }
               alt={liga.nombre}
               className="size-9"
@@ -149,9 +142,7 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
 
         <img
           src={
-            darkMode
-              ? fondoFutbolinMap[liga.tipoFutbolin]
-              : fondoFutbolinMapLight[liga.tipoFutbolin]
+            fondoFutbolinMap[liga.tipoFutbolin]
           }
           alt={liga.nombre}
           className={`h-full object-cover z-0 object-right absolute right-0 top-0`}
