@@ -21,6 +21,9 @@ import {
   type LigaDTO,
 } from "recreativos-air-core/liga";
 import { useNavigate } from "react-router";
+import { LigaProgress } from "./LigaProgress";
+import { PosicionUsuarioChip } from "./PosicionUsuarioChip";
+
 
 export interface TarjetaLigaProps {
   liga: LigaDTO;
@@ -66,7 +69,7 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
     <>
       <div
         onClick={onClick}
-        className="max-w-80 h-full hover:border-neutral-700 shrink-0 justify-between border overflow-hidden md:p-4 p-1.5 relative bg-neutral-900 rounded-lg border-neutral-800 z-0"
+        className="h-full hover:border-neutral-700 shrink-0 justify-between border overflow-hidden md:p-4 p-1.5 relative bg-neutral-900 rounded-lg border-neutral-800 z-0"
       >
         <div className="relative z-2 flex flex-col justify-between h-full gap-1">
           <div className="flex items-center gap-2">
@@ -83,29 +86,40 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
               {liga.nombre}
             </p>
           </div>
-          <p className="text-sm text-neutral-500">
-            Equipos inscritos:{" "}
-            {
-              liga.equipos.filter(
-                (e) => e.estado === EstadoEquipoEnLiga.Aprobado
-              ).length
+          <div className="flex flex-col gap-2">
+            {/* <p className="text-sm text-neutral-500">
+              Equipos:{" "}
+              {
+                liga.equipos.filter(
+                  (e) => e.estado === EstadoEquipoEnLiga.Aprobado
+                ).length
+              }
+            </p> */}
+            {equipoUsuario?.equipo?.id && (
+              <PosicionUsuarioChip
+                ligaId={liga.id}
+                equipoId={equipoUsuario.equipo.id}
+              />
+            )}
+            {liga.estadoLiga === EstadoLiga.EnCurso &&
+              <LigaProgress ligaId={liga.id} myTeamId={equipoUsuario?.equipo?.id} />
             }
-          </p>
+          </div>
           {liga.estadoLiga === EstadoLiga.EnCurso && (
-            <div className="relative z-3 min-w-20 w-min text-orange-500 text-xs rounded-md">
+            <div className="absolute top-0 right-0 z-3 text-right w-fit px-1 text-orange-400 bg-orange-500/20 text-xs rounded-md">
               En curso
             </div>
           )}
           {liga.estadoLiga === EstadoLiga.SinEmpezar && (
-            <p className="relative z-3 min-w-20 w-min text-green-400 text-xs rounded-md whitespace-nowrap">
+            <p className="absolute top-0 right-0 z-3 text-right w-fit px-1 text-green-400 bg-green-500/20 text-xs rounded-md whitespace-nowrap">
               Aún no ha comenzado
             </p>
           )}
-          {liga.descripcion && (
+          {/* {liga.descripcion && (
             <p className="text-neutral-400 bg-neutral-950/50 rounded-lg text-xs md:text-base max-w-10/12 line-clamp-2">
               {liga.descripcion}
             </p>
-          )}
+          )} */}
           {isLoggedIn ? (
             !estaInscrito && liga.estadoLiga === EstadoLiga.SinEmpezar && (
               <div className="mt-3">
@@ -119,7 +133,7 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
             )
           ) : (
             <div className="mt-3">
-              <Button onClick={()=>navigate('/login')} variant="outline-neutral">
+              <Button onClick={() => navigate('/login')} variant="outline-neutral">
                 Inscribirme
               </Button>
             </div>
