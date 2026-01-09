@@ -52,7 +52,7 @@ export const CompeticionesPage = () => {
               <span
                 style={{ animationDelay: `${index * 0.1}s` }}
                 key={liga.id}
-                className="animate-fade-in-top"
+                className="animate-fade-in-top w-full"
               >
                 <TarjetaLiga
                   liga={liga}

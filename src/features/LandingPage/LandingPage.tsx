@@ -64,7 +64,7 @@ export const LandingPage = () => {
             {["qwe", "qweo", "qweu"]?.map((l) => (
               <div
                 key={l}
-                className="w-11/12 md:w-full max-w-96 shrink-0 snap-center rounded-xl"
+                className="w-11/12 md:w-full shrink-0 snap-center rounded-xl"
               >
                 <div className="animate-pulse max-w-80 h-30 shrink-0 justify-between border overflow-hidden md:p-4 p-1.5 relative bg-neutral-900 rounded-lg border-neutral-800 z-0">
                   Cargando...
@@ -77,7 +77,7 @@ export const LandingPage = () => {
             {ligas?.map((l) => (
               <div
                 key={l.id}
-                className="w-11/12 md:w-full max-w-96 shrink-0 snap-center rounded-xl"
+                className={`${ligas.length > 1 ? 'w-11/12' : 'w-full'} md:w-full shrink-0 snap-center rounded-xl`}
               >
                 <TarjetaLiga
                   key={l.id}
