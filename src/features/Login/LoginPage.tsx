@@ -46,7 +46,7 @@ export const LoginPage = () => {
       } else {
         toast.error(res.message);
       }
-    } catch (err:unknown) {
+    } catch (err: unknown) {
       console.log(err)
       toast.error((err as ErrorResponse).message);
     }
@@ -73,7 +73,7 @@ export const LoginPage = () => {
                   id="login-email"
                   name="email"
                   placeholder="test@test.com"
-                  autoComplete="email"
+                  autoComplete="username"
                   value={field.value}
                   onChangeText={field.onChange}
                   hasError={!!errors.email}
