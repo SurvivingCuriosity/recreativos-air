@@ -9,7 +9,7 @@ import { ButtonWhatsapp } from "./ButtonWhatsapp";
 export const LandingPage = () => {
   const navigate = useNavigate();
 
-  const { ligas, loadingLigas } = useLigasDeUsuario();
+  const { ligas, loadingLigas, errorLigas } = useLigasDeUsuario();
   const { isLoggedIn } = useAuth();
 
   const handleNavigateLiga = (idLiga: string) => {
@@ -66,6 +66,8 @@ export const LandingPage = () => {
               </div>
             ))}
           </ul>
+        ) : errorLigas ? (
+          <p className="text-red-500 text-center">Error al cargar las ligas: {errorLigas.message}</p>
         ) : (
           <ul className="pb-3 flex overflow-x-auto gap-2 snap-x rounded-lg">
             {ligas?.map((l) => (

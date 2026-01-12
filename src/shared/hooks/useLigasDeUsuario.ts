@@ -3,7 +3,7 @@ import { useLigas } from "../api/ligas/useLigas";
 
 export const useLigasDeUsuario = () => {
     const { user } = useAuth();
-    const { data: ligas, isLoading: loadingLigas } = useLigas();
+    const { data: ligas, isLoading: loadingLigas, error: errorLigas } = useLigas();
 
     if (loadingLigas)
         return {
@@ -26,7 +26,7 @@ export const useLigasDeUsuario = () => {
             )
         ),
         loadingLigas: false,
-        errorLigas: undefined,
+        errorLigas: errorLigas,
     };
 
 }
