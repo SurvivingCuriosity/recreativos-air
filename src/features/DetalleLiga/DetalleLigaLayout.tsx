@@ -77,7 +77,7 @@ export const DetalleLigaLayout = () => {
 
   return (
     <>
-      <div className="max-w-screen-sm mx-auto p-4 pt-2 h-full relative">
+      <div className="max-w-screen-sm mx-auto p-4 pt-2 h-full relative w-full">
         <div className="flex items-center gap-2 sticky top-0 bg-neutral-950 z-2 pt-2 animate-fade-in-top">
           <img
             src={
