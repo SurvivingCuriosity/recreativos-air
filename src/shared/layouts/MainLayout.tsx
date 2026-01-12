@@ -33,15 +33,15 @@ export const MainLayout = () => {
 
   return (
     <>
-      <div className="bg-neutral-950 text-neutral-50 min-h-svh">
+      <div className="bg-neutral-950 text-neutral-50 min-h-svh flex flex-col">
         <TopNav content={content} />
-        <div className="h-full relative mx-auto">
+        <div className="relative mx-auto flex flex-col items-center flex-1 w-full">
           <img
             src="/logo.png"
             alt="logo"
             className="w-full opacity-[4%] pointer-events-none fixed z-1 -bottom-1/12 left-1/3 md:w-90 md:left-20"
           />
-          <div className="z-2 relative">
+          <div className="z-2 relative flex-1 w-full flex flex-col">
             <Outlet />
           </div>
         </div>

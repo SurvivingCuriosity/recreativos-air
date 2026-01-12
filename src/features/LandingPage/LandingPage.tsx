@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router";
 import { useAuth } from "../../shared/api/auth/useAuth";
-import fondo from "../../shared/assets/fondo-tsunami-full.jpg";
-import fondo_text from "../../shared/assets/fondo-tsunami.jpg";
+import fondo from "../../shared/assets/tsunami.jpg";
 import { TarjetaLiga } from "../../shared/components/TarjetaLiga/TarjetaLiga";
 import { TELEFONO_ALBERTO } from "../../shared/db/telefono";
 import { useLigasDeUsuario } from "../../shared/hooks/useLigasDeUsuario";
@@ -18,10 +17,13 @@ export const LandingPage = () => {
   };
 
   return (
-    <main className="z-0 p-4 h-full w-full relative bg-neutral-950 flex flex-col items-center justify-start">
+    <main className="p-4 h-full w-full relative flex-1 flex flex-col items-center justify-between pb-18">
       <img
         src={fondo}
         alt="fondo"
+        style={{
+          objectPosition: "bottom 0px right -520px",
+        }}
         className="h-svh w-full bottom-0 object-cover fixed pointer-events-none -z-1"
       />
 
@@ -33,20 +35,16 @@ export const LandingPage = () => {
           bg-center bg-cover bg-no-repeat
           bg-clip-text
           leading-none
-          text-3xl
+          text-4xl
           md:text-4xl
           xl:text-5xl
           2xl:text-6xl
           animate-fade-in-top
         "
-        style={{ backgroundImage: `url(${fondo_text})` }}
       >
-        Recreativos{" "}
-        <span className="text-8xl md:text-[18vw] lg:text-[10vw] tracking-widest block text-neutral-50/60">
-          AIR
-        </span>
+        Recreativos AIR
       </h1>
-      <p className="italic text-neutral-200 text-balance text-center animate-fade-in-top text-sm">
+      <p className="text-neutral-200 text-balance text-center animate-fade-in-top text-sm mt-4">
         Empresa especializada en futbolines Tsunami e Infinity en la provincia
         de Salamanca.
       </p>
@@ -85,19 +83,20 @@ export const LandingPage = () => {
           </ul>
         )}
 
-        <a
-          href="https://www.futbolin.app"
-          target="_blank"
-          className="bg-neutral-900 block rounded-xl mt-4 font-cool p-3 text-center text-sm"
-        >
-          ¡ Encuentra futbolines cerca !
-          <img
-            src="/logo-futbol-in.png"
-            alt="logo"
-            className="w-fit max-w-42 mx-auto"
-          />
-        </a>
       </div>
+
+      <a
+        href="https://www.futbolin.app"
+        target="_blank"
+        className="bg-neutral-900 block rounded-xl font-cool p-3 text-center text-sm mt-auto"
+      >
+        ¡ Encuentra futbolines cerca !
+        <img
+          src="/logo-futbol-in.png"
+          alt="logo"
+          className="w-fit max-w-42 mx-auto"
+        />
+      </a>
 
       {!isLoggedIn && <ButtonWhatsapp numero={TELEFONO_ALBERTO} />}
     </main>
