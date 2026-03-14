@@ -4,6 +4,11 @@ import api from "../http";
 
 
 export const EnfrentamientosAPI = {
+  async getPendientesAdmin(): Promise<EnfrentamientoDTO[]> {
+    const res = await api.get(`/enfrentamientos/pendientes-admin`);
+    return res.data.data;
+  },
+
   async getPorLiga(ligaId: string): Promise<EnfrentamientoDTO[]> {
     const res = await api.get(`/enfrentamientos/liga/${ligaId}`);
     return res.data.data

@@ -3,6 +3,19 @@ import toast from "react-hot-toast";
 import { type EnfrentamientoDTO } from "recreativos-air-core/enfrentamiento";
 import { EnfrentamientosAPI } from "./api";
 
+export const useEnfrentamientosPendientesAdmin = () => {
+  return useQuery<EnfrentamientoDTO[]>({
+    placeholderData: [],
+    queryKey: ["enfrentamientosPendientesAdmin"],
+    queryFn: () => EnfrentamientosAPI.getPendientesAdmin(),
+  });
+};
+
+export const useConteoEnfrentamientosPendientes = () => {
+  const { data: enfrentamientos } = useEnfrentamientosPendientesAdmin();
+  return enfrentamientos?.length ?? 0;
+};
+
 export const useEnfrentamientosLiga = (ligaId: string) => {
   return useQuery<EnfrentamientoDTO[]>({
     placeholderData: [],
@@ -51,6 +64,7 @@ export const useConfirmarResultadoAdmin = () => {
     mutationFn: EnfrentamientosAPI.confirmarResultadoAdmin,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["ligas"] });
+      qc.invalidateQueries({ queryKey: ["enfrentamientosPendientesAdmin"] });
     },
   });
 };
@@ -61,6 +75,7 @@ export const useRechazarResultadoAdmin = () => {
     mutationFn: EnfrentamientosAPI.rechazarResultadoAdmin,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["ligas"] });
+      qc.invalidateQueries({ queryKey: ["enfrentamientosPendientesAdmin"] });
     },
   });
 };

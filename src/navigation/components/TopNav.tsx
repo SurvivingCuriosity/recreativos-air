@@ -8,6 +8,8 @@ import type {
   AuthNavContent,
   GuestNavContent,
 } from "../../shared/layouts/MainLayout";
+import { EnfrentamientosPendientes } from "../../features/Jornadas/DetalleJornada/components/EnfrentamientosPendientes";
+import { useConteoEnfrentamientosPendientes } from "../../shared/api/enfrentamientos/hooks";
 
 export interface TopNavItem {
   label: string;
@@ -48,6 +50,7 @@ export const HamburgerMenu = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { user, isLoggedIn } = useAuth();
   const isAdmin = user?.admin;
+  const conteoEnfrentamientosPendientes = useConteoEnfrentamientosPendientes();
 
   useEffect(() => {
     if (isOpen) {
@@ -75,6 +78,11 @@ export const HamburgerMenu = ({
         onClick={toggleMenu}
         className="z-6 text-primary flex size-6 flex-col justify-center gap-2 lg:hidden relative"
       >
+        {isAdmin && conteoEnfrentamientosPendientes > 0 && (
+          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold rounded-full min-w-[16px] h-4 flex items-center justify-center px-1 leading-none">
+            {conteoEnfrentamientosPendientes}
+          </span>
+        )}
         <span
           className={`${
             isOpen ? "rotate-[45deg] scale-[120%]" : "rotate-0"
@@ -117,6 +125,9 @@ export const HamburgerMenu = ({
         } transition-all duration-200 pt-20 pb-4`}
       >
         <ul className={`w-full px-7 space-y-2 *:text-xl text-neutral-300 h-full flex flex-col`}>
+
+          {isAdmin && <EnfrentamientosPendientes />}
+
           <BotonRefrescar onClick={() => setIsOpen(false)} />
 
           {isLoggedIn ? (
