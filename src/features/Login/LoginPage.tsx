@@ -58,7 +58,7 @@ export const LoginPage = () => {
         <form
           autoComplete="on"
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 bg-neutral-900 shadow-md rounded-xl p-6 border border-neutral-800 max-w-md mx-auto w-full"
+          className="flex flex-col gap-4 sm:bg-neutral-900 shadow-md rounded-xl p-2 sm:p-6 sm:border border-neutral-800 max-w-lg mx-auto w-full"
         >
           <h1 className="text-2xl font-bold text-center">Iniciar sesión</h1>
 
@@ -109,7 +109,7 @@ export const LoginPage = () => {
 
           <Link
             to="/reset-password"
-            className="mr-auto underline text-sm text-gray-400 mt-2"
+            className="mr-auto underline text-sm text-neutral-400 mt-2"
           >
             He olvidado mi contraseña
           </Link>
@@ -120,7 +120,7 @@ export const LoginPage = () => {
 
           <Link
             to="/register"
-            className="mx-auto underline text-sm text-gray-600 mt-2"
+            className="mx-auto underline text-sm text-neutral-600 mt-2"
           >
             ¿No tienes cuenta? Regístrate
           </Link>

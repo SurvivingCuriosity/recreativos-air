@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "react-router";
+import { Button } from "../../packages/components/Button/Button";
 import { useAuth } from "../../shared/api/auth/useAuth";
 import fondo from "../../shared/assets/tsunami.jpg";
 import { TarjetaLiga } from "../../shared/components/TarjetaLiga/TarjetaLiga";
 import { TELEFONO_ALBERTO } from "../../shared/db/telefono";
 import { useLigasDeUsuario } from "../../shared/hooks/useLigasDeUsuario";
 import { ButtonWhatsapp } from "./ButtonWhatsapp";
-import { Button } from "../../packages/components/Button/Button";
 
 export const LandingPage = () => {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export const LandingPage = () => {
       <h1
         className="
           font-black
-          text-neutral-50/60
+          text-neutral-50
           text-center font-neutral-950
           bg-center bg-cover bg-no-repeat
           bg-clip-text
@@ -43,9 +43,9 @@ export const LandingPage = () => {
           animate-fade-in-top
         "
       >
-        Recreativos AIR
+        Recreativos <span className="text-primary">AIR</span>
       </h1>
-      <p className="text-neutral-200 text-balance text-center animate-fade-in-top text-sm mt-4">
+      <p className="text-neutral-400 text-balance text-center animate-fade-in-top text-sm mt-4">
         Empresa especializada en futbolines Tsunami e Infinity en la provincia
         de Salamanca.
       </p>
@@ -90,26 +90,40 @@ export const LandingPage = () => {
           )}
         </div>
       ) : (
-        <div className="mt-20 w-full max-w-60 flex flex-col gap-2">
-          <Button>
-            <Link to="/login">Iniciar sesión</Link>
-          </Button>
-          <Button variant="outline">
-            <Link to="/register">No tengo una cuenta</Link>
-          </Button>
+        <div className="mt-20 w-full flex flex-col gap-2">
+          <div className="mt-5 flex flex-col items-center gap-4">
+            <div className="flex w-full gap-2">
+
+            <Button>
+              <Link to="/login" className="w-full">
+                Entrar 🚀
+              </Link>
+            </Button>
+            <Button variant="outline">
+              <Link to="/register">No tengo cuenta</Link>
+            </Button>
+            </div>
+
+            <Link
+              to="/reset-password"
+              className="text-neutral-400 text-sm underline"
+            >
+              He olvidado mi contraseña
+            </Link>
+          </div>
         </div>
       )}
 
       <a
         href="https://www.futbolin.app"
         target="_blank"
-        className="bg-neutral-900 block rounded-xl font-cool p-3 text-center text-sm mt-auto"
+        className="bg-neutral-900/70 backdrop-blur-xs block rounded-3xl font-cool p-4 min-w-80 text-center text-xs mt-auto"
       >
         ¡ Encuentra futbolines cerca !
         <img
           src="/logo-futbol-in.png"
           alt="logo"
-          className="w-fit max-w-42 mx-auto"
+          className="w-fit max-w-32 mx-auto"
         />
       </a>
 

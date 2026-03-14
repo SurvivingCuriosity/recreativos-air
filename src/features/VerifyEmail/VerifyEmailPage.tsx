@@ -47,7 +47,7 @@ export const VerifyEmailPage = () => {
         }}
       >
         <h1 className="text-2xl font-bold text-center">Verifica tu correo</h1>
-        <p className="text-center text-gray-500 text-sm">
+        <p className="text-center text-neutral-500 text-sm">
           Hemos enviado un código de 6 dígitos a <strong>{email}</strong>
         </p>
 

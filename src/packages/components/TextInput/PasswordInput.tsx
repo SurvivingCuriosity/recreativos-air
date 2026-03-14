@@ -18,9 +18,9 @@ export const PasswordInput = (props: PasswordInputProps) => {
       <input
         type={showingPass ? "text" : "password"}
         onChange={(e) => onChangeText(e.target.value)}
-        className={`h-9 ${
+        className={`h-10 ${
           hasError ? "bg-red-600/20" : "bg-neutral-800"
-        } w-full p-1 px-2 rounded-md outline-0 focus:outline-1 outline-primary disabled:bg-neutral-600 disabled:text-neutral-500 disabled:cursor-not-allowed`}
+        } w-full p-1 px-2 rounded-2xl outline-0 focus:outline-1 outline-primary disabled:bg-neutral-600 disabled:text-neutral-500 disabled:cursor-not-allowed`}
         {...rest}
       />
       <button

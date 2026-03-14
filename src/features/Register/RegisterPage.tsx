@@ -10,6 +10,7 @@ import { PasswordInput } from "../../packages/components/TextInput/PasswordInput
 import { TextInput } from "../../packages/components/TextInput/TextInput";
 import { useRegister } from "../../shared/api/auth/hooks";
 import { handleApiErrors } from "../../shared/api/utils";
+import { AdaptativeFlexContainer } from "./components/AdaptativeFlexContainer";
 
 export const RegisterPage = () => {
   const { mutate: registerUser, isPending } = useRegister();
@@ -52,113 +53,115 @@ export const RegisterPage = () => {
       },
       onError: (error) => {
         toast.error(
-          error.message ??
-            "Error del servidor. Inténtalo de nuevo más tarde."
+          error.message ?? "Error del servidor. Inténtalo de nuevo más tarde.",
         );
       },
     });
   };
 
-  console.log(isPending)
+  console.log(isPending);
 
   return (
     <>
       <title>Registro | Recreativos Air</title>
       <main className="h-full w-full p-4 max-w-screen-lg mx-auto flex flex-col justify-center">
         <form
-          className="flex flex-col gap-4 bg-neutral-900 shadow-md rounded-xl p-6 border border-neutral-800 max-w-md mx-auto w-full"
+          className="flex flex-col gap-4 sm:bg-neutral-900 shadow-md rounded-xl p-2 sm:p-6 sm:border border-neutral-800 max-w-md mx-auto w-full"
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit(onSubmit)();
           }}
         >
           <h1 className="text-2xl font-bold text-center">Registro</h1>
-
-          <FormField>
-            <FormLabel htmlFor="register-email">Email</FormLabel>
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  id="register-email"
-                  placeholder="test@test.com"
-                  autoComplete="email"
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  hasError={!!errors.email}
-                  autoFocus
-                />
+          <AdaptativeFlexContainer>
+            <FormField>
+              <FormLabel htmlFor="register-email">Email</FormLabel>
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                    id="register-email"
+                    placeholder="test@test.com"
+                    autoComplete="email"
+                    value={field.value}
+                    onChangeText={field.onChange}
+                    hasError={!!errors.email}
+                    autoFocus
+                  />
+                )}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-xs">{errors.email.message}</p>
               )}
-            />
-            {errors.email && (
-              <p className="text-red-500 text-xs">{errors.email.message}</p>
-            )}
-          </FormField>
-
-          <FormField>
-            <FormLabel htmlFor="register-phone">Móvil</FormLabel>
-            <Controller
-              name="movil"
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  id="register-phone"
-                  placeholder="666666666"
-                  autoComplete="tel-national"
-                  inputMode="tel"
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  hasError={!!errors.movil}
-                />
+            </FormField>
+            <FormField>
+              <FormLabel htmlFor="register-phone">Móvil</FormLabel>
+              <Controller
+                name="movil"
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                    id="register-phone"
+                    placeholder="666666666"
+                    autoComplete="tel-national"
+                    inputMode="tel"
+                    value={field.value}
+                    onChangeText={field.onChange}
+                    hasError={!!errors.movil}
+                  />
+                )}
+              />
+              {errors.movil && (
+                <p className="text-red-500 text-xs">{errors.movil.message}</p>
               )}
-            />
-            {errors.movil && (
-              <p className="text-red-500 text-xs">{errors.movil.message}</p>
-            )}
-          </FormField>
+            </FormField>
+          </AdaptativeFlexContainer>
 
-          <FormField>
-            <FormLabel htmlFor="register-nombre">Nombre (opcional)</FormLabel>
-            <Controller
-              name="nombre"
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  id="register-nombre"
-                  placeholder="Fernando"
-                  autoComplete="given-name"
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  hasError={!!errors.nombre}
-                />
+          <AdaptativeFlexContainer>
+            <FormField>
+              <FormLabel htmlFor="register-username">Nickname</FormLabel>
+              <Controller
+                name="username"
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                    id="register-username"
+                    placeholder="fer99"
+                    autoComplete="username"
+                    value={field.value}
+                    onChangeText={field.onChange}
+                    hasError={!!errors.username}
+                  />
+                )}
+              />
+              {errors.username && (
+                <p className="text-red-500 text-xs">
+                  {errors.username.message}
+                </p>
               )}
-            />
-            {errors.nombre && (
-              <p className="text-red-500 text-xs">{errors.nombre.message}</p>
-            )}
-          </FormField>
-
-          <FormField>
-            <FormLabel htmlFor="register-username">Nickname</FormLabel>
-            <Controller
-              name="username"
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  id="register-username"
-                  placeholder="fer99"
-                  autoComplete="username"
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  hasError={!!errors.username}
-                />
+            </FormField>
+            <FormField>
+              <FormLabel htmlFor="register-nombre">Nombre (opcional)</FormLabel>
+              <Controller
+                name="nombre"
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                    id="register-nombre"
+                    placeholder="Fernando"
+                    autoComplete="given-name"
+                    value={field.value}
+                    onChangeText={field.onChange}
+                    hasError={!!errors.nombre}
+                  />
+                )}
+              />
+              {errors.nombre && (
+                <p className="text-red-500 text-xs">{errors.nombre.message}</p>
               )}
-            />
-            {errors.username && (
-              <p className="text-red-500 text-xs">{errors.username.message}</p>
-            )}
-          </FormField>
+            </FormField>
+          </AdaptativeFlexContainer>
 
           <FormField>
             <FormLabel htmlFor="register-pass">Contraseña</FormLabel>

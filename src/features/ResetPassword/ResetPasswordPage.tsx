@@ -51,7 +51,7 @@ const StepEmail = ({ onSuccess }: StepEmailProps) => {
       className="flex flex-col gap-4 bg-neutral-900 shadow-md rounded-xl p-6 border border-neutral-800 max-w-md mx-auto w-full"
     >
       <h1 className="text-2xl font-bold text-center">Recuperar contraseña</h1>
-      <p className="text-center text-gray-500 text-sm">
+      <p className="text-center text-neutral-500 text-sm">
         Introduce tu correo y te enviaremos un código de recuperación
       </p>
 
@@ -82,7 +82,7 @@ const StepEmail = ({ onSuccess }: StepEmailProps) => {
         Enviar código
       </Button>
 
-      <Link to="/login" className="mx-auto underline text-sm text-gray-600 mt-2">
+      <Link to="/login" className="mx-auto underline text-sm text-neutral-600 mt-2">
         Volver al inicio de sesión
       </Link>
     </form>
@@ -129,7 +129,7 @@ const StepReset = ({ email, onBack }: StepResetProps) => {
       className="flex flex-col gap-4 bg-neutral-900 shadow-md rounded-xl p-6 border border-neutral-800 max-w-md mx-auto w-full"
     >
       <h1 className="text-2xl font-bold text-center">Nueva contraseña</h1>
-      <p className="text-center text-gray-500 text-sm">
+      <p className="text-center text-neutral-500 text-sm">
         Hemos enviado un código de 6 dígitos a <strong>{email}</strong>
       </p>
 
@@ -209,7 +209,7 @@ const StepReset = ({ email, onBack }: StepResetProps) => {
       <button
         type="button"
         onClick={onBack}
-        className="mx-auto underline text-sm text-gray-600 mt-2"
+        className="mx-auto underline text-sm text-neutral-600 mt-2"
       >
         Volver a introducir el correo
       </button>

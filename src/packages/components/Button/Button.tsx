@@ -57,7 +57,7 @@ export const Button = (props: ButtonProps) => {
       href={href}
       disabled={disabled}
       type={type}
-      className={`${esSoloIcon ? 'p-2' : 'px-3 py-1'} w-full h-9 flex items-center justify-center font-bold rounded-lg gap-2 ${variantStyles[variant]} disabled:bg-neutral-700! disabled:text-neutral-600!`}
+      className={`${esSoloIcon ? 'p-2' : 'px-3 py-1'} w-full h-10 flex items-center justify-center font-bold rounded-2xl gap-2 ${variantStyles[variant]} disabled:bg-neutral-700! disabled:text-neutral-600!`}
     >
       {icon && <FontAwesomeIcon icon={icon} className="w-5 h-5" />}
       {children}

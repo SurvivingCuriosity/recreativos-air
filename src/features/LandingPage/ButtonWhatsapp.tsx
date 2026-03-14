@@ -12,8 +12,7 @@ export const ButtonWhatsapp = ({ numero }: { numero: string }) => {
     );
   };
   return (
-    <button style={{animationDelay: '0.5s'}} className="bg-[#4dc247] pl-4 rounded-xl flex items-center z-4 animate-in-right cursor-pointer fixed bottom-3 right-3" onClick={handleSendWhatsapp}>
-      <span className="text-sm">Pedir información</span>
+    <button style={{animationDelay: '0.5s'}} className="bg-[#4dc247] rounded-xl flex items-center z-4 animate-in-right cursor-pointer fixed bottom-3 right-3" onClick={handleSendWhatsapp}>
       <svg
         viewBox="0 0 32 32"
         className={`bg-[#4dc247] rounded-full p-2 size-12`}
