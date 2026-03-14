@@ -47,14 +47,13 @@ export const LoginPage = () => {
         toast.error(res.message);
       }
     } catch (err: unknown) {
-      console.log(err)
+      console.log(err);
       toast.error((err as ErrorResponse).message);
     }
   };
 
   return (
     <>
-
       <main className="h-full w-full p-4 max-w-screen-lg mx-auto flex flex-col justify-center">
         <form
           autoComplete="on"
@@ -107,6 +106,13 @@ export const LoginPage = () => {
               <p className="text-red-500 text-xs">{errors.password.message}</p>
             )}
           </FormField>
+
+          <Link
+            to="/reset-password"
+            className="mr-auto underline text-sm text-gray-400 mt-2"
+          >
+            He olvidado mi contraseña
+          </Link>
 
           <Button disabled={isPending} type="submit">
             Entrar

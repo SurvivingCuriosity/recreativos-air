@@ -20,6 +20,7 @@ import RequireAdmin from "./components/RequireAdmin";
 import RequireAuth from "./components/RequireAuth";
 import { AdminEquiposPage } from "../features/Admin/AdminEquiposPage";
 import { AdminUsuariosPage } from "../features/Admin/AdminUsuariosPage";
+import { ResetPasswordPage } from "../features/ResetPassword/ResetPasswordPage";
 
 export const Router = () => {
   return (
@@ -29,6 +30,8 @@ export const Router = () => {
         <Route index element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="competiciones" element={<CompeticionesPage />} />
       </Route>

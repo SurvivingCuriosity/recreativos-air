@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  type ForgotPasswordBody,
   type LoginBody,
   type RegisterBody,
+  type ResetPasswordBody,
   type VerifyEmailBody,
 } from "recreativos-air-core/auth";
 import type { UserDTO } from "recreativos-air-core/user";
@@ -58,6 +60,28 @@ export function useMe(enabled = true) {
     },
   });
 }
+
+export const useForgotPassword = () =>
+  useMutation({
+    mutationFn: async (payload: ForgotPasswordBody): Promise<ApiResponse<null>> => {
+      const { data } = await api.post<ApiResponse<null>>(
+        "/auth/forgot-password",
+        payload
+      );
+      return data;
+    },
+  });
+
+export const useResetPassword = () =>
+  useMutation({
+    mutationFn: async (payload: ResetPasswordBody): Promise<ApiResponse<null>> => {
+      const { data } = await api.post<ApiResponse<null>>(
+        "/auth/reset-password",
+        payload
+      );
+      return data;
+    },
+  });
 
 export const useLogout = () => {
   const queryClient = useQueryClient();
