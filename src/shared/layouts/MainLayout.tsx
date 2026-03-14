@@ -11,25 +11,40 @@ import {
 import { useAuth } from "../api/auth/useAuth";
 import { NetworkStatusBanner } from "../components/NetworkStatusBanner/NetworkStatusBanner";
 
-const TopNavContentAuth: TopNavItem[] = [
-  { label: "Mi perfil", href: "/mi-perfil", icon: faUser },
-  { label: "Competiciones", href: "/competiciones", icon: faTrophy },
-  { label: "Crear equipo", href: "/crear-equipo", icon: faPlus },
-  { label: "Crear liga", href: "/crear-liga", icon: faPlus, onlyAdmin: true },
-  { label: "Equipos", href: "/admin-equipos", icon: faUser, onlyAdmin: true },
-  { label: "Usuarios", href: "/admin-usuarios", icon: faUsers, onlyAdmin: true },
-];
+export type AuthNavContent = {
+  miPerfil: TopNavItem;
+  competiciones: TopNavItem;
+  crearEquipo: TopNavItem;
+  crearLiga: TopNavItem;
+  equipos: TopNavItem;
+  usuarios: TopNavItem;
+};
 
-const TopNavContent: TopNavItem[] = [
-  { label: "Inciar sesión", href: "/login", icon: faRightToBracket },
-  { label: "Crear cuenta", href: "/register", icon: faUserPlus },
-  { label: "Competiciones", href: "/competiciones", icon: faTrophy },
-];
+export type GuestNavContent = {
+  login: TopNavItem;
+  register: TopNavItem;
+  competiciones: TopNavItem;
+};
+
+const TopNavContentAuth: AuthNavContent = {
+  miPerfil: { label: "Mi perfil", href: "/mi-perfil", icon: faUser },
+  competiciones: { label: "Competiciones", href: "/competiciones", icon: faTrophy },
+  crearEquipo: { label: "Crear equipo", href: "/crear-equipo", icon: faPlus },
+  crearLiga: { label: "Crear liga", href: "/crear-liga", icon: faPlus, onlyAdmin: true },
+  equipos: { label: "Equipos", href: "/admin-equipos", icon: faUser, onlyAdmin: true },
+  usuarios: { label: "Usuarios", href: "/admin-usuarios", icon: faUsers, onlyAdmin: true },
+};
+
+const TopNavContent: GuestNavContent = {
+  login: { label: "Inciar sesión", href: "/login", icon: faRightToBracket },
+  register: { label: "Crear cuenta", href: "/register", icon: faUserPlus },
+  competiciones: { label: "Competiciones", href: "/competiciones", icon: faTrophy },
+};
 
 export const MainLayout = () => {
   const { isLoggedIn } = useAuth();
 
-  const content = isLoggedIn ? TopNavContentAuth : TopNavContent;
+  const content = isLoggedIn ? TopNavContentAuth : TopNavContent
 
   return (
     <>

@@ -44,7 +44,7 @@ export const Button = (props: ButtonProps) => {
   };
 
   const variantStyles: Record<ButtonVariant, string> = {
-    primary: "bg-primary text-neutral-900",
+    primary: "bg-radial from-primary2 to-primary text-neutral-900",
     outline: "bg-neutral-900/80 text-primary border border-primary",
     neutral: "text-neutral-900/80 bg-neutral-400 border border-neutral-400",
     "outline-neutral":
@@ -57,7 +57,7 @@ export const Button = (props: ButtonProps) => {
       href={href}
       disabled={disabled}
       type={type}
-      className={`${esSoloIcon ? 'p-2' : 'px-3 py-1'} w-full h-10 flex items-center justify-center font-bold rounded-2xl gap-2 ${variantStyles[variant]} disabled:bg-neutral-700! disabled:text-neutral-600!`}
+      className={`${esSoloIcon ? 'p-2 rounded-full aspect-square' : 'px-3 py-1'} w-full h-10 flex items-center justify-center font-bold rounded-2xl gap-2 outline-none focus:outline-none ${variantStyles[variant]} disabled:bg-neutral-700! disabled:[background-image:none]! disabled:text-neutral-600!`}
     >
       {icon && <FontAwesomeIcon icon={icon} className="w-5 h-5" />}
       {children}

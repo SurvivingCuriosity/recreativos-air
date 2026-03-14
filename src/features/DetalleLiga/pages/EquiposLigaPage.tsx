@@ -50,7 +50,7 @@ export const EquiposLigaPage = () => {
             onClick={handleInscribirEquipoExistente}
             variant="outline-neutral"
           >
-            Inscribir equipo exitente
+            Inscribir equipo existente
           </Button>
         </div>
       )}

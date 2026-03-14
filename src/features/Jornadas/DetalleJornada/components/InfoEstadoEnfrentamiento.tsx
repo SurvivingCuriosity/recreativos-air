@@ -62,7 +62,7 @@ export const InfoEstadoEnfrentamiento = ({
   return (
     <div
       className={
-        `flex items-center gap-3 rounded-lg p-2 px-4 w-fit ` + containerClassName[enfrentamiento.estado]
+        `w-full flex items-center gap-3 rounded-lg p-2 px-4 ` + containerClassName[enfrentamiento.estado]
       }
     >
       <FontAwesomeIcon icon={icon[enfrentamiento.estado]} className={textClassName[enfrentamiento.estado]} />

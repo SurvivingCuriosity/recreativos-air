@@ -28,7 +28,7 @@ export const MiPerfilPage = () => {
   return (
     <>
       <title>Mi perfil | Recreativos Air</title>
-      <div className="p-3 flex flex-col gap-4 justify-start h-full max-w-screen-lg mx-auto">
+      <div className="p-3 flex flex-col gap-4 justify-start h-full max-w-screen-lg mx-auto w-full">
         <div className="flex justify-between bg-neutral-900 rounded-xl relative p-3 md:p-6">
           <span>
             <Titulo variant="h2" className="font-cool">
@@ -54,7 +54,7 @@ export const MiPerfilPage = () => {
 
         <div className="flex flex-col md:flex-row w-full md:gap-3">
           {/* Equipos */}
-          <div className="md:grow md:w-1/2 p-3 rounded-xl md:p-8 md:bg-neutral-900/60">
+          <div className="md:grow md:w-1/2 p-3 rounded-xl md:p-8 md:bg-neutral-900/60 min-w-0">
             <div className="flex items-center gap-2 pb-2">
               <FontAwesomeIcon
                 icon={faUsers}
@@ -80,7 +80,7 @@ export const MiPerfilPage = () => {
           </div>
 
           {/* Competiciones */}
-          <div className="md:grow md:w-1/2 p-3 rounded-xl md:p-8 md:bg-neutral-900/60">
+          <div className="md:grow md:w-1/2 p-3 rounded-xl md:p-8 md:bg-neutral-900/60 min-w-0">
             <div className="flex items-center gap-2 pb-2">
               <FontAwesomeIcon
                 icon={faTrophy}

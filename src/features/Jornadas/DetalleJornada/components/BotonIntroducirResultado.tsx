@@ -86,10 +86,10 @@ const resultadoValido = () => {
           <div className="flex flex-col gap-3">
             <div className="flex flex-row gap-1 overflow-x-auto w-full">
               <div className="flex flex-col justify-between gap-1 w-40">
-                <p className="bg-neutral-800 h-full truncate w-full max-w-32 flex items-center justify-start px-3 pl-1 text-sm rounded-lg">
+                <p className="bg-neutral-800 text-white h-full truncate w-full max-w-32 flex items-center justify-start px-3 text-sm rounded-xl">
                   {enfrentamiento.equipoA.nombre}
                 </p>
-                <p className="bg-neutral-800 h-full truncate w-full max-w-32 flex items-center justify-start px-3 pl-1 text-sm rounded-lg">
+                <p className="bg-neutral-800 text-white h-full truncate w-full max-w-32 flex items-center justify-start px-3 text-sm rounded-xl">
                   {enfrentamiento.equipoB.nombre}
                 </p>
               </div>
@@ -103,7 +103,7 @@ const resultadoValido = () => {
                     onChange={(e) =>
                       handleChange(index, "golesA", e.target.value)
                     }
-                    className="rounded-md p-2 bg-neutral-700 text-neutral-100 text-center"
+                    className="focus:outline-none focus:border-primary border border-transparent rounded-lg p-2 bg-neutral-700 text-neutral-100 text-center"
                     autoFocus={index === 0}
                   />
                   <input
@@ -114,7 +114,7 @@ const resultadoValido = () => {
                     onChange={(e) =>
                       handleChange(index, "golesB", e.target.value)
                     }
-                    className="rounded-md p-2 bg-neutral-700 text-neutral-100 text-center"
+                    className="focus:outline-none focus:border-primary border border-transparent rounded-lg p-2 bg-neutral-700 text-neutral-100 text-center"
                   />
                 </div>
               ))}

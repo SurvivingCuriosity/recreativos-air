@@ -125,7 +125,7 @@ export function Tabla<T extends object>({
                   return (
                     <td
                       key={col.key}
-                      className="p-1 border-r text-center text-sm border-b border-neutral-800"
+                      className={`${col.header === "Equipo" ? 'max-w-27 truncate text-left' : ''} p-1 border-r text-center text-sm border-b border-neutral-800`}
                     >
                       {col.cell({ row, rowIndex, column: col })}
                     </td>

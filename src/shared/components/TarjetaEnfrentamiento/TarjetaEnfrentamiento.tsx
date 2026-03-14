@@ -6,13 +6,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EstadoEnfrentamiento, type EnfrentamientoDTO } from "recreativos-air-core/enfrentamiento";
 import { useAuth } from "../../api/auth/useAuth";
 import { useGetEquiposUsuario } from "../../api/equipos/hooks/useGetEquipos";
+import type { ConfiguracionLigaDTO } from "recreativos-air-core/liga";
 
 export const TarjetaEnfrentamiento = ({
   enfrentamiento,
   onClick,
+  cfgLiga,
 }: {
   enfrentamiento: EnfrentamientoDTO;
   onClick?: () => void;
+  cfgLiga?: ConfiguracionLigaDTO;
 }) => {
   const { user } = useAuth();
   const { data: equiposUsuario } = useGetEquiposUsuario(user?.id || "");
@@ -52,8 +55,8 @@ export const TarjetaEnfrentamiento = ({
           )}
         </div>
         <div className="flex text-sm justify-between">
-          <div className={`flex flex-col min-w-28`}>
-            <div className="relative w-45 truncate">
+          <div className={`flex flex-col w-1/2`}>
+            <div className="relative w-full truncate">
               <p
                 title={enfrentamiento.equipoA.nombre}
                 className={`${
@@ -62,7 +65,7 @@ export const TarjetaEnfrentamiento = ({
                   )
                     ? "text-primary"
                     : ""
-                }  border-b border-neutral-700 py-2 px-2 truncate`}
+                } border-b border-neutral-700 py-2 px-2 truncate`}
               >
                 {enfrentamiento.equipoA.nombre}
               </p>
@@ -71,7 +74,7 @@ export const TarjetaEnfrentamiento = ({
                 className="absolute top-0 left-0 h-full w-1"
               ></div>
             </div>
-            <div className="relative w-45 truncate">
+            <div className="relative w-full truncate">
               <p
                 title={enfrentamiento.equipoB.nombre}
                 className={`${
@@ -91,7 +94,7 @@ export const TarjetaEnfrentamiento = ({
             </div>
           </div>
 
-          <div className="flex flex-row border-l border-neutral-700 overflow-x-auto mr-auto">
+          <div className="flex flex-row border-l border-neutral-700 overflow-x-auto ml-auto w-1/2">
             {enfrentamiento.partidos.map((p, index) => (
               <div
                 key={
@@ -99,14 +102,14 @@ export const TarjetaEnfrentamiento = ({
                   enfrentamiento.equipoA.nombre +
                   enfrentamiento.equipoB.nombre
                 }
-                className="flex flex-col border-r border-neutral-700 text-neutral-300"
+                className="flex flex-col not-last:border-r border-neutral-700 text-neutral-300 w-full"
               >
-                <p className="py-2 px-3 border-b border-neutral-700">
+                <p className={`${p.golesA === cfgLiga?.golesParaGanar ? 'bg-green-400/5' : ''} py-2 px-3 border-b border-neutral-700 text-center`}>
                   {enfrentamiento.estado === EstadoEnfrentamiento.SinJugar
                     ? "-"
                     : p.golesA}
                 </p>
-                <p className="py-2 px-3">
+                <p className={`${p.golesB === cfgLiga?.golesParaGanar ? 'bg-green-400/5' : ''} py-2 px-3 text-center`}>
                   {enfrentamiento.estado === EstadoEnfrentamiento.SinJugar
                     ? "-"
                     : p.golesB}

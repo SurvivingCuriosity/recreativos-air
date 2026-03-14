@@ -83,7 +83,7 @@ export const TarjetaEquipoLiga = ({ idLiga, equipoLiga, onClick }: Props) => {
         </p>
         {isAdmin && (
           <div className="w-min">
-            <Button
+            <Button 
               icon={faTrash}
               variant="outline-neutral"
               onClick={handleEliminarEquipoDeLiga}

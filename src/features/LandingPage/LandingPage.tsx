@@ -18,7 +18,7 @@ export const LandingPage = () => {
   };
 
   return (
-    <main className="p-4 h-full w-full relative flex-1 flex flex-col items-center justify-between pb-18">
+    <main className="p-4 pt-8 h-full w-full relative flex-1 flex flex-col items-center justify-between pb-18">
       <img
         src={fondo}
         alt="fondo"
@@ -90,7 +90,7 @@ export const LandingPage = () => {
           )}
         </div>
       ) : (
-        <div className="mt-20 w-full flex flex-col gap-2">
+        <div className="w-full flex flex-col gap-2">
           <div className="mt-5 flex flex-col items-center gap-4">
             <div className="flex w-full gap-2">
 

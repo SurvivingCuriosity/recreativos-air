@@ -31,26 +31,26 @@ export const ResultadoEnfrentamiento = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex text-xl justify-between w-full">
-        <div className="border-neutral-700 flex flex-col max-w-40">
-          <p className="border-b border-neutral-700 py-2 truncate font-semibold">
+      <div className="flex justify-between w-full border border-neutral-800 rounded-2xl py-0 p-2 bg-neutral-950/60">
+        <div className="max-w-32 w-full border-r border-neutral-700 flex flex-col">
+          <p className="truncate w-full border-b border-neutral-700 py-2 font-semibold">
             {enfrentamiento.equipoA.nombre}
           </p>
-          <p className="py-2 truncate font-semibold">
+          <p className="truncate w-full py-2 font-semibold">
             {enfrentamiento.equipoB.nombre}
           </p>
         </div>
 
-        <div className="flex flex-row w-full justify-center overflow-x-auto">
+        <div className="w-full flex flex-row justify-center overflow-x-auto">
           {enfrentamiento.partidos.map((p, index) => (
             <div
               key={`${index}-${enfrentamiento.id}`}
-              className="text-xl flex flex-col border-neutral-700 text-neutral-400"
+              className="w-full flex flex-col border-neutral-700 text-neutral-400"
             >
-              <p className="py-2 px-3 border-b border-neutral-700 text-center">
+              <p className="p-2 border-b border-neutral-700 text-center">
                 {p.golesA ?? "-"}
               </p>
-              <p className="py-2 px-3 text-center">{p.golesB ?? "-"}</p>
+              <p className="p-2 text-center">{p.golesB ?? "-"}</p>
             </div>
           ))}
         </div>

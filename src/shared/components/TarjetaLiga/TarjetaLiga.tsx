@@ -64,7 +64,7 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
     <>
       <div
         onClick={onClick}
-        className="h-full hover:border-neutral-700 shrink-0 justify-between border overflow-hidden md:p-4 p-1.5 relative bg-neutral-900 rounded-lg border-neutral-800 z-0"
+        className="h-full hover:border-neutral-700 shrink-0 justify-between border overflow-hidden md:p-4 p-3 relative bg-neutral-900 rounded-3xl border-neutral-800 z-0"
       >
         <div className="relative z-2 flex flex-col justify-between h-full gap-1">
           <div className="flex items-center gap-2">
@@ -99,12 +99,12 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
             }
           </div>
           {liga.estadoLiga === EstadoLiga.EnCurso && (
-            <div className="absolute top-0 right-0 z-3 text-right w-fit px-1 text-orange-400 bg-orange-500/20 text-xs rounded-md">
+            <div className="absolute -top-1 -right-1 z-3 text-right w-fit px-1 text-orange-400 bg-orange-500/20 text-xs rounded-md">
               En curso
             </div>
           )}
           {liga.estadoLiga === EstadoLiga.SinEmpezar && (
-            <p className="absolute top-0 right-0 z-3 text-right w-fit px-1 text-green-400 bg-green-500/20 text-xs rounded-md whitespace-nowrap">
+            <p className="absolute -top-1 -right-1 z-3 text-right w-fit px-1 text-green-400 bg-green-500/20 text-xs rounded-md whitespace-nowrap">
               Aún no ha comenzado
             </p>
           )}

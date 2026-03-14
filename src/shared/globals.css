@@ -74,7 +74,8 @@
     --color-neutral-700: #3c2100;
     --color-neutral-800: #281500;
     --color-neutral-900: #1c0d00; */
-    --color-primary: #ff870f;
+    --color-primary: #eb8a1f;
+    --color-primary2: #ea8e44;
 
 
     --animate-fade-in-top: fade-in-top 0.5s ease-out both;

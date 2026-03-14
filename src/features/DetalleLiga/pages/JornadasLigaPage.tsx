@@ -71,6 +71,7 @@ export const JornadasLigaPage = () => {
             key={enf.id}
             enfrentamiento={enf}
             onClick={() => navigate("/jornadas/" + enf.id)}
+            cfgLiga={liga?.configuracion}
           />
         ))
       )}
