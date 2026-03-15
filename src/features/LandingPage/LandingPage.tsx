@@ -22,11 +22,9 @@ export const LandingPage = () => {
       <img
         src={fondo}
         alt="fondo"
-        style={{
-          objectPosition: "bottom 0px right -520px",
-        }}
-        className="h-svh w-full bottom-0 object-cover fixed pointer-events-none -z-1"
+        className="h-svh w-full inset-0 object-cover object-center fixed pointer-events-none -z-1"
       />
+      <div className="h-svh w-full inset-0 fixed pointer-events-none -z-1 bg-black/20" />
 
       <h1
         className="

@@ -28,7 +28,7 @@ export const TopNav = ({
   const isAdmin = user?.admin;
   return (
     <header
-      className={`h-14 p-2 border-b ${
+      className={`relative z-3 h-14 p-2 border-b ${
         isAdmin ? "border-primary" : "border-neutral-700"
       } w-full block`}
     >
