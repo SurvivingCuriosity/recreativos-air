@@ -8,6 +8,7 @@ import { useWindow } from "../../../shared/context/WindowProvider";
 import { InscribirEquipoExistenteForm } from "../components/InscribirEquipoExistenteForm";
 import { TarjetaEquipoLiga } from "../components/TarjetaEquipoLiga";
 import { EstadoEquipoEnLiga } from "recreativos-air-core/liga";
+import { TarjetaEquipoLigaAdmin } from "../components/TarjetaEquipoLigaAdmin";
 
 export const EquiposLigaPage = () => {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ export const EquiposLigaPage = () => {
   const { data: liga } = useLigaById(idLiga || "");
 
   const { user } = useAuth();
+  const isAdmin = user?.admin;
+
   const { show, close } = useWindow();
 
   const handleInscribirEquipoExistente = () => {
@@ -26,7 +29,7 @@ export const EquiposLigaPage = () => {
 
     show(
       <InscribirEquipoExistenteForm onCloseWindow={close} idLiga={liga.id} />,
-      "Elige un equipo"
+      "Elige un equipo",
     );
   };
 
@@ -35,9 +38,9 @@ export const EquiposLigaPage = () => {
       user?.admin
         ? liga?.equipos || []
         : liga?.equipos.filter(
-            (e) => e.estado === EstadoEquipoEnLiga.Aprobado
+            (e) => e.estado === EstadoEquipoEnLiga.Aprobado,
           ) || [],
-    [liga, user]
+    [liga, user],
   );
 
   if (!liga) return <p>Ups algo pasó</p>;
@@ -56,14 +59,22 @@ export const EquiposLigaPage = () => {
       )}
       <ul className="flex flex-col gap-2">
         {equiposShow.length > 0 ? (
-          equiposShow.map((equipo, index) => (
-            <TarjetaEquipoLiga
-              key={index}
-              idLiga={liga.id}
-              equipoLiga={equipo}
-              onClick={() => navigate(`/equipos/${equipo.equipo.id}`)}
-            />
-          ))
+          equiposShow.map((equipo) =>
+            isAdmin ? (
+              <TarjetaEquipoLigaAdmin
+                key={equipo.equipo.id}
+                idLiga={liga.id}
+                equipoLiga={equipo}
+                onClick={() => navigate(`/equipos/${equipo.equipo.id}`)}
+              />
+            ) : (
+              <TarjetaEquipoLiga
+                key={equipo.equipo.id}
+                equipoLiga={equipo}
+                onClick={() => navigate(`/equipos/${equipo.equipo.id}`)}
+              />
+            ),
+          )
         ) : (
           <p className="text-neutral-400 p-4 text-center">
             Ups... no hay equipos aún

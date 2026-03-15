@@ -56,7 +56,7 @@ export const InscribirEquipoExistenteForm = ({
   if(!user?.admin) return <p>No eres admin </p>
 
   return (
-    <div className="h-40 flex flex-col justify-between">
+    <div className="h-80 flex flex-col justify-between">
       <div>
         <SelectorEquipo
           equipos={equipos || []}

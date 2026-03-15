@@ -6,7 +6,9 @@ export type ButtonVariant =
   | "primary"
   | "outline"
   | "neutral"
-  | "outline-neutral";
+  | "outline-neutral"
+  | "danger"
+  | "outline-danger";
 
 export interface ButtonProps {
   as?: "button" | "a";
@@ -49,6 +51,8 @@ export const Button = (props: ButtonProps) => {
     neutral: "text-neutral-900/80 bg-neutral-400 border border-neutral-400",
     "outline-neutral":
       "bg-neutral-900/80 text-neutral-400 border border-neutral-400",
+    danger: "bg-red-500 text-white border border-red-500",
+    "outline-danger": "bg-neutral-900/80 text-red-400 border border-red-400",
   };
 
   return (
