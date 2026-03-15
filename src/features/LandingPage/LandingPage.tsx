@@ -11,7 +11,7 @@ export const LandingPage = () => {
   const navigate = useNavigate();
 
   const { ligas, loadingLigas, errorLigas } = useLigasDeUsuario();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, isLoading } = useAuth();
 
   const handleNavigateLiga = (idLiga: string) => {
     navigate(`/competiciones/${idLiga}/clasificacion`);
@@ -50,7 +50,11 @@ export const LandingPage = () => {
         de Salamanca.
       </p>
 
-      {isLoggedIn ? (
+      {isLoading ? (
+        <div className="flex items-center justify-center flex-1">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isLoggedIn ? (
         <div className="max-w-11/12 md:min-w-md md:max-w-3xl">
           <p className="font-cool text-primary text-2xl font-black my-3">
             Mis ligas
@@ -90,7 +94,7 @@ export const LandingPage = () => {
           )}
         </div>
       ) : (
-        <div className="w-full flex flex-col gap-2">
+        <div className="w-full flex flex-col gap-2 max-w-lg">
           <div className="mt-5 flex flex-col items-center gap-4">
             <div className="flex w-full gap-2">
 
