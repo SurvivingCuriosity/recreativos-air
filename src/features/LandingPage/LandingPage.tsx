@@ -79,7 +79,7 @@ export const LandingPage = () => {
               {ligas?.map((l) => (
                 <div
                   key={l.id}
-                  className={`${ligas.length > 1 ? "w-11/12" : "w-full"} md:w-full shrink-0 snap-center rounded-xl`}
+                  className={`${ligas.length > 1 ? "w-11/12" : "w-full"} shrink-0 snap-center rounded-xl`}
                 >
                   <TarjetaLiga
                     key={l.id}
