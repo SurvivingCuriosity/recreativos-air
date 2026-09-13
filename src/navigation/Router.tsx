@@ -7,11 +7,13 @@ import { ClasificacionLigaPage } from "../features/DetalleLiga/pages/Clasificaci
 import { EquiposLigaPage } from "../features/DetalleLiga/pages/EquiposLigaPage";
 import { InfoLigaPage } from "../features/DetalleLiga/pages/InfoLigaPage";
 import { JornadasLigaPage } from "../features/DetalleLiga/pages/JornadasLigaPage";
+import { AjustesLigaPage } from "../features/DetalleLiga/pages/AjustesLigaPage";
 import { DetalleEquipoPage } from "../features/Equipos/DetalleEquipo/DetalleEquipoPage";
 import { DetalleJornadaPage } from "../features/Jornadas/DetalleJornada/DetalleJornadaPage";
 import { LandingPage } from "../features/LandingPage/LandingPage";
 import { LoginPage } from "../features/Login/LoginPage";
 import { MiPerfilPage } from "../features/MiPerfil/MiPerfilPage";
+import { EditarPerfilPage } from "../features/MiPerfil/EditarPerfilPage";
 import { PerfilPublicoPage } from "../features/PerfilPublico/PerfilPublicoPage";
 import { RegisterPage } from "../features/Register/RegisterPage";
 import { VerifyEmailPage } from "../features/VerifyEmail/VerifyEmailPage";
@@ -21,6 +23,9 @@ import RequireAuth from "./components/RequireAuth";
 import { AdminEquiposPage } from "../features/Admin/AdminEquiposPage";
 import { AdminUsuariosPage } from "../features/Admin/AdminUsuariosPage";
 import { ResetPasswordPage } from "../features/ResetPassword/ResetPasswordPage";
+import { AdminTemporadasPage } from "../features/Admin/Temporadas/AdminTemporadasPage";
+import { AdminTemporadaNuevaPage } from "../features/Admin/Temporadas/AdminTemporadaNuevaPage";
+import { AdminTemporadaDetallePage } from "../features/Admin/Temporadas/AdminTemporadaDetallePage";
 
 export const Router = () => {
   return (
@@ -41,6 +46,7 @@ export const Router = () => {
         <Route element={<RequireAuth />}>
           <Route path="user/:id" element={<PerfilPublicoPage />} />
           <Route path="mi-perfil" element={<MiPerfilPage />} />
+          <Route path="mi-perfil/editar" element={<EditarPerfilPage />} />
           <Route path="crear-equipo" element={<CrearEquipoPage />} />
           <Route path="equipos/:id" element={<DetalleEquipoPage />} />
           <Route path="jornadas/:id" element={<DetalleJornadaPage />} />
@@ -49,6 +55,7 @@ export const Router = () => {
             <Route path="jornadas" element={<JornadasLigaPage />} />
             <Route path="clasificacion" element={<ClasificacionLigaPage />} />
             <Route path="equipos" element={<EquiposLigaPage />} />
+            <Route path="ajustes" element={<AjustesLigaPage />} />
           </Route>
         </Route>
       </Route>
@@ -59,6 +66,9 @@ export const Router = () => {
           <Route path="crear-liga" element={<CrearLigaPage />} />
           <Route path="admin-equipos" element={<AdminEquiposPage />} />
           <Route path="admin-usuarios" element={<AdminUsuariosPage />} />
+          <Route path="admin-temporadas" element={<AdminTemporadasPage />} />
+          <Route path="admin-temporadas/nueva" element={<AdminTemporadaNuevaPage />} />
+          <Route path="admin-temporadas/:id" element={<AdminTemporadaDetallePage />} />
         </Route>
       </Route>
     </Routes>

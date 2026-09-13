@@ -6,6 +6,7 @@ import { Outlet, useParams } from "react-router";
 import { EstadoEquipoEnLiga, EstadoLiga } from "recreativos-air-core/liga";
 import { Button } from "../../packages/components/Button/Button";
 import { Titulo } from "../../packages/components/Titulo/Titulo";
+import { ChipEstadoLiga } from "../../shared/components/TarjetaLiga/ChipEstadoLiga";
 import { useAuth } from "../../shared/api/auth/useAuth";
 import {
   useInscribirEquipo,
@@ -17,7 +18,6 @@ import {
   logoFutbolinMap,
 } from "../../shared/db/logoFutbolinMap";
 import { NavDetalleLiga } from "./NavDetalleLiga";
-import { BotonArrancarLiga } from "./components/BotonArrancarLiga";
 
 export const DetalleLigaLayout = () => {
   const { id } = useParams<{ id: string }>();
@@ -89,6 +89,7 @@ export const DetalleLigaLayout = () => {
           <h1 className="font-cool text-2xl font-bold text-primary">
             {liga.nombre}
           </h1>
+          <ChipEstadoLiga estado={liga.estadoLiga} className="ml-auto" />
         </div>
         {userYaInscrito ? (
           equipoUsuario?.estado === EstadoEquipoEnLiga.Pendiente && (
@@ -103,9 +104,6 @@ export const DetalleLigaLayout = () => {
             </Button>
           </div>
         )}
-        {user?.admin &&
-          <BotonArrancarLiga liga={liga} />
-        }
         <NavDetalleLiga />
         <Outlet />
       </div>

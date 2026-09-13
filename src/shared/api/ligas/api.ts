@@ -1,5 +1,10 @@
 import type { EquipoDTO } from "recreativos-air-core/equipos";
-import type { CrearLigaBody, LigaDTO } from "recreativos-air-core/liga";
+import type {
+  ActualizarLigaBody,
+  CrearLigaBody,
+  GetLigasQuery,
+  LigaDTO,
+} from "recreativos-air-core/liga";
 import type { TableRow } from "../../../features/DetalleLiga/components/ClasificacionLiga";
 import api from "../http";
 
@@ -9,8 +14,21 @@ export const LigasAPI = {
     return res.data.data;
   },
 
-  async getLigas(): Promise<LigaDTO[]> {
-    const res = await api.get("/ligas");
+  async actualizarLiga(
+    ligaId: string,
+    data: ActualizarLigaBody
+  ): Promise<LigaDTO> {
+    const res = await api.put(`/ligas/${ligaId}`, data);
+    return res.data.data;
+  },
+
+  async eliminarLiga(ligaId: string): Promise<LigaDTO> {
+    const res = await api.delete(`/ligas/${ligaId}`);
+    return res.data.data;
+  },
+
+  async getLigas(params?: GetLigasQuery): Promise<LigaDTO[]> {
+    const res = await api.get("/ligas", { params });
     return res.data.data;
   },
 

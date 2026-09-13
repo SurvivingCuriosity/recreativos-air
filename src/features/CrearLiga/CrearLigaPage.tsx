@@ -10,11 +10,22 @@ import { TextInput } from "../../packages/components/TextInput/TextInput";
 import { Titulo } from "../../packages/components/Titulo/Titulo";
 import { useCrearLiga } from "../../shared/api/ligas/useLigas";
 import { SelectorTipoFutbolin } from "../../shared/components/SelectorTipoFutbolin/SelectorTipoFutbolin";
-import { EstadoLiga, TipoFutbolin } from "recreativos-air-core/liga";
+import {
+  EstadoLiga,
+  SIN_TEMPORADA,
+  TipoFutbolin,
+} from "recreativos-air-core/liga";
+import {
+  useTemporadaActual,
+  useTemporadas,
+} from "../../shared/api/temporadas/useTemporadas";
+import { SelectorTemporada } from "../../shared/components/SelectorTemporada/SelectorTemporada";
 
 export const CrearLigaPage = () => {
   const navigate = useNavigate();
   const { mutate: crearLiga, isPending } = useCrearLiga();
+  const { data: temporadas } = useTemporadas();
+  const { data: temporadaActual } = useTemporadaActual();
 
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -22,6 +33,8 @@ export const CrearLigaPage = () => {
     TipoFutbolin.Tsunami
   );
   const [normas, setNormas] = useState("");
+  const [temporada, setTemporada] = useState<string | null>(null);
+  const temporadaValue = temporada ?? temporadaActual?.id ?? SIN_TEMPORADA;
   const [premio, setPremio] = useState("");
   const [ubicaciones, setUbicaciones] = useState<string[]>([]);
   const [ubicacionActual, setUbicacionActual] = useState("");
@@ -62,6 +75,7 @@ export const CrearLigaPage = () => {
           golesParaGanar,
           idaYVuelta,
         },
+        temporada: temporadaValue === SIN_TEMPORADA ? null : temporadaValue,
       },
       {
         onSuccess: () => {
@@ -110,6 +124,16 @@ export const CrearLigaPage = () => {
             <SelectorTipoFutbolin
               value={tipoFutbolin}
               onSelect={(value) => setTipoFutbolin(value)}
+            />
+          </FormField>
+
+          <FormField>
+            <FormLabel>Temporada</FormLabel>
+            <SelectorTemporada
+              temporadas={temporadas ?? []}
+              value={temporadaValue}
+              onSelect={setTemporada}
+              incluirOpcionSinTemporada
             />
           </FormField>
 

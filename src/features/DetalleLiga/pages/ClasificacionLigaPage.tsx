@@ -6,6 +6,7 @@ import {
 import { TablaClasificacionLiga } from "../components/ClasificacionLiga";
 import { EstadoLiga } from "recreativos-air-core/liga";
 import { useAuth } from "../../../shared/api/auth/useAuth";
+import { PosicionUsuarioChip } from "../../../shared/components/TarjetaLiga/PosicionUsuarioChip";
 
 export const ClasificacionLigaPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -32,8 +33,21 @@ export const ClasificacionLigaPage = () => {
       </p>
     );
 
+  const equipoUsuario = liga?.equipos?.find((e) =>
+    e.equipo?.jugadores?.some((j) => j.idUsuario === user?.id)
+  );
+
   return (
     <div className="animate-fade-in-top">
+      {liga?.estadoLiga === EstadoLiga.Finalizada && equipoUsuario && (
+        <div className="flex justify-center my-3">
+          <PosicionUsuarioChip
+            ligaId={liga.id}
+            equipoId={equipoUsuario.equipo.id}
+            finalizada
+          />
+        </div>
+      )}
       <TablaClasificacionLiga data={clasificacion} />
     </div>
   );

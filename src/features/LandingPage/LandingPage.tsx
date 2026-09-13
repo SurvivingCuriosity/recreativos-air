@@ -1,17 +1,44 @@
 import { Link, useNavigate } from "react-router";
+import { EstadoLiga, type LigaDTO } from "recreativos-air-core/liga";
 import { Button } from "../../packages/components/Button/Button";
 import { useAuth } from "../../shared/api/auth/useAuth";
 import fondo from "../../shared/assets/tsunami.jpg";
 import { TarjetaLiga } from "../../shared/components/TarjetaLiga/TarjetaLiga";
 import { TELEFONO_ALBERTO } from "../../shared/db/telefono";
+import { useLigas } from "../../shared/api/ligas/useLigas";
+import { useTemporadaActual } from "../../shared/api/temporadas/useTemporadas";
 import { useLigasDeUsuario } from "../../shared/hooks/useLigasDeUsuario";
+import { CtaLigasDisponibles } from "./CtaLigasDisponibles";
 import { ButtonWhatsapp } from "./ButtonWhatsapp";
 
 export const LandingPage = () => {
   const navigate = useNavigate();
 
-  const { ligas, loadingLigas, errorLigas } = useLigasDeUsuario();
+  const { ligas: ligasUsuario, loadingLigas, errorLigas } = useLigasDeUsuario();
+  const { data: todasLasLigas } = useLigas();
+  const { data: temporadaActual } = useTemporadaActual();
   const { isLoggedIn, isLoading } = useAuth();
+
+  // Una liga se considera activa si no ha finalizado y no pertenece a una temporada pasada
+  const esLigaActiva = (l: LigaDTO) =>
+    l.estadoLiga !== EstadoLiga.Finalizada &&
+    (!temporadaActual || !l.temporada || l.temporada === temporadaActual.id);
+
+  const ligas = ligasUsuario
+    ? [...ligasUsuario].sort(
+        (a, b) => Number(esLigaActiva(b)) - Number(esLigaActiva(a))
+      )
+    : undefined;
+
+  const sinLigasActivas = !!ligas && !ligas.some(esLigaActiva);
+
+  const ligasDisponibles =
+    todasLasLigas?.filter(
+      (l) =>
+        l.estadoLiga === EstadoLiga.SinEmpezar &&
+        esLigaActiva(l) &&
+        !ligasUsuario?.some((lu) => lu.id === l.id)
+    ).length ?? 0;
 
   const handleNavigateLiga = (idLiga: string) => {
     navigate(`/competiciones/${idLiga}/clasificacion`);
@@ -89,6 +116,13 @@ export const LandingPage = () => {
                 </div>
               ))}
             </ul>
+          )}
+          {sinLigasActivas && !loadingLigas && (
+            <CtaLigasDisponibles
+              ligasDisponibles={ligasDisponibles}
+              tieneLigas={!!ligas?.length}
+              temporadaActual={temporadaActual}
+            />
           )}
         </div>
       ) : (

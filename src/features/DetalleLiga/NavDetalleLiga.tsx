@@ -1,5 +1,6 @@
 import {
   faCalendarDays,
+  faGear,
   faInfoCircle,
   faListOl,
   faPeopleGroup,
@@ -7,22 +8,26 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { InlinePicker } from "../../packages/components/InlinePicker/InlinePicker";
+import { useAuth } from "../../shared/api/auth/useAuth";
 
 export const NavDetalleLiga = () => {
   const [activeTab, setActiveTab] = useState(getActiveTabBasedOnUrlValue());
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const labelMap: Record<number, string> = {
     1: "Clasificación",
     2: "Jornadas",
     3: "Equipos",
     4: "Información",
+    5: "Ajustes",
   };
   const navigateMap: Record<number, string> = {
     1: "clasificacion",
     2: "jornadas",
     3: "equipos",
     4: "info",
+    5: "ajustes",
   };
 
   function getActiveTabBasedOnUrlValue() {
@@ -39,6 +44,9 @@ export const NavDetalleLiga = () => {
     }
     if (urlSegments.includes("info")) {
       value = 4;
+    }
+    if (urlSegments.includes("ajustes")) {
+      value = 5;
     }
     return value;
   }
@@ -60,6 +68,7 @@ export const NavDetalleLiga = () => {
             { id: 2, label: "", icon: faCalendarDays },
             { id: 3, label: "", icon: faPeopleGroup },
             { id: 4, label: "", icon: faInfoCircle },
+            ...(user?.admin ? [{ id: 5, label: "", icon: faGear }] : []),
           ]}
           activeTabId={activeTab}
           onTabClick={handleTabClick}

@@ -1,13 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import type { CrearLigaBody, LigaDTO } from "recreativos-air-core/liga";
+import type {
+  ActualizarLigaBody,
+  CrearLigaBody,
+  GetLigasQuery,
+  LigaDTO,
+} from "recreativos-air-core/liga";
 import { LigasAPI } from "./api";
 
 // 🔁 Obtener todas las ligas
-export const useLigas = () => {
+export const useLigas = (
+  filtro?: GetLigasQuery,
+  options: { enabled?: boolean } = {}
+) => {
   return useQuery<LigaDTO[]>({
-    queryKey: ["ligas"],
-    queryFn: LigasAPI.getLigas,
+    queryKey: filtro?.temporada ? ["ligas", filtro] : ["ligas"],
+    queryFn: () => LigasAPI.getLigas(filtro),
+    ...options,
   });
 };
 
@@ -33,6 +42,33 @@ export const useCrearLiga = () => {
     onError: () => {
       toast.error("Error al crear la liga");
     },
+  });
+};
+
+export const useActualizarLiga = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ ligaId, data }: { ligaId: string; data: ActualizarLigaBody }) =>
+      LigasAPI.actualizarLiga(ligaId, data),
+    onSuccess: () => {
+      toast.success("Liga actualizada");
+      queryClient.invalidateQueries({ queryKey: ["ligas"] });
+    },
+    onError: () => toast.error("Error al actualizar la liga"),
+  });
+};
+
+export const useEliminarLiga = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (ligaId: string) => LigasAPI.eliminarLiga(ligaId),
+    onSuccess: () => {
+      toast.success("Liga eliminada");
+      queryClient.invalidateQueries({ queryKey: ["ligas"] });
+    },
+    onError: () => toast.error("Error al eliminar la liga"),
   });
 };
 

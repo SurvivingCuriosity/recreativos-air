@@ -19,6 +19,7 @@ import {
 import { useNavigate } from "react-router";
 import { LigaProgress } from "./LigaProgress";
 import { PosicionUsuarioChip } from "./PosicionUsuarioChip";
+import { ChipEstadoLiga } from "./ChipEstadoLiga";
 
 
 export interface TarjetaLigaProps {
@@ -92,22 +93,17 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
               <PosicionUsuarioChip
                 ligaId={liga.id}
                 equipoId={equipoUsuario.equipo.id}
+                finalizada={liga.estadoLiga === EstadoLiga.Finalizada}
               />
             )}
             {liga.estadoLiga === EstadoLiga.EnCurso &&
               <LigaProgress ligaId={liga.id} myTeamId={equipoUsuario?.equipo?.id} />
             }
           </div>
-          {liga.estadoLiga === EstadoLiga.EnCurso && (
-            <div className="absolute -top-1 -right-1 z-3 text-right w-fit px-1 text-orange-400 bg-orange-500/20 text-xs rounded-md">
-              En curso
-            </div>
-          )}
-          {liga.estadoLiga === EstadoLiga.SinEmpezar && (
-            <p className="absolute -top-1 -right-1 z-3 text-right w-fit px-1 text-green-400 bg-green-500/20 text-xs rounded-md whitespace-nowrap">
-              Aún no ha comenzado
-            </p>
-          )}
+          <ChipEstadoLiga
+            estado={liga.estadoLiga}
+            className="absolute -top-1 -right-1 z-3"
+          />
           {/* {liga.descripcion && (
             <p className="text-neutral-400 bg-neutral-950/50 rounded-lg text-xs md:text-base max-w-10/12 line-clamp-2">
               {liga.descripcion}

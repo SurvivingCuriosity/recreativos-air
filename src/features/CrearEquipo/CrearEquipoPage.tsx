@@ -102,7 +102,7 @@ export const CrearEquipoPage = () => {
     const esElUltimoAgregado = jugadores.length === 2;
 
     handleAgregarJugador({
-      nombre: u.nombre,
+      nombre: u.nombre || u.username,
       idUsuario: u.id,
       estado: EstadoJugadorEnEquipo.PENDIENTE,
       suplente: esElUltimoAgregado ? true : false,

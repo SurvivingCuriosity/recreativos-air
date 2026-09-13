@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import { TopNav, type TopNavItem } from "../../navigation/components/TopNav";
 import {
+  faCalendarDays,
   faPlus,
   faRightToBracket,
   faTrophy,
@@ -10,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../api/auth/useAuth";
 import { NetworkStatusBanner } from "../components/NetworkStatusBanner/NetworkStatusBanner";
+import { AvisoPerfilSinNombre } from "../components/AvisoPerfilSinNombre/AvisoPerfilSinNombre";
 
 export type AuthNavContent = {
   miPerfil: TopNavItem;
@@ -18,6 +20,7 @@ export type AuthNavContent = {
   crearLiga: TopNavItem;
   equipos: TopNavItem;
   usuarios: TopNavItem;
+  temporadas: TopNavItem;
 };
 
 export type GuestNavContent = {
@@ -33,6 +36,7 @@ const TopNavContentAuth: AuthNavContent = {
   crearLiga: { label: "Crear liga", href: "/crear-liga", icon: faPlus, onlyAdmin: true },
   equipos: { label: "Equipos", href: "/admin-equipos", icon: faUser, onlyAdmin: true },
   usuarios: { label: "Usuarios", href: "/admin-usuarios", icon: faUsers, onlyAdmin: true },
+  temporadas: { label: "Temporadas", href: "/admin-temporadas", icon: faCalendarDays, onlyAdmin: true },
 };
 
 const TopNavContent: GuestNavContent = {
@@ -50,6 +54,7 @@ export const MainLayout = () => {
     <>
       <div className="bg-neutral-950 text-neutral-50 min-h-svh flex flex-col">
         <TopNav content={content} />
+        <AvisoPerfilSinNombre />
         <div className="relative mx-auto flex flex-col items-center flex-1 w-full">
           <img
             src="/logo.png"

@@ -180,6 +180,11 @@ export const HamburgerMenu = ({
               setIsOpen={setIsOpen}
             />
           </div>
+          <TopNavItemComponent
+            item={authContent.temporadas}
+            isAdmin={!!isAdmin}
+            setIsOpen={setIsOpen}
+          />
 
           <a
             href="https://www.futbolin.app"

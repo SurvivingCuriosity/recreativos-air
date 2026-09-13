@@ -1,4 +1,4 @@
-import { faPlus, faTrophy, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faPlus, faTrophy, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router";
@@ -39,12 +39,21 @@ export const MiPerfilPage = () => {
             <p className="text-neutral-500">{user?.email}</p>
             <p className="text-neutral-500">{user?.movil}</p>
           </span>
-          <button
-            onClick={handleLogout}
-            className="rounded-lg text-red-600 bg-neutral-950 border border-red-600 px-3 py-1 mt-auto z-1"
-          >
-            Salir
-          </button>
+          <div className="flex flex-col items-end gap-2 mt-auto z-1">
+            <button
+              onClick={() => navigate("/mi-perfil/editar")}
+              className="rounded-lg text-primary bg-neutral-950 border border-primary px-3 py-1"
+            >
+              <FontAwesomeIcon icon={faPen} className="mr-2" />
+              Editar
+            </button>
+            <button
+              onClick={handleLogout}
+              className="rounded-lg text-red-600 bg-neutral-950 border border-red-600 px-3 py-1"
+            >
+              Salir
+            </button>
+          </div>
           {user?.admin && (
             <p className="absolute -top-2 -left-2 bg-primary text-black text-xs size-min p-0.5 px-2 rounded-md font-bold">
               ADMIN

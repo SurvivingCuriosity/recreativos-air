@@ -1,16 +1,37 @@
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { Button } from "../../../packages/components/Button/Button";
 import { Message } from "../../../packages/components/Message/Message";
 import { useAuth } from "../../../shared/api/auth/useAuth";
 import { useGetEquiposUsuario } from "../../../shared/api/equipos/hooks/useGetEquipos";
 import { useLigas } from "../../../shared/api/ligas/useLigas";
+import {
+  useTemporadaActual,
+  useTemporadas,
+} from "../../../shared/api/temporadas/useTemporadas";
+import {
+  OPCION_TODAS,
+  SelectorTemporada,
+} from "../../../shared/components/SelectorTemporada/SelectorTemporada";
 import { TarjetaLiga } from "../../../shared/components/TarjetaLiga/TarjetaLiga";
 
 export const CompeticionesPage = () => {
   const navigate = useNavigate();
 
-  const { data: ligas, isLoading, error } = useLigas();
+  const { data: temporadas } = useTemporadas();
+  const { data: temporadaActual, isLoading: cargandoActual } =
+    useTemporadaActual();
+  const [temporadaSeleccionada, setTemporadaSeleccionada] = useState<
+    string | null
+  >(null);
+  const temporadaFiltro =
+    temporadaSeleccionada ?? temporadaActual?.id ?? OPCION_TODAS;
+
+  const { data: ligas, isLoading, error } = useLigas(
+    temporadaFiltro === OPCION_TODAS ? undefined : { temporada: temporadaFiltro },
+    { enabled: !cargandoActual }
+  );
 
   const { user } = useAuth();
   const { data: equiposUsuario } = useGetEquiposUsuario(user?.id || "");
@@ -20,6 +41,15 @@ export const CompeticionesPage = () => {
       <title>Competiciones | Recreativos Air</title>
       <div className="max-w-screen-md mx-auto flex flex-col items-center justify-start p-4 h-full gap-3">
         <h1 className="text-3xl font-bold font-cool sticky top-0 bg-neutral-950 pb-2 w-full">Competiciones</h1>
+        <div className="w-full">
+          <SelectorTemporada
+            temporadas={temporadas ?? []}
+            value={temporadaFiltro}
+            onSelect={setTemporadaSeleccionada}
+            incluirOpcionTodas
+            incluirOpcionSinTemporada={!!user?.admin}
+          />
+        </div>
         {equiposUsuario?.length === 0 && (
           <Message variant="info" className="w-full mb-2">
             <>
