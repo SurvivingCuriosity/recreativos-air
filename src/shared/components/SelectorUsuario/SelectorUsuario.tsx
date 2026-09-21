@@ -48,11 +48,11 @@ export default function SelectorUsuario({
       loadingMessage="Cargando..."
       renderOption={(e)=>{
         return (
-          <div className="flex items-center gap-4 p-2 rounded-lg hover:bg-neutral-900">
-            <Icon icon={User} className="text-neutral-300" />
+          <div className="flex min-h-11 items-center gap-3 py-1">
+            <Icon icon={User} className="text-muted-foreground" />
             <div className="flex flex-col">
-              <p className="text-neutral-300">{e.label}</p>
-              <p className="text-neutral-500">{e.nombre}</p>
+              <p className="text-foreground">{e.label}</p>
+              <p className="text-xs text-muted-foreground">{e.nombre}</p>
             </div>
 
           </div>

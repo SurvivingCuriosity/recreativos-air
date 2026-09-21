@@ -20,6 +20,8 @@
       href="favicon/apple-touch-icon.png"
     />
     <meta name="apple-mobile-web-app-title" content="Recreativos AIR" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafafa" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
     <link rel="manifest" href="favicon/manifest.json" />
     <link
       href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Albert+Sans:wght@400;500;600;700&display=swap"
@@ -47,7 +49,8 @@
     <script>
       (function () {
         try {
-          var t = localStorage.getItem("theme");
+          var q = new URLSearchParams(location.search).get("theme");
+          var t = q === "light" || q === "dark" ? q : localStorage.getItem("theme");
           if (t !== "light" && t !== "dark") {
             t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
           }

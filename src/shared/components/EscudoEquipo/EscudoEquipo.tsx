@@ -23,7 +23,7 @@ export const EscudoEquipo = ({
   size?: 32 | 40 | 44 | 52;
   className?: string;
 }) => {
-  const base = color?.trim() || "var(--color-primary)";
+  const base = color?.trim() || "var(--primary)";
   return (
     <span
       aria-hidden="true"

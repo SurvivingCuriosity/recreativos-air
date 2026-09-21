@@ -19,7 +19,7 @@ import { BadgePendientes } from "./BadgePendientes";
 const itemBase =
   "relative flex h-14 flex-1 flex-col items-center justify-center gap-[3px] rounded-input text-[11px] font-semibold text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring";
 const itemActive =
-  "text-primary-text bg-primary/12 shadow-[inset_0_2px_0_var(--color-primary)]";
+  "text-primary-text bg-primary/12 shadow-[inset_0_2px_0_var(--primary)]";
 
 const BottomNavLink = ({ item, badge }: { item: NavItem; badge?: number }) => (
   <NavLink

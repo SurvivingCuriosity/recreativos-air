@@ -112,7 +112,7 @@ export const TarjetaLiga = ({ liga, onClick, className }: TarjetaLigaProps) => {
       />
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,var(--color-card)_30%,rgb(22_22_22/0.7)_62%,rgb(255_79_163/0.08)_100%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,var(--card)_30%,rgb(22_22_22/0.7)_62%,rgb(255_79_163/0.08)_100%)]"
       />
 
       <div className="relative flex h-full flex-col gap-3 px-4 pt-3.5 pb-4">

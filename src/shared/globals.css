@@ -33,9 +33,10 @@
   --radius: 14px;
 
   /* Podio (§4) */
-  --podium-1: #fcd34d;
-  --podium-2: #cbd5e1;
-  --podium-3: #f0a36b;
+  /* Podio en claro: mismas semánticas, oscurecidas para AA sobre blanco */
+  --podium-1: #a16207;
+  --podium-2: #475569;
+  --podium-3: #c2410c;
 
   /* Sombra dura del modo claro (sustituye al glow) */
   --hard-shadow-color: #171717;
@@ -66,6 +67,11 @@
   --ring: #eb8a1f;
   --destructive-solid: #dc2626;
   --success-solid: #16a34a;
+
+  /* Podio (§4) */
+  --podium-1: #fcd34d;
+  --podium-2: #cbd5e1;
+  --podium-3: #f0a36b;
 
   color-scheme: dark;
 }
@@ -214,6 +220,19 @@
     -moz-appearance: textfield;
     appearance: textfield;
   }
+
+  /* Accesibilidad: sin animaciones ni transiciones si el usuario lo pide */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 /* ------------------------------------------------------------------
@@ -237,9 +256,9 @@
 
 @utility ring-logo {
   /* anillo del logo en el header */
-  box-shadow: 0 0 0 2px var(--color-background), 0 0 0 3px var(--hard-shadow-color);
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 3px var(--hard-shadow-color);
   .dark & {
-    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 3px var(--color-primary),
+    box-shadow: 0 0 0 2px var(--background), 0 0 0 3px var(--primary),
       0 0 10px rgb(235 138 31 / 0.3);
   }
 }
@@ -247,7 +266,7 @@
 @utility border-gradient-liga {
   /* borde degradado de TarjetaLiga (§3) */
   border: 1px solid transparent;
-  background: linear-gradient(var(--color-card), var(--color-card)) padding-box,
+  background: linear-gradient(var(--card), var(--card)) padding-box,
     linear-gradient(135deg, rgb(235 138 31 / 0.9), rgb(255 79 163 / 0.55)) border-box;
 }
 

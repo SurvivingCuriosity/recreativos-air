@@ -23,17 +23,17 @@ export const SelectorEquipoUsuario = ({
   const [idEquipoSelected, setIdEquipoSelected] = useState<string>("");
 
   if (isLoading) {
-    return <p>Cargando equipos...</p>;
+    return <p className="text-muted-foreground">Cargando equipos...</p>;
   }
 
   if (error) {
-    return <p>Error al cargar equipos</p>;
+    return <p className="text-destructive">Error al cargar equipos</p>;
   }
 
   if (equiposUsuario?.length === 0)
     return (
       <>
-        <p className="text-neutral-200 p-2">Ups... no tienes ningún equipo</p>
+        <p className="p-2 text-foreground-soft">Ups... no tienes ningún equipo</p>
         <Button
           onClick={() => {
             navigate("/crear-equipo");

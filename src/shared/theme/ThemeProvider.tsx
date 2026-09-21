@@ -27,6 +27,9 @@ const ThemeContext = createContext<ThemeContextType | null>(null);
  */
 const getInitialTheme = (): Theme => {
   try {
+    // Override por URL (?theme=light|dark), útil para QA y enlaces compartidos
+    const q = new URLSearchParams(window.location.search).get("theme");
+    if (q === "light" || q === "dark") return q;
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored === "light" || stored === "dark") return stored;
     if (window.matchMedia?.("(prefers-color-scheme: light)").matches) return "light";

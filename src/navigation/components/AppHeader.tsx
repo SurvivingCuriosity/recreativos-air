@@ -17,7 +17,7 @@ const HeaderLink = ({ item }: { item: NavItem }) => (
     className={({ isActive }) =>
       cn(
         "inline-flex min-h-11 items-center px-1.5 font-display text-[15px] font-semibold text-foreground-soft transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
-        isActive && "text-primary-text shadow-[inset_0_-2px_0_var(--color-primary)]"
+        isActive && "text-primary-text shadow-[inset_0_-2px_0_var(--primary)]"
       )
     }
   >
@@ -48,7 +48,7 @@ export const AppHeader = () => {
         aria-label="Principal"
         className="mx-auto flex h-full w-full max-w-5xl items-center gap-5 px-4 lg:px-6"
       >
-        <NavLink to="/" aria-label="Inicio" className="mr-auto flex rounded-full">
+        <NavLink to="/" aria-label="Inicio" className="mr-auto -ml-0.5 flex size-11 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
           <img src="/logo.png" alt="Recreativos AIR" className="size-10 rounded-full ring-logo" />
         </NavLink>
 

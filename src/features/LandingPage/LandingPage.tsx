@@ -74,7 +74,7 @@ export const LandingPage = () => {
       <div
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute inset-x-0 top-0 overflow-hidden",
+          "pointer-events-none absolute inset-x-0 top-0 hidden overflow-hidden dark:block",
           heroInvitado ? "bottom-0" : "h-[300px] lg:h-[260px]"
         )}
       >
@@ -90,8 +90,8 @@ export const LandingPage = () => {
           className={cn(
             "absolute inset-0",
             heroInvitado
-              ? "bg-[linear-gradient(180deg,rgb(from_var(--color-background)_r_g_b/0.55),rgb(from_var(--color-background)_r_g_b/0.2)_45%,rgb(from_var(--color-background)_r_g_b/0.85))]"
-              : "bg-[linear-gradient(180deg,rgb(from_var(--color-background)_r_g_b/0.35),var(--color-background)_92%)]"
+              ? "bg-[linear-gradient(180deg,rgb(from_var(--background)_r_g_b/0.55),rgb(from_var(--background)_r_g_b/0.2)_45%,rgb(from_var(--background)_r_g_b/0.85))]"
+              : "bg-[linear-gradient(180deg,rgb(from_var(--background)_r_g_b/0.35),var(--background)_92%)]"
           )}
         />
       </div>
@@ -105,7 +105,7 @@ export const LandingPage = () => {
         <div className="flex flex-col items-center gap-2.5 text-center">
           <h1 className="animate-fade-in-top font-display text-[38px] leading-none font-bold tracking-[0.01em] text-foreground uppercase lg:text-6xl">
             Recreativos{" "}
-            <span className="text-primary-text [text-shadow:0_0_14px_rgb(235_138_31/0.45)]">
+            <span className="text-primary-text text-glow-brand dark:[text-shadow:0_0_14px_rgb(235_138_31/0.45)]">
               AIR
             </span>
           </h1>
@@ -170,7 +170,7 @@ export const LandingPage = () => {
                 href="/register"
                 variant="outline"
                 onClick={() => navigate("/register")}
-                className="bg-background/60"
+                className="bg-background/60 dark:bg-background/60"
               >
                 No tengo cuenta
               </Button>

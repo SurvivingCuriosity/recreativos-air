@@ -50,7 +50,7 @@ export const NavDetalleLiga = () => {
                 "flex h-13 flex-col items-center justify-center gap-[3px] rounded-[10px] px-1 text-[11px] font-semibold text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring lg:h-11 lg:flex-row lg:gap-2 lg:text-[13px]",
                 tabs.length >= 5 && "text-[10px] lg:text-[13px]",
                 isActive &&
-                  "bg-primary/14 text-primary-text shadow-[inset_0_-2px_0_var(--color-primary)]"
+                  "bg-primary/14 text-primary-text shadow-[inset_0_-2px_0_var(--primary)]"
               )
             }
           >

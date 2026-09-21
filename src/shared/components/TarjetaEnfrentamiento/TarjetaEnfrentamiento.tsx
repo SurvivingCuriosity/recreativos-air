@@ -47,7 +47,7 @@ export const TarjetaEnfrentamiento = ({
       <span
         aria-hidden="true"
         className="h-[18px] w-1 shrink-0 rounded-sm"
-        style={{ backgroundColor: equipo.color || "var(--color-primary)" }}
+        style={{ backgroundColor: equipo.color || "var(--primary)" }}
       />
       <span title={equipo.nombre} className="truncate">
         {equipo.nombre}

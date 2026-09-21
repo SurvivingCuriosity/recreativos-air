@@ -95,7 +95,7 @@ export function Tabla<T extends object>({
                     isActive ? (sortState.direction === "asc" ? "ascending" : "descending") : undefined
                   }
                   className={cn(
-                    "h-10 px-2 text-center text-xs font-semibold tracking-wide text-muted-foreground uppercase",
+                    "h-11 px-2 text-center text-xs font-semibold tracking-wide text-muted-foreground uppercase",
                     col.className
                   )}
                 >
@@ -104,7 +104,7 @@ export function Tabla<T extends object>({
                       type="button"
                       onClick={handleSort(col)}
                       className={cn(
-                        "mx-auto flex min-h-10 items-center gap-1 rounded-sm px-1 hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring",
+                        "mx-auto flex min-h-11 items-center gap-1 rounded-sm px-1 hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring",
                         isActive && "text-primary-text",
                         col.align === "left" && "mx-0"
                       )}
