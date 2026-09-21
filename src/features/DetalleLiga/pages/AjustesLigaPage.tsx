@@ -1,4 +1,4 @@
-import { Flag, Play, Save, Trash2 } from "lucide-react";
+import { Flag, Play, Plus, Save, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/shared/lib/toast";
 import { Navigate, useNavigate, useParams } from "react-router";
@@ -24,6 +24,19 @@ import { useTemporadas } from "../../../shared/api/temporadas/useTemporadas";
 import { SelectorTemporada } from "../../../shared/components/SelectorTemporada/SelectorTemporada";
 import { SelectorTipoFutbolin } from "../../../shared/components/SelectorTipoFutbolin/SelectorTipoFutbolin";
 import { useConfirmDialog } from "../../../shared/context/UIProvider/hooks/useUI";
+import { SkeletonLista } from "../../../shared/components/Estados/Estados";
+
+const TituloAjustes = ({ children, tono = "primary" }: { children: React.ReactNode; tono?: "primary" | "danger" }) => (
+  <h2
+    className={
+      tono === "danger"
+        ? "font-display text-[17px] font-bold tracking-[0.06em] text-destructive uppercase"
+        : "font-display text-[17px] font-bold tracking-[0.06em] text-primary-text uppercase"
+    }
+  >
+    {children}
+  </h2>
+);
 
 export const AjustesLigaPage = () => {
   const { id = "" } = useParams<{ id: string }>();
@@ -33,9 +46,7 @@ export const AjustesLigaPage = () => {
   if (!user?.admin) return <Navigate to={`/competiciones/${id}/clasificacion`} replace />;
   if (isLoading || !liga)
     return (
-      <p className="text-neutral-400 text-center p-10 animate-pulse">
-        Cargando ajustes...
-      </p>
+      <SkeletonLista count={4} height="h-12" label="Cargando ajustes..." />
     );
 
   return <AjustesLigaForm key={liga.id} liga={liga} />;
@@ -96,6 +107,7 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
       description:
         "Se generarán los enfrentamientos y los usuarios podrán comenzar a introducir resultados",
       confirmText: "Arrancar liga",
+      variant: "default",
     });
     if (ok) cambiarEstadoLiga({ ligaId: liga.id, nuevoEstado: EstadoLiga.EnCurso });
   };
@@ -116,6 +128,7 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
       title: "¿Reanudar la liga?",
       description: "La liga volverá a estar en curso",
       confirmText: "Reanudar liga",
+      variant: "default",
     });
     if (ok) cambiarEstadoLiga({ ligaId: liga.id, nuevoEstado: EstadoLiga.EnCurso });
   };
@@ -131,9 +144,9 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
   };
 
   return (
-    <div className="animate-fade-in-top space-y-6 pb-6">
-      <section className="space-y-3">
-        <p className="font-display text-lg text-primary">Estado</p>
+    <div className="flex animate-fade-in-top flex-col gap-[22px] pb-6">
+      <section className="flex flex-col gap-2.5">
+        <TituloAjustes>Estado</TituloAjustes>
         {sinEmpezar && (
           <Button onClick={handleArrancar} icon={Play} disabled={cambiandoEstado}>
             {cambiandoEstado ? "Arrancando liga..." : "Arrancar liga"}
@@ -166,9 +179,9 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
           e.preventDefault();
           handleGuardar();
         }}
-        className="space-y-4"
+        className="flex flex-col gap-4"
       >
-        <p className="font-display text-lg text-primary">Datos de la liga</p>
+        <TituloAjustes>Datos de la liga</TituloAjustes>
 
         <FormField>
           <FormLabel>Nombre</FormLabel>
@@ -207,31 +220,43 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
           />
         </FormField>
 
-        <div className="bg-neutral-900 border border-neutral-700 p-3 rounded-md">
-          <FormLabel>Ubicaciones</FormLabel>
+        <div className="flex flex-col gap-2.5 rounded-button border border-border bg-card-2 p-3">
+          <FormLabel htmlFor="liga-ubicacion">Ubicaciones</FormLabel>
 
-          <div className="flex items-center gap-2 mb-3">
+          <div className="flex items-center gap-2">
             <TextInput
+              id="liga-ubicacion"
               placeholder="Añadir ubicación..."
               value={ubicacionActual}
               onChangeText={setUbicacionActual}
+              className="min-w-0 flex-1"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleAgregarUbicacion();
+                }
+              }}
             />
-            <Button onClick={handleAgregarUbicacion} variant="outline">
-              +
-            </Button>
+            <Button
+              onClick={handleAgregarUbicacion}
+              variant="outline"
+              icon={Plus}
+              aria-label="Añadir ubicación"
+              className="rounded-input"
+            />
           </div>
 
           {ubicaciones.length > 0 && (
-            <ul className="space-y-2">
+            <ul className="flex flex-col gap-2">
               {ubicaciones.map((u, i) => (
                 <li
                   key={i}
-                  className="flex justify-between items-center bg-neutral-800 px-3 py-1.5 rounded-md text-sm text-neutral-300"
+                  className="flex min-h-11 items-center justify-between gap-2 rounded-[10px] bg-muted py-0 pr-1 pl-3 text-sm text-foreground-soft"
                 >
-                  <span>{u}</span>
+                  <span className="truncate">{u}</span>
                   <button
                     type="button"
-                    className="text-red-500 text-xs hover:text-red-400"
+                    className="min-h-11 shrink-0 px-2.5 text-[13px] font-semibold text-destructive hover:underline focus-visible:outline-2 focus-visible:outline-ring"
                     onClick={() =>
                       setUbicaciones(ubicaciones.filter((_, j) => j !== i))
                     }
@@ -262,14 +287,14 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
           />
         </FormField>
 
-        <Button onClick={handleGuardar} icon={Save} disabled={guardando}>
+        <Button type="submit" icon={Save} disabled={guardando}>
           {guardando ? "Guardando..." : "Guardar cambios"}
         </Button>
       </form>
 
-      <section className="border border-red-500/30 rounded-md p-3 space-y-2">
-        <p className="font-display text-lg text-red-400">Zona de peligro</p>
-        <p className="text-xs text-neutral-500">
+      <section className="flex flex-col gap-2.5 rounded-button border border-destructive/40 bg-destructive/4 p-3.5">
+        <TituloAjustes tono="danger">Zona de peligro</TituloAjustes>
+        <p className="text-[13px] text-foreground-soft">
           Se eliminará la liga y todos sus enfrentamientos.
         </p>
         <Button

@@ -1,51 +1,48 @@
-import { useEffect, useState } from "react";
-import { SelectorEstadoEnfrentamiento } from "../../../shared/components/SelectorEstadoEnfrentamiento/SelectorEstadoEnfrentamiento";
 import { EstadoEnfrentamientoConOpcionCualquiera } from "recreativos-air-core/enfrentamiento";
-
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { SelectorEstadoEnfrentamiento } from "../../../shared/components/SelectorEstadoEnfrentamiento/SelectorEstadoEnfrentamiento";
 
 type Props = {
-  onChangeSoloEquiposUser: (mostrarTodos: boolean) => void;
+  mostrarTodos: boolean;
+  onChangeMostrarTodos: (mostrarTodos: boolean) => void;
+  estado: EstadoEnfrentamientoConOpcionCualquiera;
   onChangeEstado: (estado: EstadoEnfrentamientoConOpcionCualquiera) => void;
 };
 
+const toggleItemClass =
+  "h-full flex-1 rounded-[9px] px-2 text-[13px] font-semibold text-muted-foreground data-[state=on]:bg-primary/16 data-[state=on]:font-bold data-[state=on]:text-primary-text hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring";
+
+/** Filtros de jornadas: ToggleGroup «Mis partidos | Todos» + estado (DESIGN.md §6.5). */
 export const FiltrosJornadas = ({
-  onChangeSoloEquiposUser,
+  mostrarTodos,
+  onChangeMostrarTodos,
+  estado,
   onChangeEstado,
 }: Props) => {
-  const [estadoEnfrentamiento, setEstadoEnfrentamiento] =
-    useState<EstadoEnfrentamientoConOpcionCualquiera>(
-      EstadoEnfrentamientoConOpcionCualquiera.Cualquiera
-    );
-  const [mostrarTodos, setMostrarTodos] = useState(false);
-
-  useEffect(() => {
-    onChangeEstado(estadoEnfrentamiento);
-  }, [estadoEnfrentamiento]);
-
-  useEffect(() => {
-    onChangeSoloEquiposUser(mostrarTodos);
-  }, [mostrarTodos]);
-
   return (
-    <div className="flex gap-2 items-center justify-between">
-      <div className="w-full flex flex-col gap-1">
-        <p className="text-xs text-neutral-500">Equipos:</p>
-        <label className="flex items-center gap-2 w-full">
-          <input
-            type="checkbox"
-            checked={mostrarTodos}
-            onChange={(e) => setMostrarTodos(e.target.checked)}
-            className="size-5"
-          />
-          Mostrar todos
-        </label>
+    <div className="grid grid-cols-2 gap-2">
+      <div className="flex flex-col gap-1.5">
+        <span className="text-xs text-muted-foreground">Equipos:</span>
+        <ToggleGroup
+          type="single"
+          value={mostrarTodos ? "todos" : "mios"}
+          onValueChange={(v) => {
+            if (v) onChangeMostrarTodos(v === "todos");
+          }}
+          aria-label="Equipos"
+          className="grid h-[46px] w-full grid-cols-2 gap-[3px] rounded-input border border-border bg-card p-[3px]"
+        >
+          <ToggleGroupItem value="mios" className={toggleItemClass}>
+            Mis partidos
+          </ToggleGroupItem>
+          <ToggleGroupItem value="todos" className={toggleItemClass}>
+            Todos
+          </ToggleGroupItem>
+        </ToggleGroup>
       </div>
-      <div className="w-full flex flex-col gap-1">
-        <p className="text-xs text-neutral-500">Estado:</p>
-        <SelectorEstadoEnfrentamiento
-          value={estadoEnfrentamiento}
-          onSelect={setEstadoEnfrentamiento}
-        />
+      <div className="flex min-w-0 flex-col gap-1.5">
+        <span className="text-xs text-muted-foreground">Estado:</span>
+        <SelectorEstadoEnfrentamiento value={estado} onSelect={onChangeEstado} />
       </div>
     </div>
   );

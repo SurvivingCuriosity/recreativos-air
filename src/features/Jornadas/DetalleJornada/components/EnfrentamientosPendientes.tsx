@@ -9,6 +9,8 @@ import {
 } from "../../../../shared/api/enfrentamientos/hooks";
 import { TarjetaEnfrentamiento } from "../../../../shared/components/TarjetaEnfrentamiento/TarjetaEnfrentamiento";
 import type { EnfrentamientoDTO } from "recreativos-air-core/enfrentamiento";
+import { useConfirmDialog } from "../../../../shared/context/UIProvider/hooks/useUI";
+import { SkeletonLista } from "../../../../shared/components/Estados/Estados";
 
 const FilaEnfrentamiento = ({
   enfrentamiento,
@@ -16,6 +18,7 @@ const FilaEnfrentamiento = ({
   enfrentamiento: EnfrentamientoDTO;
 }) => {
   const qc = useQueryClient();
+  const { confirm } = useConfirmDialog();
 
   const { mutate: confirmarAdmin, isPending: confirmando } =
     useConfirmarResultadoAdmin();
@@ -40,7 +43,14 @@ const FilaEnfrentamiento = ({
     );
   };
 
-  const handleRechazar = () => {
+  // DESIGN.md §6.7: confirmación en «Rechazar»
+  const handleRechazar = async () => {
+    const ok = await confirm({
+      title: "¿Rechazar y reiniciar?",
+      description: "El resultado se descartará y el partido volverá a estar sin jugar.",
+      confirmText: "Rechazar y reiniciar",
+    });
+    if (!ok) return;
     rechazarAdmin(
       { enfrentamientoId: enfrentamiento.id },
       {
@@ -82,7 +92,11 @@ const FilaEnfrentamiento = ({
 };
 
 export const EnfrentamientosPendientes = () => {
-  const { data: enfrentamientos } = useEnfrentamientosPendientesAdmin();
+  const { data: enfrentamientos, isPlaceholderData, isFetching } =
+    useEnfrentamientosPendientesAdmin();
+
+  if (isPlaceholderData && isFetching)
+    return <SkeletonLista count={1} height="h-[118px]" label="Cargando pendientes..." />;
 
   if (!enfrentamientos || enfrentamientos.length === 0) return null;
 

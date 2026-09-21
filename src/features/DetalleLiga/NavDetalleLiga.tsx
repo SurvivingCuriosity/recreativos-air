@@ -1,80 +1,64 @@
-import { CalendarDays, Settings, Info, ListOrdered, Users } from "lucide-react";
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import { InlinePicker } from "../../packages/components/InlinePicker/InlinePicker";
+import {
+  CalendarDays,
+  Info,
+  ListOrdered,
+  Settings,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
+import { NavLink } from "react-router";
+import { cn } from "@/lib/utils";
 import { useAuth } from "../../shared/api/auth/useAuth";
 
+export interface TabLiga {
+  segment: string;
+  label: string;
+  titulo: string;
+  icon: LucideIcon;
+  onlyAdmin?: boolean;
+}
+
+/** Pestañas del detalle de liga con icono y etiqueta visible (DESIGN.md §5/§6). */
+export const TABS_LIGA: TabLiga[] = [
+  { segment: "clasificacion", label: "Clasificación", titulo: "Clasificación", icon: ListOrdered },
+  { segment: "jornadas", label: "Jornadas", titulo: "Jornadas", icon: CalendarDays },
+  { segment: "equipos", label: "Equipos", titulo: "Equipos", icon: Users },
+  { segment: "info", label: "Info", titulo: "Información", icon: Info },
+  { segment: "ajustes", label: "Ajustes", titulo: "Ajustes", icon: Settings, onlyAdmin: true },
+];
+
 export const NavDetalleLiga = () => {
-  const [activeTab, setActiveTab] = useState(getActiveTabBasedOnUrlValue());
-  const navigate = useNavigate();
   const { user } = useAuth();
-
-  const labelMap: Record<number, string> = {
-    1: "Clasificación",
-    2: "Jornadas",
-    3: "Equipos",
-    4: "Información",
-    5: "Ajustes",
-  };
-  const navigateMap: Record<number, string> = {
-    1: "clasificacion",
-    2: "jornadas",
-    3: "equipos",
-    4: "info",
-    5: "ajustes",
-  };
-
-  function getActiveTabBasedOnUrlValue() {
-    const urlSegments = new URL(window.location.href).toString().split("/");
-    let value = 1;
-    if (urlSegments.includes("clasificacion")) {
-      value = 1;
-    }
-    if (urlSegments.includes("jornadas")) {
-      value = 2;
-    }
-    if (urlSegments.includes("equipos")) {
-      value = 3;
-    }
-    if (urlSegments.includes("info")) {
-      value = 4;
-    }
-    if (urlSegments.includes("ajustes")) {
-      value = 5;
-    }
-    return value;
-  }
-
-  const handleTabClick = (id: number) => {
-    setActiveTab(id);
-    navigate(navigateMap[id], { replace: true });
-  };
+  const tabs = TABS_LIGA.filter((t) => !t.onlyAdmin || user?.admin);
 
   return (
-    <>
-      <nav
-        style={{ animationDelay: "0.2s" }}
-        className="mt-2 animate-fade-in-top"
+    <nav
+      aria-label="Secciones de la liga"
+      className="grid animate-fade-in-top gap-1 rounded-button border border-border bg-card p-1"
+    >
+      <div
+        className="grid gap-1"
+        style={{ gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
       >
-        <InlinePicker
-          options={[
-            { id: 1, label: "", icon: ListOrdered },
-            { id: 2, label: "", icon: CalendarDays },
-            { id: 3, label: "", icon: Users },
-            { id: 4, label: "", icon: Info },
-            ...(user?.admin ? [{ id: 5, label: "", icon: Settings }] : []),
-          ]}
-          activeTabId={activeTab}
-          onTabClick={handleTabClick}
-          size="md"
-        />
-      </nav>
-      <p
-        style={{ animationDelay: "0.4s" }}
-        className="z-2 animate-fade-in-top font-display text-xl py-1 font-black sticky top-9.5 bg-neutral-950"
-      >
-        {labelMap[activeTab]}
-      </p>
-    </>
+        {tabs.map((t) => (
+          <NavLink
+            key={t.segment}
+            to={t.segment}
+            replace
+            className={({ isActive }) =>
+              cn(
+                "flex h-13 flex-col items-center justify-center gap-[3px] rounded-[10px] px-1 text-[11px] font-semibold text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring lg:h-11 lg:flex-row lg:gap-2 lg:text-[13px]",
+                tabs.length >= 5 && "text-[10px] lg:text-[13px]",
+                isActive &&
+                  "bg-primary/14 text-primary-text shadow-[inset_0_-2px_0_var(--color-primary)]"
+              )
+            }
+          >
+            <t.icon size={20} strokeWidth={2} aria-hidden="true" />
+            <span className="truncate">{t.label}</span>
+          </NavLink>
+        ))}
+      </div>
+    </nav>
   );
 };

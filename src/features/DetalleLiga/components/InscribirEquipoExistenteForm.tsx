@@ -16,13 +16,12 @@ export const InscribirEquipoExistenteForm = ({
   idLiga: string;
   onCloseWindow: () => void;
 }) => {
-
-  const {user} = useAuth()
+  const { user } = useAuth();
 
   const { mutate: inscribirEquipo } = useInscribirEquipo();
 
   const { data: liga } = useLigaById(idLiga);
-  
+
   const { data: equipos } = useGetAllEquipos();
 
   const [idEquipoSelected, setIdEquipoSelected] = useState<string | undefined>(
@@ -53,25 +52,23 @@ export const InscribirEquipoExistenteForm = ({
     onCloseWindow();
   };
 
-  if(!user?.admin) return <p>No eres admin </p>
+  if (!user?.admin) return <p className="text-sm text-muted-foreground">No eres admin </p>;
 
   return (
-    <div className="h-80 flex flex-col justify-between">
-      <div>
-        <SelectorEquipo
-          equipos={equipos || []}
-          idEquipoSelected={idEquipoSelected}
-          onSelect={(id) => {
-            setIdEquipoSelected(id === "-1" ? undefined : id);
-          }}
-        />
-      </div>
+    <div className="flex flex-col gap-4">
+      <SelectorEquipo
+        equipos={equipos || []}
+        idEquipoSelected={idEquipoSelected}
+        onSelect={(id) => {
+          setIdEquipoSelected(id === "-1" ? undefined : id);
+        }}
+      />
       <div className="flex items-center gap-2">
-        <Button onClick={handleAgregarEquipo} disabled={!idEquipoSelected}>
-          Agregar
-        </Button>
-        <Button variant="outline" onClick={onCloseWindow}>
+        <Button variant="outline" onClick={onCloseWindow} className="flex-1">
           Cancelar
+        </Button>
+        <Button onClick={handleAgregarEquipo} disabled={!idEquipoSelected} className="flex-1">
+          Agregar
         </Button>
       </div>
     </div>

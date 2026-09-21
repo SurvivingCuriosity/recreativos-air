@@ -1,48 +1,39 @@
-import { Icon } from "@/shared/ui/Icon";
-import { CircleCheck, Hand, Info } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-import { EstadoEnfrentamiento, type EnfrentamientoDTO } from "recreativos-air-core/enfrentamiento";
+import { CircleCheck, Hand, Info, type LucideIcon } from "lucide-react";
+import {
+  EstadoEnfrentamiento,
+  type EnfrentamientoDTO,
+} from "recreativos-air-core/enfrentamiento";
+import { cn } from "@/lib/utils";
 import { useAuth } from "../../../../shared/api/auth/useAuth";
+import { chipColorClass } from "../../../../shared/components/ChipEstado/ChipEstado";
+import {
+  equiposDelUsuarioEnEnfrentamiento,
+  getEstadoEnfrentamientoInfo,
+} from "../../../../shared/components/TarjetaEnfrentamiento/estadoEnfrentamiento";
 
+/**
+ * Caja de estado del enfrentamiento (DESIGN.md §6.4): mismo vocabulario que chip y filtro.
+ * «Debes aceptar o rechazar el resultado» solo se muestra a quien puede hacerlo.
+ */
 export const InfoEstadoEnfrentamiento = ({
   enfrentamiento,
 }: {
   enfrentamiento: EnfrentamientoDTO;
 }) => {
-
-  const {user:loggedInUser} = useAuth();
-  const equipoDelUsuario = enfrentamiento.equipoA.jugadores.some(
-    (j) => j.idUsuario === loggedInUser?.id
-  )
-    ? enfrentamiento.equipoA
-    : enfrentamiento.equipoB;
-
-  const propuestoPorEquipoDeUsuario = enfrentamiento.resultadoPropuestoPor !== null && enfrentamiento.resultadoPropuestoPor === equipoDelUsuario.id
-
-  const containerClassName: Record<EstadoEnfrentamiento, string> = {
-    [EstadoEnfrentamiento.SinJugar]: "bg-red-500/10",
-    [EstadoEnfrentamiento.CorroborarResultado]: "bg-orange-500/10",
-    [EstadoEnfrentamiento.ConfirmarResultado]: "bg-yellow-500/10",
-    [EstadoEnfrentamiento.Jugado]: "bg-green-500/10",
-  };
-  const textClassName: Record<EstadoEnfrentamiento, string> = {
-    [EstadoEnfrentamiento.SinJugar]: "text-red-400",
-    [EstadoEnfrentamiento.CorroborarResultado]: "text-orange-400",
-    [EstadoEnfrentamiento.ConfirmarResultado]: "text-yellow-400",
-    [EstadoEnfrentamiento.Jugado]: "text-green-400",
-  };
-
-  const title: Record<EstadoEnfrentamiento, string> = {
-    [EstadoEnfrentamiento.SinJugar]: "Sin jugar",
-    [EstadoEnfrentamiento.CorroborarResultado]: "Pendiente de confirmación",
-    [EstadoEnfrentamiento.ConfirmarResultado]: "Pendiente de finalización",
-    [EstadoEnfrentamiento.Jugado]: "Jugado",
-  };
+  const { user } = useAuth();
+  const info = getEstadoEnfrentamientoInfo(enfrentamiento, user?.id);
+  const misEquipos = equiposDelUsuarioEnEnfrentamiento(enfrentamiento, user?.id);
+  const propuestoPorMiEquipo =
+    enfrentamiento.resultadoPropuestoPor !== null &&
+    misEquipos.includes(enfrentamiento.resultadoPropuestoPor);
 
   const description: Record<EstadoEnfrentamiento, string> = {
     [EstadoEnfrentamiento.SinJugar]: "Este partido no ha sido jugado aún.",
-    [EstadoEnfrentamiento.CorroborarResultado]:
-      propuestoPorEquipoDeUsuario ? "El resultado debe ser confirmado por la otra pareja." : "Debes aceptar o rechazar el resultado",
+    [EstadoEnfrentamiento.CorroborarResultado]: info.debeResponder
+      ? "Debes aceptar o rechazar el resultado"
+      : propuestoPorMiEquipo
+        ? "El resultado debe ser confirmado por la otra pareja."
+        : "Resultado pendiente de respuesta del rival.",
     [EstadoEnfrentamiento.ConfirmarResultado]:
       "El administrador debe confirmar finalmente el resultado.",
     [EstadoEnfrentamiento.Jugado]: "El partido ha finalizado.",
@@ -55,18 +46,20 @@ export const InfoEstadoEnfrentamiento = ({
     [EstadoEnfrentamiento.Jugado]: CircleCheck,
   };
 
+  const IconComp = icon[enfrentamiento.estado];
+
   return (
     <div
-      className={
-        `w-full flex items-center gap-3 rounded-lg p-2 px-4 ` + containerClassName[enfrentamiento.estado]
-      }
+      role="status"
+      className={cn(
+        "flex w-full items-center gap-3 rounded-button border px-3.5 py-3",
+        chipColorClass[info.color]
+      )}
     >
-      <Icon icon={icon[enfrentamiento.estado]} className={textClassName[enfrentamiento.estado]} />
-      <div className="flex flex-col">
-        <p className={`font-extrabold ` + textClassName[enfrentamiento.estado]}>{title[enfrentamiento.estado]}</p>
-        <p className={`text-xs ` + textClassName[enfrentamiento.estado]}>
-          {description[enfrentamiento.estado]}
-        </p>
+      <IconComp size={22} className="shrink-0" aria-hidden="true" />
+      <div className="flex flex-col gap-0.5">
+        <p className="font-display text-base font-bold">{info.label}</p>
+        <p className="text-[13px] text-foreground">{description[enfrentamiento.estado]}</p>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { CalendarDays, MapPin } from "lucide-react";
-import { Icon } from "@/shared/ui/Icon";
 import type { EnfrentamientoDTO } from "recreativos-air-core/enfrentamiento";
+import { cn } from "@/lib/utils";
 
 export const FechaYLugarEnfrentamiento = ({
   enfrentamiento,
@@ -8,18 +8,30 @@ export const FechaYLugarEnfrentamiento = ({
   enfrentamiento: EnfrentamientoDTO;
 }) => {
   return (
-    <>
-      <div className={`${enfrentamiento.fecha ? 'text-neutral-300' : 'text-neutral-600'}`}>
-        <Icon icon={CalendarDays} className="mr-1" />
-        {enfrentamiento.fecha
-          ? new Date(enfrentamiento.fecha).toLocaleDateString()
-          : "Fecha no especificada"}
+    <div className="flex flex-col gap-2 text-sm">
+      <div
+        className={cn(
+          "flex items-center gap-2",
+          enfrentamiento.fecha ? "text-foreground-soft" : "text-muted-foreground"
+        )}
+      >
+        <CalendarDays size={16} className="shrink-0" aria-hidden="true" />
+        <span>
+          {enfrentamiento.fecha
+            ? new Date(enfrentamiento.fecha).toLocaleDateString()
+            : "Fecha no especificada"}
+        </span>
       </div>
 
-      <div className={`${enfrentamiento.ubicacion ? 'text-neutral-300' : 'text-neutral-600'}`}>
-        <Icon icon={MapPin} className="mr-1" />
-        {enfrentamiento.ubicacion || "Ubicación no especificada"}
+      <div
+        className={cn(
+          "flex items-center gap-2",
+          enfrentamiento.ubicacion ? "text-foreground-soft" : "text-muted-foreground"
+        )}
+      >
+        <MapPin size={16} className="shrink-0" aria-hidden="true" />
+        <span>{enfrentamiento.ubicacion || "Ubicación no especificada"}</span>
       </div>
-    </>
+    </div>
   );
 };

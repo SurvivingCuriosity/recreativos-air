@@ -1,12 +1,13 @@
 import { useParams } from "react-router";
+import { EstadoLiga } from "recreativos-air-core/liga";
+import { useAuth } from "../../../shared/api/auth/useAuth";
 import {
   useClasificacionLiga,
   useLigaById,
 } from "../../../shared/api/ligas/useLigas";
-import { TablaClasificacionLiga } from "../components/ClasificacionLiga";
-import { EstadoLiga } from "recreativos-air-core/liga";
-import { useAuth } from "../../../shared/api/auth/useAuth";
+import { EstadoVacio, SkeletonLista } from "../../../shared/components/Estados/Estados";
 import { PosicionUsuarioChip } from "../../../shared/components/TarjetaLiga/PosicionUsuarioChip";
+import { TablaClasificacionLiga } from "../components/ClasificacionLiga";
 
 export const ClasificacionLigaPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -15,22 +16,18 @@ export const ClasificacionLigaPage = () => {
   const { user } = useAuth();
 
   if (isLoading)
-    return (
-      <p className="text-neutral-500 p-10 text-center">
-        Cargando clasificación...
-      </p>
-    );
+    return <SkeletonLista count={1} height="h-56" label="Cargando clasificación..." />;
 
   if (!clasificacion?.length)
     return (
-      <p className="text-center p-10">No hay equipos para la clasificación</p>
+      <EstadoVacio className="border-0 bg-transparent py-10">
+        No hay equipos para la clasificación
+      </EstadoVacio>
     );
 
   if (liga?.estadoLiga === EstadoLiga.SinEmpezar && !user?.admin)
     return (
-      <p className="text-center p-10 text-neutral-500">
-        La liga no ha comenzado
-      </p>
+      <EstadoVacio className="border-0 bg-transparent py-10">La liga no ha comenzado</EstadoVacio>
     );
 
   const equipoUsuario = liga?.equipos?.find((e) =>
@@ -38,9 +35,9 @@ export const ClasificacionLigaPage = () => {
   );
 
   return (
-    <div className="animate-fade-in-top">
+    <div className="flex animate-fade-in-top flex-col gap-3">
       {liga?.estadoLiga === EstadoLiga.Finalizada && equipoUsuario && (
-        <div className="flex justify-center my-3">
+        <div className="flex justify-center lg:hidden">
           <PosicionUsuarioChip
             ligaId={liga.id}
             equipoId={equipoUsuario.equipo.id}
@@ -48,7 +45,7 @@ export const ClasificacionLigaPage = () => {
           />
         </div>
       )}
-      <TablaClasificacionLiga data={clasificacion} />
+      <TablaClasificacionLiga data={clasificacion} miEquipoId={equipoUsuario?.equipo?.id} />
     </div>
   );
 };

@@ -9,6 +9,7 @@ export interface SelectorEstadoEnfrentamiento {
   incluirOpcionTodos?: boolean;
 }
 
+/** Filtro de estado con el vocabulario único de DESIGN.md §6.4. */
 export const SelectorEstadoEnfrentamiento = memo(
   (props: SelectorEstadoEnfrentamiento) => {
     const { value, onSelect, disabled = false } = props;
@@ -20,11 +21,11 @@ export const SelectorEstadoEnfrentamiento = memo(
       },
       {
         value: EstadoEnfrentamientoConOpcionCualquiera.ConfirmarResultado,
-        label: "Esperar admin",
+        label: "Esperando al admin",
       },
       {
         value: EstadoEnfrentamientoConOpcionCualquiera.CorroborarResultado,
-        label: "Esperar rival",
+        label: "Esperando al rival",
       },
       {
         value: EstadoEnfrentamientoConOpcionCualquiera.Jugado,

@@ -1,113 +1,99 @@
-import { RefreshCw } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
+import { RefreshCw } from "lucide-react";
 import { useCallback, useRef } from "react";
-import { toast } from "@/shared/lib/toast";
-import { Outlet, useParams } from "react-router";
+import { Outlet, useLocation, useParams } from "react-router";
 import { EstadoEquipoEnLiga, EstadoLiga } from "recreativos-air-core/liga";
 import { Button } from "../../packages/components/Button/Button";
-import { Titulo } from "../../packages/components/Titulo/Titulo";
-import { ChipEstadoLiga } from "../../shared/components/TarjetaLiga/ChipEstadoLiga";
 import { useAuth } from "../../shared/api/auth/useAuth";
-import {
-  useInscribirEquipo,
-  useLigaById,
-} from "../../shared/api/ligas/useLigas";
-import { SelectorEquipoUsuario } from "../../shared/components/SelectorEquipoUsuario/SelectorEquipoUsuario";
-import { useWindow } from "../../shared/context/WindowProvider";
-import {
-  logoFutbolinMap,
-} from "../../shared/db/logoFutbolinMap";
-import { NavDetalleLiga } from "./NavDetalleLiga";
+import { useLigaById } from "../../shared/api/ligas/useLigas";
+import { ChipEstado } from "../../shared/components/ChipEstado/ChipEstado";
+import { EstadoVacio, SkeletonLista } from "../../shared/components/Estados/Estados";
+import { ChipEstadoLiga } from "../../shared/components/TarjetaLiga/ChipEstadoLiga";
+import { SectionTitle } from "../../shared/components/Titulos/Titulos";
+import { logoFutbolinMap } from "../../shared/db/logoFutbolinMap";
+import { useInscribirmeEnLiga } from "../../shared/hooks/useInscribirmeEnLiga";
+import { NavDetalleLiga, TABS_LIGA } from "./NavDetalleLiga";
+import { PanelMiEquipo } from "./PanelMiEquipo";
 
 export const DetalleLigaLayout = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
-  const { close, show } = useWindow();
+  const { pathname } = useLocation();
 
   const { data: liga, isLoading, error } = useLigaById(id!);
-
-  const { mutate: inscribirEquipo, isPending } = useInscribirEquipo();
-
-  const handleClickInscribir = () => {
-    if (!liga) {
-      toast.error("Error al cargar liga");
-      return;
-    }
-    show(
-      <SelectorEquipoUsuario
-        onSelect={(equipoId) => {
-          inscribirEquipo({
-            equipoId,
-            ligaId: liga.id,
-          });
-          close();
-        }}
-        onCancel={() => close()}
-      />
-    );
-  };
+  const { inscribirme, isPending } = useInscribirmeEnLiga(liga);
 
   if (isLoading) {
     return (
-      <p className="text-neutral-400 text-center p-10 animate-pulse">
-        Cargando liga...
-      </p>
+      <main className="mx-auto w-full max-w-screen-sm px-4 pt-3.5 lg:max-w-5xl lg:px-6">
+        <SkeletonLista count={3} height="h-14" label="Cargando liga..." />
+      </main>
     );
   }
 
   if (error || !liga) {
     return (
-      <div className="text-center p-10 text-neutral-400">
-        <Titulo variant="h2" className="text-primary mb-2">
-          Liga no encontrada
-        </Titulo>
-        <p>No se ha podido cargar la información de esta liga.</p>
-      </div>
+      <main className="mx-auto w-full max-w-screen-sm px-4 pt-10">
+        <EstadoVacio className="border-0 bg-transparent">
+          <span className="mb-2 block font-display text-xl font-bold text-primary-text">
+            Liga no encontrada
+          </span>
+          No se ha podido cargar la información de esta liga.
+        </EstadoVacio>
+      </main>
     );
   }
-
-  // ✅ Determinar si el usuario ya está inscrito
-  const userYaInscrito = liga.equipos?.some((e) =>
-    e.equipo.jugadores?.some((j) => j.idUsuario === user?.id)
-  );
 
   const equipoUsuario = liga.equipos?.find((e) =>
     e.equipo.jugadores?.some((j) => j.idUsuario === user?.id)
   );
+  const userYaInscrito = !!equipoUsuario;
+
+  const segmentoActivo = pathname.split("/").filter(Boolean).pop();
+  const tabActiva = TABS_LIGA.find((t) => t.segment === segmentoActivo);
 
   return (
-    <>
-      <div className="max-w-screen-sm mx-auto p-4 pt-2 h-full relative w-full">
-        <div className="flex items-center gap-2 sticky top-0 bg-neutral-950 z-2 pt-2 animate-fade-in-top">
-          <img
-            src={
-              logoFutbolinMap[liga.tipoFutbolin]
-            }
-            alt={liga.nombre}
-            className="size-9"
-          />
-          <h1 className="font-display text-2xl font-bold text-primary">
-            {liga.nombre}
-          </h1>
-          <ChipEstadoLiga estado={liga.estadoLiga} className="ml-auto" />
-        </div>
-        {userYaInscrito ? (
-          equipoUsuario?.estado === EstadoEquipoEnLiga.Pendiente && (
-            <p className="p-1 bg-neutral-500/20 w-fit rounded text-sm text-primary my-2">
-              Esperando confirmación...
-            </p>
-          )
-        ) : liga.estadoLiga === EstadoLiga.SinEmpezar && (
-          <div className="flex justify-center my-4">
-            <Button onClick={handleClickInscribir} disabled={isPending}>
-              Inscribirme
-            </Button>
-          </div>
-        )}
-        <NavDetalleLiga />
-        <Outlet />
+    <main className="mx-auto flex w-full max-w-screen-sm flex-col gap-3.5 px-4 pt-3.5 pb-5 lg:max-w-5xl lg:gap-6 lg:px-6 lg:pt-8">
+      <div className="flex animate-fade-in-top items-center gap-2.5">
+        <img
+          src={logoFutbolinMap[liga.tipoFutbolin]}
+          alt={liga.tipoFutbolin}
+          className="size-9 shrink-0 object-contain lg:size-11"
+        />
+        <h1 className="min-w-0 truncate font-display text-2xl leading-[1.1] font-bold text-primary-text text-glow-liga lg:text-[32px]">
+          {liga.nombre}
+        </h1>
+        <ChipEstadoLiga estado={liga.estadoLiga} className="ml-auto shrink-0" />
       </div>
-    </>
+
+      {userYaInscrito
+        ? equipoUsuario?.estado === EstadoEquipoEnLiga.Pendiente && (
+            <div className="flex">
+              <ChipEstado color="warning">Esperando confirmación...</ChipEstado>
+            </div>
+          )
+        : liga.estadoLiga === EstadoLiga.SinEmpezar && (
+            <div className="flex justify-center">
+              <Button onClick={inscribirme} disabled={isPending} className="lg:w-auto">
+                Inscribirme
+              </Button>
+            </div>
+          )}
+
+      <NavDetalleLiga />
+
+      <div className="grid gap-3.5 lg:grid-cols-[2fr_1fr] lg:items-start lg:gap-6">
+        <div className="flex min-w-0 flex-col gap-3.5">
+          {tabActiva && (
+            <SectionTitle className="animate-fade-in-top" >{tabActiva.titulo}</SectionTitle>
+          )}
+          <Outlet />
+        </div>
+        {equipoUsuario?.equipo && (
+          <PanelMiEquipo liga={liga} equipo={equipoUsuario.equipo} />
+        )}
+      </div>
+    </main>
   );
 };
 

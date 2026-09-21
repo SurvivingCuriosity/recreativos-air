@@ -1,13 +1,14 @@
 import { useMemo } from "react";
-import { toast } from "@/shared/lib/toast";
 import { useNavigate, useParams } from "react-router";
+import { EstadoEquipoEnLiga } from "recreativos-air-core/liga";
+import { toast } from "@/shared/lib/toast";
 import { Button } from "../../../packages/components/Button/Button";
 import { useAuth } from "../../../shared/api/auth/useAuth";
 import { useLigaById } from "../../../shared/api/ligas/useLigas";
+import { EstadoError, EstadoVacio } from "../../../shared/components/Estados/Estados";
 import { useWindow } from "../../../shared/context/WindowProvider";
 import { InscribirEquipoExistenteForm } from "../components/InscribirEquipoExistenteForm";
 import { TarjetaEquipoLiga } from "../components/TarjetaEquipoLiga";
-import { EstadoEquipoEnLiga } from "recreativos-air-core/liga";
 import { TarjetaEquipoLigaAdmin } from "../components/TarjetaEquipoLigaAdmin";
 
 export const EquiposLigaPage = () => {
@@ -29,7 +30,7 @@ export const EquiposLigaPage = () => {
 
     show(
       <InscribirEquipoExistenteForm onCloseWindow={close} idLiga={liga.id} />,
-      "Elige un equipo",
+      "Elige un equipo"
     );
   };
 
@@ -37,50 +38,41 @@ export const EquiposLigaPage = () => {
     () =>
       user?.admin
         ? liga?.equipos || []
-        : liga?.equipos.filter(
-            (e) => e.estado === EstadoEquipoEnLiga.Aprobado,
-          ) || [],
-    [liga, user],
+        : liga?.equipos.filter((e) => e.estado === EstadoEquipoEnLiga.Aprobado) || [],
+    [liga, user]
   );
 
-  if (!liga) return <p>Ups algo pasó</p>;
+  if (!liga) return <EstadoError>Ups algo pasó</EstadoError>;
 
   return (
-    <>
+    <div className="flex flex-col gap-3">
       {user?.admin && (
-        <div className="mb-3">
-          <Button
-            onClick={handleInscribirEquipoExistente}
-            variant="outline-neutral"
-          >
-            Inscribir equipo existente
-          </Button>
-        </div>
+        <Button onClick={handleInscribirEquipoExistente} variant="outline-neutral">
+          Inscribir equipo existente
+        </Button>
       )}
-      <ul className="flex flex-col gap-2">
-        {equiposShow.length > 0 ? (
-          equiposShow.map((equipo) =>
-            isAdmin ? (
-              <TarjetaEquipoLigaAdmin
-                key={equipo.equipo.id}
-                idLiga={liga.id}
-                equipoLiga={equipo}
-                onClick={() => navigate(`/equipos/${equipo.equipo.id}`)}
-              />
-            ) : (
-              <TarjetaEquipoLiga
-                key={equipo.equipo.id}
-                equipoLiga={equipo}
-                onClick={() => navigate(`/equipos/${equipo.equipo.id}`)}
-              />
-            ),
-          )
-        ) : (
-          <p className="text-neutral-400 p-4 text-center">
-            Ups... no hay equipos aún
-          </p>
-        )}
-      </ul>
-    </>
+      {equiposShow.length > 0 ? (
+        <ul className="flex flex-col gap-2">
+          {equiposShow.map((equipo) => (
+            <li key={equipo.equipo.id}>
+              {isAdmin ? (
+                <TarjetaEquipoLigaAdmin
+                  idLiga={liga.id}
+                  equipoLiga={equipo}
+                  onClick={() => navigate(`/equipos/${equipo.equipo.id}`)}
+                />
+              ) : (
+                <TarjetaEquipoLiga
+                  equipoLiga={equipo}
+                  onClick={() => navigate(`/equipos/${equipo.equipo.id}`)}
+                />
+              )}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <EstadoVacio className="border-0 bg-transparent">Ups... no hay equipos aún</EstadoVacio>
+      )}
+    </div>
   );
 };
