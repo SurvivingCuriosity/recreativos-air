@@ -36,10 +36,10 @@ export const NetworkStatusBanner = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full z-50 text-center py-2 text-sm font-medium text-white shadow-md transition-all duration-500 ${
-        isOnline
-          ? "bg-green-600 opacity-100"
-          : "bg-red-600 opacity-100 animate-pulse"
+      role="status"
+      aria-live="polite"
+      className={`fixed top-0 left-0 z-50 w-full py-2 text-center text-sm font-medium text-white shadow-md transition-all duration-500 ${
+        isOnline ? "bg-success-solid" : "animate-pulse bg-destructive-solid"
       }`}
     >
       {isOnline

@@ -87,16 +87,21 @@ export const EnfrentamientosPendientes = () => {
   if (!enfrentamientos || enfrentamientos.length === 0) return null;
 
   return (
-    <li className="text-base">
-      <p className="text-sm text-neutral-400 mb-2 font-semibold uppercase tracking-wide">
-        Pendientes de confirmar
-      </p>
+    <section className="flex w-full flex-col gap-2.5 text-base">
+      <div className="flex items-center gap-2">
+        <h2 className="font-display text-base font-bold tracking-[0.06em] text-foreground uppercase">
+          Pendientes de confirmar
+        </h2>
+        <span className="ml-auto inline-flex h-[22px] min-w-[22px] items-center justify-center rounded-full bg-destructive-solid px-1.5 text-xs font-extrabold text-white">
+          {enfrentamientos.length}
+        </span>
+      </div>
       <ul className="flex flex-col gap-4">
         {enfrentamientos.map((enf) => (
           <FilaEnfrentamiento key={enf.id} enfrentamiento={enf} />
         ))}
       </ul>
-    </li>
+    </section>
   );
 };
 

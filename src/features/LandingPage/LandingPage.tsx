@@ -10,6 +10,7 @@ import { useTemporadaActual } from "../../shared/api/temporadas/useTemporadas";
 import { useLigasDeUsuario } from "../../shared/hooks/useLigasDeUsuario";
 import { CtaLigasDisponibles } from "./CtaLigasDisponibles";
 import { ButtonWhatsapp } from "./ButtonWhatsapp";
+import { EnfrentamientosPendientes } from "../Jornadas/DetalleJornada/components/EnfrentamientosPendientes";
 
 export const LandingPage = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export const LandingPage = () => {
   const { ligas: ligasUsuario, loadingLigas, errorLigas } = useLigasDeUsuario();
   const { data: todasLasLigas } = useLigas();
   const { data: temporadaActual } = useTemporadaActual();
-  const { isLoggedIn, isLoading } = useAuth();
+  const { isLoggedIn, isLoading, user } = useAuth();
 
   // Una liga se considera activa si no ha finalizado y no pertenece a una temporada pasada
   const esLigaActiva = (l: LigaDTO) =>
@@ -81,6 +82,7 @@ export const LandingPage = () => {
         </div>
       ) : isLoggedIn ? (
         <div className="max-w-11/12 md:min-w-md md:max-w-3xl">
+          {user?.admin && <EnfrentamientosPendientes />}
           <p className="font-display text-primary text-2xl font-black my-3">
             Mis ligas
           </p>

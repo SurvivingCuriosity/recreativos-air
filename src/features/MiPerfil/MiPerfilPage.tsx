@@ -8,6 +8,8 @@ import { useLogout } from "../../shared/api/auth/hooks";
 import { useAuth } from "../../shared/api/auth/useAuth";
 import { MisCompeticiones } from "./components/MisCompeticiones";
 import { MisEquipos } from "./components/MisEquipos";
+import { BotonRefrescar } from "../DetalleLiga/DetalleLigaLayout";
+import { LogOut } from "lucide-react";
 
 export const MiPerfilPage = () => {
   const navigate = useNavigate();
@@ -46,12 +48,6 @@ export const MiPerfilPage = () => {
             >
               <Icon icon={Pencil} className="mr-2" />
               Editar
-            </button>
-            <button
-              onClick={handleLogout}
-              className="rounded-lg text-red-600 bg-neutral-950 border border-red-600 px-3 py-1"
-            >
-              Salir
             </button>
           </div>
           {user?.admin && (
@@ -114,6 +110,12 @@ export const MiPerfilPage = () => {
             </div>
             <MisCompeticiones />
           </div>
+        </div>
+        <div className="mt-auto flex flex-col gap-2 pt-4">
+          <BotonRefrescar />
+          <Button variant="outline-danger" icon={LogOut} onClick={handleLogout}>
+            Salir
+          </Button>
         </div>
       </div>
     </>

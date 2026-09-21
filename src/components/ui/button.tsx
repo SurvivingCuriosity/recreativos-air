@@ -14,7 +14,7 @@ import { Slot } from "radix-ui";
  * Tamaños: 48 px por defecto, 44 px mínimo en cualquier control, icon circular 44.
  */
 const buttonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-button font-display text-[15px] font-bold transition-[color,background-color,border-color,box-shadow,transform] outline-none select-none active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none aria-invalid:border-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[18px]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-button font-display text-[15px] font-bold transition-[color,background-color,border-color,box-shadow,transform] outline-none select-none active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none aria-invalid:border-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[18px]",
   {
     variants: {
       variant: {

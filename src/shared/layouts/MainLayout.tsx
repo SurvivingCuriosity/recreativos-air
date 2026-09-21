@@ -1,62 +1,32 @@
 import { Outlet } from "react-router";
-import { TopNav, type TopNavItem } from "../../navigation/components/TopNav";
-import { CalendarDays, Plus, LogIn, Trophy, User, UserPlus, Users } from "lucide-react";
-import { useAuth } from "../api/auth/useAuth";
-import { NetworkStatusBanner } from "../components/NetworkStatusBanner/NetworkStatusBanner";
+import { AppHeader } from "../../navigation/components/AppHeader";
+import { BottomNav } from "../../navigation/components/BottomNav";
 import { AvisoPerfilSinNombre } from "../components/AvisoPerfilSinNombre/AvisoPerfilSinNombre";
+import { NetworkStatusBanner } from "../components/NetworkStatusBanner/NetworkStatusBanner";
 
-export type AuthNavContent = {
-  miPerfil: TopNavItem;
-  competiciones: TopNavItem;
-  crearEquipo: TopNavItem;
-  crearLiga: TopNavItem;
-  equipos: TopNavItem;
-  usuarios: TopNavItem;
-  temporadas: TopNavItem;
-};
-
-export type GuestNavContent = {
-  login: TopNavItem;
-  register: TopNavItem;
-  competiciones: TopNavItem;
-};
-
-const TopNavContentAuth: AuthNavContent = {
-  miPerfil: { label: "Mi perfil", href: "/mi-perfil", icon: User },
-  competiciones: { label: "Competiciones", href: "/competiciones", icon: Trophy },
-  crearEquipo: { label: "Crear equipo", href: "/crear-equipo", icon: Plus },
-  crearLiga: { label: "Crear liga", href: "/crear-liga", icon: Plus, onlyAdmin: true },
-  equipos: { label: "Equipos", href: "/admin-equipos", icon: User, onlyAdmin: true },
-  usuarios: { label: "Usuarios", href: "/admin-usuarios", icon: Users, onlyAdmin: true },
-  temporadas: { label: "Temporadas", href: "/admin-temporadas", icon: CalendarDays, onlyAdmin: true },
-};
-
-const TopNavContent: GuestNavContent = {
-  login: { label: "Inciar sesión", href: "/login", icon: LogIn },
-  register: { label: "Crear cuenta", href: "/register", icon: UserPlus },
-  competiciones: { label: "Competiciones", href: "/competiciones", icon: Trophy },
-};
-
+/**
+ * Shell de la app (brief §2.1 + DESIGN.md §6.2/§6.3):
+ * header → aviso de perfil sin nombre → contenido (contenedor 1024 px) → barra inferior (móvil).
+ * Marca de agua del logo fija bajo el contenido.
+ */
 export const MainLayout = () => {
-  const { isLoggedIn } = useAuth();
-
-  const content = isLoggedIn ? TopNavContentAuth : TopNavContent
-
   return (
     <>
-      <div className="bg-background text-foreground min-h-svh flex flex-col">
-        <TopNav content={content} />
+      <div className="flex min-h-svh flex-col bg-background text-foreground">
+        <AppHeader />
         <AvisoPerfilSinNombre />
-        <div className="relative mx-auto flex flex-col items-center flex-1 w-full">
+        <div className="relative mx-auto flex w-full flex-1 flex-col items-center">
           <img
             src="/logo.png"
-            alt="logo"
-            className="w-full opacity-[4%] pointer-events-none fixed z-1 -bottom-1/12 left-1/3 md:w-90 md:left-20"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none fixed -bottom-1/12 left-1/3 z-[1] w-full opacity-[4%] md:left-20 md:w-90"
           />
-          <div className="z-2 relative flex-1 w-full flex flex-col">
+          <div className="relative z-[2] flex w-full max-w-5xl flex-1 flex-col pb-[calc(76px+env(safe-area-inset-bottom,0px))] lg:pb-0">
             <Outlet />
           </div>
         </div>
+        <BottomNav />
       </div>
       <NetworkStatusBanner />
     </>
