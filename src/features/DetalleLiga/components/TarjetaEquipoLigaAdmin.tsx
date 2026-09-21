@@ -1,16 +1,23 @@
 import { ChevronDown, Euro, Eye, Hand, Trash2, Users } from "lucide-react";
-import { Icon } from "@/shared/ui/Icon";
 import { useState } from "react";
 import {
   EstadoEquipoEnLiga,
   type EquipoEnLigaDTO,
 } from "recreativos-air-core/liga";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
 import { Button } from "../../../packages/components/Button/Button";
 import {
   useAprobarInscripcion,
   useEliminarEquipoDeLiga,
   useMarcarPagado,
 } from "../../../shared/api/ligas/useLigas";
+import { ChipEstado } from "../../../shared/components/ChipEstado/ChipEstado";
+import { EscudoEquipo } from "../../../shared/components/EscudoEquipo/EscudoEquipo";
 import { useConfirmDialog } from "../../../shared/context/UIProvider/hooks/useUI";
 
 type Props = {
@@ -19,6 +26,7 @@ type Props = {
   onClick: () => void;
 };
 
+/** TarjetaEquipoLigaAdmin (design/screens/LigaEquiposAdmin.html): acordeón con acciones. */
 export const TarjetaEquipoLigaAdmin = ({
   idLiga,
   equipoLiga,
@@ -61,6 +69,7 @@ export const TarjetaEquipoLigaAdmin = ({
     const acepta = await confirm({
       title: "¿Estás seguro?",
       description: "Marcarás como pagado el equipo",
+      variant: "default",
     });
     if (acepta) {
       marcarPagado({
@@ -70,86 +79,84 @@ export const TarjetaEquipoLigaAdmin = ({
     }
   };
 
+  const { equipo } = equipoLiga;
+
   return (
-    <div className="bg-neutral-800/80 p-2 px-3 pl-5 rounded-lg relative flex flex-col overflow-hidden">
-      <div
-        style={{
-          backgroundColor: equipoLiga.equipo.color || "var(--color-primary)",
-        }}
-        className="absolute h-full left-0 w-2 top-0"
-      ></div>
-
-      {/* Cabecera: siempre visible */}
-      <div
-        className="flex items-center cursor-pointer py-1"
-        onClick={() => setIsOpened(!isOpened)}
-      >
-        <div className="grow flex flex-col gap-1">
-          <p className="font-display text-primary tracking-tight font-extrabold text-lg">
-            {equipoLiga.equipo.nombre}
-          </p>
-          <div className="flex items-center gap-2 text-neutral-400">
-            <Icon icon={Users} size={14} />
-            <p className="text-sm">
-              {equipoLiga.equipo.jugadores.map((j) => j.nombre).join(", ")}
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            {pendienteDePago && (
-              <div className="absolute top-1 right-1 p-1 px-2 rounded bg-red-400/10 flex items-center gap-2 text-red-400">
-                <Icon icon={Euro} />
-              </div>
-            )}
-            {pendiente && (
-              <div className="p-1 px-2 rounded bg-red-400/10 flex items-center gap-2 text-red-400">
-                <Icon icon={Hand} />
-                <p className="text-xs">No aceptado</p>
-              </div>
-            )}
-          </div>
-        </div>
-        <Icon
-          icon={ChevronDown}
-          className="text-neutral-400 transition-transform duration-200"
-          style={{ transform: isOpened ? "rotate(180deg)" : "rotate(0deg)" }}
+    <Collapsible
+      open={isOpened}
+      onOpenChange={setIsOpened}
+      className={cn(
+        "overflow-hidden rounded-card border bg-card text-foreground",
+        isOpened ? "border-input" : "border-border"
+      )}
+    >
+      <CollapsibleTrigger className="flex w-full items-center gap-3 px-3.5 py-3 text-left focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring">
+        <EscudoEquipo nombre={equipo.nombre} color={equipo.color} size={44} />
+        <span className="flex min-w-0 flex-1 flex-col gap-1">
+          <span className="truncate font-display text-[17px] font-bold text-primary-text">
+            {equipo.nombre}
+          </span>
+          <span className="inline-flex items-center gap-1.5 text-[13px] text-foreground-soft">
+            <Users size={14} className="shrink-0" aria-hidden="true" />
+            <span className="truncate">
+              {equipo.jugadores.map((j) => j.nombre).join(", ")}
+            </span>
+          </span>
+          {pendiente && (
+            <span className="flex">
+              <ChipEstado color="destructive" icon={Hand}>
+                No aceptado
+              </ChipEstado>
+            </span>
+          )}
+        </span>
+        {pendienteDePago && (
+          <span
+            aria-label="Pendiente de pago"
+            title="Pendiente de pago"
+            className="inline-flex size-9 shrink-0 items-center justify-center rounded-input border border-destructive/35 bg-destructive/13 text-destructive"
+          >
+            <Euro size={16} aria-hidden="true" />
+          </span>
+        )}
+        <ChevronDown
+          size={20}
+          aria-hidden="true"
+          className={cn(
+            "shrink-0 text-muted-foreground transition-transform duration-200",
+            isOpened && "rotate-180"
+          )}
         />
-      </div>
+      </CollapsibleTrigger>
 
-      {/* Contenido desplegable */}
-      <div
-        className="grid"
-        style={{
-          gridTemplateRows: isOpened ? "1fr" : "0fr",
-          transition: "grid-template-rows 0.2s ease-out",
-        }}
-      >
-        <div className="overflow-hidden">
-          <div className="flex flex-wrap items-center gap-2 pt-2 pb-1">
-            
-            <Button icon={Eye} variant="outline" onClick={onClick}>
-              Ver equipo
+      <CollapsibleContent className="data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0">
+        <div className="flex flex-wrap items-center gap-2 border-t border-border px-3.5 py-3">
+          <Button icon={Eye} variant="outline" className="w-auto" onClick={onClick}>
+            Ver equipo
+          </Button>
+
+          {pendienteDePago && (
+            <Button variant="outline" className="w-auto" onClick={handleMarcarPagado}>
+              Marcar pagado
             </Button>
+          )}
 
-            {pendienteDePago && (
-              <Button variant="outline" onClick={handleMarcarPagado}>
-                Marcar pagado
-              </Button>
-            )}
-            
-            {pendiente && (
-              <Button onClick={handleAceptarInscripcion}>Aceptar</Button>
-            )}
-
-            <Button
-              icon={Trash2}
-              variant="outline-danger"
-              onClick={handleEliminarEquipoDeLiga}
-            >
-              Eliminar de la liga
+          {pendiente && (
+            <Button className="w-auto" onClick={handleAceptarInscripcion}>
+              Aceptar
             </Button>
-          </div>
+          )}
+
+          <Button
+            icon={Trash2}
+            variant="outline-danger"
+            className="w-auto"
+            onClick={handleEliminarEquipoDeLiga}
+          >
+            Eliminar de la liga
+          </Button>
         </div>
-      </div>
-    </div>
+      </CollapsibleContent>
+    </Collapsible>
   );
 };

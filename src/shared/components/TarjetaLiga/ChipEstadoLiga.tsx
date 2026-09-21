@@ -1,18 +1,11 @@
 import { EstadoLiga } from "recreativos-air-core/liga";
+import { ChipEstado, type ChipColor } from "../ChipEstado/ChipEstado";
 
-const estilos: Record<EstadoLiga, { label: string; className: string }> = {
-  [EstadoLiga.EnCurso]: {
-    label: "En curso",
-    className: "text-orange-400 bg-orange-500/20",
-  },
-  [EstadoLiga.SinEmpezar]: {
-    label: "Aún no ha comenzado",
-    className: "text-green-400 bg-green-500/20",
-  },
-  [EstadoLiga.Finalizada]: {
-    label: "Finalizada",
-    className: "text-sky-400 bg-sky-500/20",
-  },
+/** Estado de liga (DESIGN.md §4): En curso → magenta · Aún no ha comenzado → success · Finalizada → info. */
+const estilos: Record<EstadoLiga, { label: string; color: ChipColor }> = {
+  [EstadoLiga.EnCurso]: { label: "En curso", color: "neon" },
+  [EstadoLiga.SinEmpezar]: { label: "Aún no ha comenzado", color: "success" },
+  [EstadoLiga.Finalizada]: { label: "Finalizada", color: "info" },
 };
 
 export const ChipEstadoLiga = ({
@@ -22,13 +15,10 @@ export const ChipEstadoLiga = ({
   estado: EstadoLiga;
   className?: string;
 }) => {
-  const { label, className: color } = estilos[estado];
-
+  const { label, color } = estilos[estado];
   return (
-    <p
-      className={`w-fit px-1 text-xs rounded-md whitespace-nowrap ${color} ${className}`}
-    >
+    <ChipEstado color={color} className={className}>
       {label}
-    </p>
+    </ChipEstado>
   );
 };

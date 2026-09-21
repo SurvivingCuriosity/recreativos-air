@@ -1,13 +1,30 @@
-import  { type EquipoDTO, EstadoJugadorEnEquipo, type JugadorDTO } from "recreativos-air-core/equipos";
+import {
+  EstadoJugadorEnEquipo,
+  type EquipoDTO,
+  type JugadorDTO,
+} from "recreativos-air-core/equipos";
+import { cn } from "@/lib/utils";
 import { Button } from "../../../packages/components/Button/Button";
 import { useAuth } from "../../api/auth/useAuth";
 import { useResponderInvitacion } from "../../api/equipos/hooks/useResponderInvitacion";
+import { EscudoEquipo } from "../EscudoEquipo/EscudoEquipo";
 
 interface Props {
   equipo: EquipoDTO;
   onClick: () => void;
 }
 
+/** Chip «Tú» junto al nombre del usuario. */
+export const ChipTu = () => (
+  <span className="rounded-[4px] bg-muted px-1.5 py-px text-[11px] font-bold text-foreground-soft">
+    Tú
+  </span>
+);
+
+/**
+ * TarjetaEquipo (design/screens/MiPerfil.html): escudo + nombre, lista de jugadores,
+ * y estado de invitación con Aceptar / Rechazar.
+ */
 export const TarjetaEquipo = ({ equipo, onClick }: Props) => {
   const { user } = useAuth();
 
@@ -27,18 +44,6 @@ export const TarjetaEquipo = ({ equipo, onClick }: Props) => {
     responderInvitacion({ equipoId: equipo.id, aceptar });
   };
 
-  const renderEstado = (estado: EstadoJugadorEnEquipo) => {
-    const colors = {
-      [EstadoJugadorEnEquipo.ACEPTADO]: "text-green-500",
-      [EstadoJugadorEnEquipo.PENDIENTE]: "text-amber-500",
-      [EstadoJugadorEnEquipo.RECHAZADO]: "text-neutral-400",
-    };
-    if (estado === EstadoJugadorEnEquipo.RECHAZADO) return null;
-    if (estado === EstadoJugadorEnEquipo.ACEPTADO) return null;
-    return <p className={`${colors[estado]} text-sm`}>{estado}</p>;
-  };
-
-  // 🎯 Determinar estado visual de la tarjeta
   const isMiInvitacionPendiente =
     !soyCreador && miRegistro?.estado === EstadoJugadorEnEquipo.PENDIENTE;
 
@@ -48,74 +53,81 @@ export const TarjetaEquipo = ({ equipo, onClick }: Props) => {
     !pendientes.some((p) => p.idUsuario === user.id);
 
   const completado = !hayPendientes;
+  const clicable = !isMiInvitacionPendiente;
 
-  // 🧱 Render principal (estructura común)
   return (
     <div
-      onClick={!isMiInvitacionPendiente ? onClick : undefined}
-      className={`border border-neutral-700 relative p-2 px-4 rounded-lg transition-all overflow-hidden min-w-62 
-        ${
-          isMiInvitacionPendiente
-            ? "bg-neutral-800"
-            : esperandoCompañero
-            ? "bg-neutral-900"
-            : "bg-neutral-900 hover:border-primary cursor-pointer"
-        }`}
+      onClick={clicable ? onClick : undefined}
+      role={clicable ? "link" : undefined}
+      tabIndex={clicable ? 0 : undefined}
+      onKeyDown={(e) => {
+        if (clicable && (e.key === "Enter" || e.key === " ") && e.target === e.currentTarget) {
+          e.preventDefault();
+          onClick();
+        }
+      }}
+      className={cn(
+        "flex min-w-62 flex-col gap-2.5 rounded-card border border-border px-3.5 py-3 text-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+        isMiInvitacionPendiente ? "bg-muted" : "bg-card",
+        clicable && "cursor-pointer hover:border-primary"
+      )}
     >
-      {/* HEADER */}
-      <div className="flex justify-between items-center">
+      <div className="flex items-center gap-2.5">
+        <EscudoEquipo nombre={equipo.nombre} color={equipo.color} size={40} />
         <p
-          className={`font-display text-lg font-bold ${
+          className={cn(
+            "truncate font-display text-lg font-bold",
             esperandoCompañero
-              ? "text-amber-400"
+              ? "text-warning"
               : completado
-              ? "text-primary"
-              : "text-neutral-200"
-          }`}
+                ? "text-primary-text"
+                : "text-foreground"
+          )}
         >
           {equipo.nombre}
         </p>
-        {equipo.color && (
-          <span
-            className="absolute left-0 top-0 w-2 h-full"
-            style={{ backgroundColor: equipo.color }}
-          />
-        )}
       </div>
 
-      {/* ESTADO GENERAL */}
       {isMiInvitacionPendiente && (
-        <p className="text-sm text-amber-400 mb-3">
-          Has sido invitado a este equipo
-        </p>
+        <p className="text-sm text-warning">Has sido invitado a este equipo</p>
       )}
 
-      {/* LISTA DE JUGADORES */}
-      <div className="border-t border-neutral-700 pt-2 space-y-1">
-        {equipo.jugadores.map((j: JugadorDTO) => (
-          <div
-            key={j.idUsuario ?? j.nombre}
-            className="flex justify-between items-center text-sm"
-          >
-            <p className={`${user.id === j.idUsuario ? 'text-primary' : 'text-neutral-300'} truncate mr-2`}>
-              {j.nombre}
-              {j.suplente && (
-                <span className="ml-1 text-amber-400 text-xs">(Suplente)</span>
+      <div className="flex flex-col gap-2 border-t border-border pt-2.5 text-sm">
+        {equipo.jugadores.map((j: JugadorDTO) => {
+          const soyYo = user.id === j.idUsuario;
+          const mostrarPendiente =
+            equipo.idCreador !== j.idUsuario &&
+            j.estado === EstadoJugadorEnEquipo.PENDIENTE;
+          return (
+            <div
+              key={j.idUsuario ?? j.nombre}
+              className="flex items-center justify-between gap-2"
+            >
+              <span
+                className={cn(
+                  "inline-flex min-w-0 items-center gap-1.5",
+                  soyYo ? "text-primary-text" : "text-foreground-soft"
+                )}
+              >
+                <span className="truncate">{j.nombre}</span>
+                {j.suplente && <span className="text-xs text-warning">(Suplente)</span>}
+                {soyYo && <ChipTu />}
+              </span>
+              {mostrarPendiente && (
+                <span className="text-xs font-bold text-warning">{j.estado}</span>
               )}
-            </p>
-            {user.id === j.idUsuario && <p className="w-min mr-auto bg-neutral-800 text-neutral-400 text-xs px-2 p-0.5 rounded">Tú</p>}
-            {equipo.idCreador !== j.idUsuario && renderEstado(j.estado)}
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
 
-      {/* INVITACIÓN BOTONES */}
       {isMiInvitacionPendiente && (
-        <div className="flex gap-2 items-center mt-4">
+        <div className="flex gap-2 pt-1">
           <Button
             onClick={() => handleResponderInvitacion(true)}
             disabled={isPending}
             variant="primary"
+            className="flex-1"
           >
             Aceptar
           </Button>
@@ -123,6 +135,7 @@ export const TarjetaEquipo = ({ equipo, onClick }: Props) => {
             onClick={() => handleResponderInvitacion(false)}
             disabled={isPending}
             variant="outline"
+            className="flex-1"
           >
             Rechazar
           </Button>

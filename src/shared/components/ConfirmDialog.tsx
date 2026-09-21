@@ -1,4 +1,4 @@
-import { Trash2 } from "lucide-react";
+import { CircleHelp, Trash2 } from "lucide-react";
 import type { ReactNode } from "react";
 import {
   AlertDialog,
@@ -20,6 +20,7 @@ type ConfirmDialogProps = {
   confirmText?: string;
   cancelText?: string;
   icon?: ReactNode;
+  variant?: "destructive" | "default";
 };
 
 /**
@@ -36,13 +37,26 @@ export const ConfirmDialog = ({
   confirmText = "Confirmar",
   cancelText = "Cancelar",
   icon,
+  variant = "destructive",
 }: ConfirmDialogProps) => {
+  const destructivo = variant === "destructive";
   return (
     <AlertDialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
       <AlertDialogContent className="max-w-sm">
         <AlertDialogHeader className="items-center text-center sm:text-center">
-          <div className="flex size-14 items-center justify-center rounded-full border border-destructive/35 bg-destructive/13 text-destructive">
-            {icon ?? <Trash2 size={24} aria-hidden="true" />}
+          <div
+            className={
+              destructivo
+                ? "flex size-14 items-center justify-center rounded-full border border-destructive/35 bg-destructive/13 text-destructive"
+                : "flex size-14 items-center justify-center rounded-full border border-primary/35 bg-primary/13 text-primary-text"
+            }
+          >
+            {icon ??
+              (destructivo ? (
+                <Trash2 size={24} aria-hidden="true" />
+              ) : (
+                <CircleHelp size={24} aria-hidden="true" />
+              ))}
           </div>
           <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription className="text-foreground-soft">
@@ -53,7 +67,11 @@ export const ConfirmDialog = ({
           <AlertDialogCancel variant="secondary" className="flex-1" onClick={onCancel}>
             {cancelText}
           </AlertDialogCancel>
-          <AlertDialogAction variant="destructive" className="flex-1" onClick={onConfirm}>
+          <AlertDialogAction
+            variant={destructivo ? "destructive" : "default"}
+            className="flex-1"
+            onClick={onConfirm}
+          >
             {confirmText}
           </AlertDialogAction>
         </AlertDialogFooter>

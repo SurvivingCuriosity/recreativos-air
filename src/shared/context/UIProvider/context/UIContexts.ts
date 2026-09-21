@@ -6,6 +6,8 @@ export type ConfirmContextType = {
     description?: string;
     confirmText?: string;
     cancelText?: string;
+    /** «destructive» (por defecto): icono papelera y confirmar en rojo. «default»: confirmar en primary. */
+    variant?: "destructive" | "default";
   }) => Promise<boolean>;
 };
 

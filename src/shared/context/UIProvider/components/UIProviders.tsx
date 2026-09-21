@@ -7,6 +7,7 @@ type ConfirmOptions = {
   description?: string;
   confirmText?: string;
   cancelText?: string;
+  variant?: "destructive" | "default";
 };
 
 export const UIProvider = ({ children }: { children: React.ReactNode }) => {

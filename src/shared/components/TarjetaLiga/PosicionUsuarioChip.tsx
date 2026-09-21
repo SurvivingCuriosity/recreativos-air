@@ -1,5 +1,5 @@
-import { Icon } from "@/shared/ui/Icon";
-import { Trophy, Medal, ShieldHalf } from "lucide-react";
+import { Medal, ShieldHalf, Trophy, type LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useClasificacionLiga } from "../../api/ligas/useLigas";
 
 interface PosicionUsuarioChipProps {
@@ -8,6 +8,7 @@ interface PosicionUsuarioChipProps {
   finalizada?: boolean;
 }
 
+/** Píldora de posición del usuario. Podio con los colores de DESIGN.md §4. */
 export const PosicionUsuarioChip = ({
   ligaId,
   equipoId,
@@ -23,19 +24,14 @@ export const PosicionUsuarioChip = ({
 
   const { pos } = posicion;
 
-  let icon = <Icon icon={ShieldHalf} className="text-sm" />;
-  let colorClass = "text-neutral-500 bg-neutral-800 border-neutral-700";
-
-  if (pos === 1) {
-    icon = <Icon icon={Trophy} className="text-sm" />;
-    colorClass = "text-amber-400 bg-amber-400/10 border-amber-400/20";
-  } else if (pos === 2) {
-    icon = <Icon icon={Medal} className="text-sm" />;
-    colorClass = "text-slate-400 bg-slate-400/10 border-slate-400/20";
-  } else if (pos === 3) {
-    icon = <Icon icon={Medal} className="text-sm" />;
-    colorClass = "text-orange-700 bg-orange-700/10 border-orange-700/20";
-  }
+  const estilo: { icon: LucideIcon; className: string } =
+    pos === 1
+      ? { icon: Trophy, className: "text-podium-1 bg-podium-1/10 border-podium-1/28" }
+      : pos === 2
+        ? { icon: Medal, className: "text-podium-2 bg-podium-2/10 border-podium-2/28" }
+        : pos === 3
+          ? { icon: Medal, className: "text-podium-3 bg-podium-3/10 border-podium-3/28" }
+          : { icon: ShieldHalf, className: "text-foreground-soft bg-muted border-border" };
 
   const label = finalizada
     ? pos === 1
@@ -44,8 +40,13 @@ export const PosicionUsuarioChip = ({
     : `${pos}º Puesto`;
 
   return (
-    <div className={`flex items-center gap-2 border px-3 py-1.5 w-fit rounded-full text-xs font-bold ${colorClass}`}>
-      {icon}
+    <div
+      className={cn(
+        "flex w-fit items-center gap-1.5 rounded-full border px-3 py-[5px] text-xs font-bold",
+        estilo.className
+      )}
+    >
+      <estilo.icon size={14} strokeWidth={2} aria-hidden="true" />
       <span>{label}</span>
     </div>
   );
