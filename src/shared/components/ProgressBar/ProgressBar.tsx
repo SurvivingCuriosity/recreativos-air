@@ -1,34 +1,42 @@
 import { useMemo } from "react";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 
 export interface ProgressBarProps {
-    progress: number;
-    label?: string;
-    color?: string;
-    className?: string;
+  progress: number;
+  label?: string;
+  /** Clase de fondo del indicador. Por defecto, degradado naranja→magenta (§3). */
+  color?: string;
+  className?: string;
 }
 
 export const ProgressBar = ({
-    progress,
-    label,
-    color = "bg-primary",
-    className = "",
+  progress,
+  label,
+  color = "bg-gradient-progress",
+  className = "",
 }: ProgressBarProps) => {
-    const clampedProgress = useMemo(() => Math.min(Math.max(progress, 0), 100), [progress]);
+  const clampedProgress = useMemo(
+    () => Math.min(Math.max(progress, 0), 100),
+    [progress]
+  );
 
-    return (
-        <div className={`w-full flex flex-col gap-1 ${className}`}>
-            {label && (
-                <div className="flex text-xs text-neutral-400 gap-2">
-                    <span>{label}</span>
-                    <span className="text-primary font-bold">{Math.round(clampedProgress)}%</span>
-                </div>
-            )}
-            <div className="h-2 w-full rounded-full bg-neutral-800 overflow-hidden">
-                <div
-                    className={`h-full rounded-full transition-all duration-300 ${color}`}
-                    style={{ width: `${clampedProgress}%` }}
-                />
-            </div>
+  return (
+    <div className={cn("flex w-full flex-col gap-1", className)}>
+      {label && (
+        <div className="flex justify-between gap-2 text-xs text-muted-foreground">
+          <span>{label}</span>
+          <span className="font-display font-bold text-primary-text">
+            {Math.round(clampedProgress)}%
+          </span>
         </div>
-    );
+      )}
+      <Progress
+        value={clampedProgress}
+        aria-label={label}
+        className="h-1.5 bg-muted"
+        indicatorClassName={color}
+      />
+    </div>
+  );
 };

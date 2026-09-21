@@ -1,9 +1,5 @@
-import {
-  faCheckCircle,
-  faInfoCircle,
-  faXmarkCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CircleCheck, Info, CircleX } from "lucide-react";
+import { Icon } from "@/shared/ui/Icon";
 import {
   EstadoEnfrentamiento,
   type EnfrentamientoDTO,
@@ -60,8 +56,8 @@ export const ResultadoEnfrentamiento = ({
         <>
           {enfrentamiento.resultadoPropuestoPor !== null && (
             <div className="text-sm flex items-center gap-2 bg-neutral-900 p-3 rounded-lg">
-              <FontAwesomeIcon
-                icon={faInfoCircle}
+              <Icon
+                icon={Info}
                 className="text-neutral-400"
               />
               <p className="text-neutral-400">
@@ -71,8 +67,8 @@ export const ResultadoEnfrentamiento = ({
           )}
           {enfrentamiento.resultadoAceptadoPor !== null && (
             <div className="text-sm flex items-center gap-2 bg-green-900/50 p-3 rounded-lg">
-              <FontAwesomeIcon
-                icon={faCheckCircle}
+              <Icon
+                icon={CircleCheck}
                 className="text-green-200"
               />
               <p className="text-green-200">
@@ -82,7 +78,7 @@ export const ResultadoEnfrentamiento = ({
           )}
           {enfrentamiento.resultadoRechazadoPor !== null && (
             <div className="text-sm flex items-center gap-2 bg-red-900/50 p-3 rounded-lg">
-              <FontAwesomeIcon icon={faXmarkCircle} className="text-red-200" />
+              <Icon icon={CircleX} className="text-red-200" />
               <p className="text-red-200">
                 Resultado rechazado por {equipoQueRechaza.nombre}
               </p>

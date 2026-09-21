@@ -1,12 +1,5 @@
-import {
-  faChevronDown,
-  faEuro,
-  faEye,
-  faHand,
-  faTrash,
-  faUsers,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ChevronDown, Euro, Eye, Hand, Trash2, Users } from "lucide-react";
+import { Icon } from "@/shared/ui/Icon";
 import { useState } from "react";
 import {
   EstadoEquipoEnLiga,
@@ -96,7 +89,7 @@ export const TarjetaEquipoLigaAdmin = ({
             {equipoLiga.equipo.nombre}
           </p>
           <div className="flex items-center gap-2 text-neutral-400">
-            <FontAwesomeIcon icon={faUsers} size="sm" />
+            <Icon icon={Users} size={14} />
             <p className="text-sm">
               {equipoLiga.equipo.jugadores.map((j) => j.nombre).join(", ")}
             </p>
@@ -104,19 +97,19 @@ export const TarjetaEquipoLigaAdmin = ({
           <div className="flex items-center gap-2">
             {pendienteDePago && (
               <div className="absolute top-1 right-1 p-1 px-2 rounded bg-red-400/10 flex items-center gap-2 text-red-400">
-                <FontAwesomeIcon icon={faEuro} />
+                <Icon icon={Euro} />
               </div>
             )}
             {pendiente && (
               <div className="p-1 px-2 rounded bg-red-400/10 flex items-center gap-2 text-red-400">
-                <FontAwesomeIcon icon={faHand} />
+                <Icon icon={Hand} />
                 <p className="text-xs">No aceptado</p>
               </div>
             )}
           </div>
         </div>
-        <FontAwesomeIcon
-          icon={faChevronDown}
+        <Icon
+          icon={ChevronDown}
           className="text-neutral-400 transition-transform duration-200"
           style={{ transform: isOpened ? "rotate(180deg)" : "rotate(0deg)" }}
         />
@@ -133,7 +126,7 @@ export const TarjetaEquipoLigaAdmin = ({
         <div className="overflow-hidden">
           <div className="flex flex-wrap items-center gap-2 pt-2 pb-1">
             
-            <Button icon={faEye} variant="outline" onClick={onClick}>
+            <Button icon={Eye} variant="outline" onClick={onClick}>
               Ver equipo
             </Button>
 
@@ -148,7 +141,7 @@ export const TarjetaEquipoLigaAdmin = ({
             )}
 
             <Button
-              icon={faTrash}
+              icon={Trash2}
               variant="outline-danger"
               onClick={handleEliminarEquipoDeLiga}
             >

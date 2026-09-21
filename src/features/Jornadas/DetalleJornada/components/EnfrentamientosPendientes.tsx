@@ -1,6 +1,6 @@
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { Check, X } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { Button } from "../../../../packages/components/Button/Button";
 import {
   useConfirmarResultadoAdmin,
@@ -65,14 +65,14 @@ const FilaEnfrentamiento = ({
           onClick={handleRechazar}
           disabled={rechazando || confirmando}
           variant="outline"
-          icon={faXmark}
+          icon={X}
         >
           Rechazar
         </Button>
         <Button
           onClick={handleConfirmar}
           disabled={confirmando || rechazando}
-          icon={faCheck}
+          icon={Check}
         >
           Confirmar
         </Button>

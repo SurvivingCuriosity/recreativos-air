@@ -1,3 +1,5 @@
+import { Input } from "@/components/ui/input";
+
 export interface TextInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   onChangeText: (value: string) => void;
@@ -5,16 +7,15 @@ export interface TextInputProps
 }
 
 export const TextInput = (props: TextInputProps) => {
-  const { onChangeText, hasError, ...rest } = props;
+  const { onChangeText, hasError, className, ...rest } = props;
 
   return (
-    <input
+    <Input
       type="text"
       onChange={(e) => onChangeText(e.target.value)}
+      aria-invalid={hasError || undefined}
+      className={className}
       {...rest}
-      className={`w-full h-10 ${
-        hasError ? "bg-red-600/20" : "bg-neutral-800"
-      }  p-1 px-2 rounded-2xl outline-0 focus:outline-1 outline-primary disabled:bg-neutral-600 disabled:text-neutral-500 disabled:cursor-not-allowed`}
     />
   );
 };

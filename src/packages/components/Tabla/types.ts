@@ -63,6 +63,12 @@ export interface Column<T> {
    * (Se usarÃ¡ si la columna es 'sortable'.)
    */
   sortFn?: (a: T, b: T) => number;
+
+  /** Alineación del contenido de la columna (por defecto, centrado). */
+  align?: "left" | "center";
+
+  /** Clases extra para cabecera y celdas de la columna. */
+  className?: string;
 }
 
 /**
@@ -72,4 +78,6 @@ export interface DataTableProps<T> {
   data: T[];
   columns: Column<T>[];
   initialSortState?: SortState;
+  /** Clases extra por fila (p. ej. resaltar la fila propia). */
+  rowClassName?: (row: T, rowIndex: number) => string | undefined;
 }

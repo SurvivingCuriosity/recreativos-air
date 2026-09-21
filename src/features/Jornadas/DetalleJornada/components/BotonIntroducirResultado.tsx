@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { Button } from "../../../../packages/components/Button/Button";
 import { Window } from "../../../../packages/components/Window/Window";
 import { useProponerResultado } from "../../../../shared/api/enfrentamientos/hooks";

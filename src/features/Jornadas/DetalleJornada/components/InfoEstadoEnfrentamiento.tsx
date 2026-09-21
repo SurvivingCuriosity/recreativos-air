@@ -1,10 +1,6 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheckCircle,
-  faHand,
-  faInfoCircle,
-  type IconDefinition,
-} from "@fortawesome/free-solid-svg-icons";
+import { Icon } from "@/shared/ui/Icon";
+import { CircleCheck, Hand, Info } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { EstadoEnfrentamiento, type EnfrentamientoDTO } from "recreativos-air-core/enfrentamiento";
 import { useAuth } from "../../../../shared/api/auth/useAuth";
 
@@ -52,11 +48,11 @@ export const InfoEstadoEnfrentamiento = ({
     [EstadoEnfrentamiento.Jugado]: "El partido ha finalizado.",
   };
 
-  const icon: Record<EstadoEnfrentamiento, IconDefinition> = {
-    [EstadoEnfrentamiento.SinJugar]: faInfoCircle,
-    [EstadoEnfrentamiento.CorroborarResultado]: faHand,
-    [EstadoEnfrentamiento.ConfirmarResultado]: faHand,
-    [EstadoEnfrentamiento.Jugado]: faCheckCircle,
+  const icon: Record<EstadoEnfrentamiento, LucideIcon> = {
+    [EstadoEnfrentamiento.SinJugar]: Info,
+    [EstadoEnfrentamiento.CorroborarResultado]: Hand,
+    [EstadoEnfrentamiento.ConfirmarResultado]: Hand,
+    [EstadoEnfrentamiento.Jugado]: CircleCheck,
   };
 
   return (
@@ -65,7 +61,7 @@ export const InfoEstadoEnfrentamiento = ({
         `w-full flex items-center gap-3 rounded-lg p-2 px-4 ` + containerClassName[enfrentamiento.estado]
       }
     >
-      <FontAwesomeIcon icon={icon[enfrentamiento.estado]} className={textClassName[enfrentamiento.estado]} />
+      <Icon icon={icon[enfrentamiento.estado]} className={textClassName[enfrentamiento.estado]} />
       <div className="flex flex-col">
         <p className={`font-extrabold ` + textClassName[enfrentamiento.estado]}>{title[enfrentamiento.estado]}</p>
         <p className={`text-xs ` + textClassName[enfrentamiento.estado]}>

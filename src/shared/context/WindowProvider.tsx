@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import { createPortal } from "react-dom";
 import { Window } from "../../packages/components/Window/Window";
 
 type WindowContextType = {
@@ -9,11 +8,14 @@ type WindowContextType = {
 
 const WindowContext = createContext<WindowContextType | null>(null);
 
+/** Título por defecto según DESIGN.md §6.9 (nunca «Ventana»). */
+const DEFAULT_TITLE = "Elige un equipo";
+
 export const WindowProvider = ({ children }: { children: React.ReactNode }) => {
   const [content, setContent] = useState<React.ReactElement | null>(null);
-  const [title, setTitle] = useState<string>("");
+  const [title, setTitle] = useState<string>(DEFAULT_TITLE);
 
-  const show = (component: React.ReactElement, titleText = "Ventana") => {
+  const show = (component: React.ReactElement, titleText = DEFAULT_TITLE) => {
     setTitle(titleText);
     setContent(component);
   };
@@ -23,17 +25,16 @@ export const WindowProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <WindowContext.Provider value={{ show, close }}>
       {children}
-      {content &&
-        createPortal(
-          <Window titulo={title} onClose={close}>
-            {content}
-          </Window>,
-          document.body
-        )}
+      {content && (
+        <Window titulo={title} onClose={close}>
+          {content}
+        </Window>
+      )}
     </WindowContext.Provider>
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useWindow = () => {
   const ctx = useContext(WindowContext);
   if (!ctx) {

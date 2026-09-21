@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { crearEquipo } from "../api";
 import type { CrearEquipoBody, EquipoDTO } from "recreativos-air-core/equipos";
 

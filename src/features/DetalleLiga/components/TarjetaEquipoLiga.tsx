@@ -1,7 +1,5 @@
-import {
-  faUsers
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Users } from "lucide-react";
+import { Icon } from "@/shared/ui/Icon";
 import {
   type EquipoEnLigaDTO
 } from "recreativos-air-core/liga";
@@ -31,7 +29,7 @@ export const TarjetaEquipoLiga = ({ equipoLiga, onClick }: Props) => {
         className="absolute h-full left-0 w-2 top-0"
       ></div>
       <div className="flex items-center gap-2 text-neutral-400 p-1.5">
-        <FontAwesomeIcon icon={faUsers} size="sm" />
+        <Icon icon={Users} size={14} />
         <p className="text-sm">
           {equipoLiga.equipo.jugadores.map((j) => j.nombre).join(", ")}
         </p>

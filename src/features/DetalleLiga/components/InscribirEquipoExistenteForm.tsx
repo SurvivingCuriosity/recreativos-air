@@ -1,5 +1,5 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { Button } from "../../../packages/components/Button/Button";
 import { useAuth } from "../../../shared/api/auth/useAuth";
 import { useGetAllEquipos } from "../../../shared/api/equipos/hooks/useGetEquipos";

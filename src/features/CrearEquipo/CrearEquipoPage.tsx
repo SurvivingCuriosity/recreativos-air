@@ -1,7 +1,7 @@
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Plus, Trash2 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { useNavigate } from "react-router";
 import {
   EstadoJugadorEnEquipo,
@@ -87,7 +87,7 @@ export const CrearEquipoPage = () => {
 
   /** ✅ Agregar jugador */
   const handleAgregarJugador = (nuevoJugador: JugadorDTO) => {
-    if (jugadores.length >= 3) return alert("Máximo 3 jugadores por equipo");
+    if (jugadores.length >= 3) return toast.error("Máximo 3 jugadores por equipo");
 
     const actualizados = markLastAsSuplente([...jugadores, nuevoJugador]);
     setJugadores(actualizados);
@@ -97,7 +97,7 @@ export const CrearEquipoPage = () => {
   /** ✅ Selector de usuario registrado */
   const handleSelectUsuario = (u: SearchUserDTO) => {
     if (jugadores.some((j) => j.idUsuario === u.id))
-      return alert("Ese usuario ya está en el equipo");
+      return toast.error("Ese usuario ya está en el equipo");
 
     const esElUltimoAgregado = jugadores.length === 2;
 
@@ -112,13 +112,13 @@ export const CrearEquipoPage = () => {
   /** ✅ Agregar jugador manual (sin cuenta) */
   const handleAgregarManual = () => {
     const esElUltimoAgregado = jugadores.length === 2;
-    if (!nombreManual.trim()) return alert("Introduce un nombre válido");
+    if (!nombreManual.trim()) return toast.error("Introduce un nombre válido");
     if (
       jugadores.some(
         (j) => j.nombre.toLowerCase() === nombreManual.trim().toLowerCase()
       )
     )
-      return alert("Ese nombre ya está en el equipo");
+      return toast.error("Ese nombre ya está en el equipo");
 
     handleAgregarJugador({
       nombre: nombreManual.trim(),
@@ -132,7 +132,7 @@ export const CrearEquipoPage = () => {
   const handleEliminarJugador = (index: number) => {
     const jugador = jugadores[index];
     if (!esAdmin && jugador.idUsuario === loggedInUser?.id) {
-      toast.custom("No puedes eliminarte del equipo");
+      toast.error("No puedes eliminarte del equipo");
       return;
     }
 
@@ -289,7 +289,7 @@ export const CrearEquipoPage = () => {
                     disabled={modoAgregar !== "manual"}
                   />
                   <div className="w-12">
-                    <Button onClick={handleAgregarManual} disabled={isPending} icon={faPlus} variant="outline-neutral"/>
+                    <Button onClick={handleAgregarManual} disabled={isPending} icon={Plus} variant="outline-neutral"/>
                   </div>
                 </div>
               )}
@@ -338,7 +338,7 @@ export const CrearEquipoPage = () => {
                         onClick={() => handleEliminarJugador(i)}
                         disabled={isPending}
                         variant="outline"
-                        icon={faTrash}
+                        icon={Trash2}
                       />
                     </div>
                   )}
@@ -351,7 +351,7 @@ export const CrearEquipoPage = () => {
           variant="primary"
           onClick={handleCrearEquipo}
           disabled={isPending}
-          icon={faPlus}
+          icon={Plus}
         >
           {isPending ? "Creando equipo..." : "Crear equipo"}
         </Button>

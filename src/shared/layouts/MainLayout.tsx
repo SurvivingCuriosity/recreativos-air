@@ -1,14 +1,6 @@
 import { Outlet } from "react-router";
 import { TopNav, type TopNavItem } from "../../navigation/components/TopNav";
-import {
-  faCalendarDays,
-  faPlus,
-  faRightToBracket,
-  faTrophy,
-  faUser,
-  faUserPlus,
-  faUsers,
-} from "@fortawesome/free-solid-svg-icons";
+import { CalendarDays, Plus, LogIn, Trophy, User, UserPlus, Users } from "lucide-react";
 import { useAuth } from "../api/auth/useAuth";
 import { NetworkStatusBanner } from "../components/NetworkStatusBanner/NetworkStatusBanner";
 import { AvisoPerfilSinNombre } from "../components/AvisoPerfilSinNombre/AvisoPerfilSinNombre";
@@ -30,19 +22,19 @@ export type GuestNavContent = {
 };
 
 const TopNavContentAuth: AuthNavContent = {
-  miPerfil: { label: "Mi perfil", href: "/mi-perfil", icon: faUser },
-  competiciones: { label: "Competiciones", href: "/competiciones", icon: faTrophy },
-  crearEquipo: { label: "Crear equipo", href: "/crear-equipo", icon: faPlus },
-  crearLiga: { label: "Crear liga", href: "/crear-liga", icon: faPlus, onlyAdmin: true },
-  equipos: { label: "Equipos", href: "/admin-equipos", icon: faUser, onlyAdmin: true },
-  usuarios: { label: "Usuarios", href: "/admin-usuarios", icon: faUsers, onlyAdmin: true },
-  temporadas: { label: "Temporadas", href: "/admin-temporadas", icon: faCalendarDays, onlyAdmin: true },
+  miPerfil: { label: "Mi perfil", href: "/mi-perfil", icon: User },
+  competiciones: { label: "Competiciones", href: "/competiciones", icon: Trophy },
+  crearEquipo: { label: "Crear equipo", href: "/crear-equipo", icon: Plus },
+  crearLiga: { label: "Crear liga", href: "/crear-liga", icon: Plus, onlyAdmin: true },
+  equipos: { label: "Equipos", href: "/admin-equipos", icon: User, onlyAdmin: true },
+  usuarios: { label: "Usuarios", href: "/admin-usuarios", icon: Users, onlyAdmin: true },
+  temporadas: { label: "Temporadas", href: "/admin-temporadas", icon: CalendarDays, onlyAdmin: true },
 };
 
 const TopNavContent: GuestNavContent = {
-  login: { label: "Inciar sesión", href: "/login", icon: faRightToBracket },
-  register: { label: "Crear cuenta", href: "/register", icon: faUserPlus },
-  competiciones: { label: "Competiciones", href: "/competiciones", icon: faTrophy },
+  login: { label: "Inciar sesión", href: "/login", icon: LogIn },
+  register: { label: "Crear cuenta", href: "/register", icon: UserPlus },
+  competiciones: { label: "Competiciones", href: "/competiciones", icon: Trophy },
 };
 
 export const MainLayout = () => {

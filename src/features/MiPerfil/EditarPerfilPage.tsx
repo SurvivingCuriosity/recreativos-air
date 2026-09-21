@@ -1,6 +1,6 @@
-import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { Save } from "lucide-react";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { useNavigate } from "react-router";
 import type { UserDTO } from "recreativos-air-core/user";
 import { Button } from "../../packages/components/Button/Button";
@@ -95,7 +95,7 @@ const EditarPerfilForm = ({ user }: { user: UserDTO }) => {
           <TextInput value={user.email} onChangeText={() => {}} disabled />
         </FormField>
 
-        <Button onClick={handleGuardar} icon={faSave} disabled={isPending}>
+        <Button onClick={handleGuardar} icon={Save} disabled={isPending}>
           {isPending ? "Guardando..." : "Guardar cambios"}
         </Button>
       </form>

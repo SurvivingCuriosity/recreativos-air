@@ -1,5 +1,5 @@
-import { faTrophy } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Trophy } from "lucide-react";
+import { Icon } from "@/shared/ui/Icon";
 import { useNavigate } from "react-router";
 import type { TemporadaDTO } from "recreativos-air-core/temporada";
 import { Button } from "../../packages/components/Button/Button";
@@ -31,7 +31,7 @@ export const CtaLigasDisponibles = ({
   return (
     <div className="animate-fade-in-top mt-3 p-4 rounded-3xl border border-primary/30 bg-neutral-900/80 backdrop-blur-xs flex flex-col gap-2">
       <div className="flex items-center gap-2">
-        <FontAwesomeIcon icon={faTrophy} className="text-primary" />
+        <Icon icon={Trophy} className="text-primary" />
         <p className="font-display text-lg text-primary">{titulo}</p>
       </div>
       <p className="text-sm text-neutral-400">{descripcion}</p>

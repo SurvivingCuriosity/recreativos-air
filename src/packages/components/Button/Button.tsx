@@ -1,7 +1,13 @@
-import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { type MouseEvent } from "react";
+import { Button as UIButton } from "@/components/ui/button";
+import { Icon, type LucideIcon } from "@/shared/ui/Icon";
+import { cn } from "@/lib/utils";
 
+/**
+ * Wrapper de compatibilidad sobre el Button de shadcn.
+ * Mantiene la API previa (variantes antiguas, `icon`, `as`/`href`)
+ * mientras las pantallas se migran fase a fase.
+ */
 export type ButtonVariant =
   | "primary"
   | "outline"
@@ -15,11 +21,22 @@ export interface ButtonProps {
   onClick?: () => void;
   children?: React.ReactNode;
   href?: string;
-  icon?: IconDefinition;
+  icon?: LucideIcon;
   variant?: ButtonVariant;
   disabled?: boolean;
   type?: "submit" | "reset" | "button";
+  className?: string;
+  "aria-label"?: string;
 }
+
+const variantMap = {
+  primary: "default",
+  outline: "outline",
+  neutral: "secondary",
+  "outline-neutral": "secondary",
+  danger: "destructive",
+  "outline-danger": "destructive-outline",
+} as const;
 
 export const Button = (props: ButtonProps) => {
   const {
@@ -31,9 +48,9 @@ export const Button = (props: ButtonProps) => {
     variant = "primary",
     disabled = false,
     type = "button",
+    className,
+    ...rest
   } = props;
-
-  const Component = href ? (as === "a" ? "a" : "button") : as;
 
   const esSoloIcon = children === undefined && icon !== undefined;
 
@@ -42,29 +59,42 @@ export const Button = (props: ButtonProps) => {
       e.preventDefault();
     }
     e.stopPropagation();
-    if(onClick) onClick();
+    onClick?.();
   };
 
-  const variantStyles: Record<ButtonVariant, string> = {
-    primary: "bg-radial from-primary2 to-primary text-neutral-900",
-    outline: "bg-neutral-900/80 text-primary border border-primary",
-    neutral: "text-neutral-900/80 bg-neutral-400 border border-neutral-400",
-    "outline-neutral":
-      "bg-neutral-900/80 text-neutral-400 border border-neutral-400",
-    danger: "bg-red-500 text-white border border-red-500",
-    "outline-danger": "bg-neutral-900/80 text-red-400 border border-red-400",
-  };
+  const content = (
+    <>
+      {icon && <Icon icon={icon} size={18} />}
+      {children}
+    </>
+  );
+
+  if (href && as === "a") {
+    return (
+      <UIButton
+        asChild
+        variant={variantMap[variant]}
+        size={esSoloIcon ? "icon" : "default"}
+        className={cn(!esSoloIcon && "w-full", className)}
+      >
+        <a href={href} onClick={handleClick} aria-disabled={disabled} {...rest}>
+          {content}
+        </a>
+      </UIButton>
+    );
+  }
 
   return (
-    <Component
-      onClick={handleClick}
-      href={href}
-      disabled={disabled}
+    <UIButton
       type={type}
-      className={`${esSoloIcon ? 'p-2 rounded-full aspect-square' : 'px-3 py-1'} w-full h-10 flex items-center justify-center font-bold rounded-2xl gap-2 outline-none focus:outline-none ${variantStyles[variant]} disabled:bg-neutral-700! disabled:[background-image:none]! disabled:text-neutral-600!`}
+      onClick={handleClick}
+      disabled={disabled}
+      variant={variantMap[variant]}
+      size={esSoloIcon ? "icon" : "default"}
+      className={cn(!esSoloIcon && "w-full", className)}
+      {...rest}
     >
-      {icon && <FontAwesomeIcon icon={icon} className="w-5 h-5" />}
-      {children}
-    </Component>
+      {content}
+    </UIButton>
   );
 };

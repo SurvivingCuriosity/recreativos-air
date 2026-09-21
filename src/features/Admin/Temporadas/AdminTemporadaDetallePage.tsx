@@ -1,4 +1,4 @@
-import { faStar, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Star, Trash2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router";
 import { Button } from "../../../packages/components/Button/Button";
 import { Titulo } from "../../../packages/components/Titulo/Titulo";
@@ -71,7 +71,7 @@ export const AdminTemporadaDetallePage = () => {
       <div className="flex gap-2 mt-6">
         <Button
           variant="outline"
-          icon={faStar}
+          icon={Star}
           disabled={temporada.actual || marcando}
           onClick={() => marcarActual(id)}
         >
@@ -79,7 +79,7 @@ export const AdminTemporadaDetallePage = () => {
         </Button>
         <Button
           variant="outline-danger"
-          icon={faTrash}
+          icon={Trash2}
           disabled={eliminando}
           onClick={handleEliminar}
         >

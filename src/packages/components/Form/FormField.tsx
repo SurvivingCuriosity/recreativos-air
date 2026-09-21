@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "@/lib/utils";
 
 export const FormField = ({
   children,
@@ -9,22 +10,12 @@ export const FormField = ({
   row?: boolean;
   border?: boolean;
 }) => {
-  if (row) {
-    return (
-      <div
-        className={`space-x-2 flex flex-row items-center ${
-          border ? "pb-2 border-b border-neutral-500" : "mb-2"
-        }`}
-      >
-        {children}
-      </div>
-    );
-  }
   return (
     <div
-      className={`space-y-0.5 flex flex-col  ${
-        border ? "pb-2 border-b border-neutral-500" : "mb-2"
-      }`}
+      className={cn(
+        row ? "flex flex-row items-center gap-2" : "flex flex-col gap-1.5",
+        border ? "border-b border-border pb-3" : "mb-3"
+      )}
     >
       {children}
     </div>

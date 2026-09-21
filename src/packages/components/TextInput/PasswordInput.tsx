@@ -1,6 +1,6 @@
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { Input } from "@/components/ui/input";
 
 export interface PasswordInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -9,29 +9,33 @@ export interface PasswordInputProps
 }
 
 export const PasswordInput = (props: PasswordInputProps) => {
-  const { onChangeText, hasError, ...rest } = props;
+  const { onChangeText, hasError, className, ...rest } = props;
 
   const [showingPass, setShowingPass] = useState(false);
 
   return (
     <div className="relative">
-      <input
+      <Input
         type={showingPass ? "text" : "password"}
         onChange={(e) => onChangeText(e.target.value)}
-        className={`h-10 ${
-          hasError ? "bg-red-600/20" : "bg-neutral-800"
-        } w-full p-1 px-2 rounded-2xl outline-0 focus:outline-1 outline-primary disabled:bg-neutral-600 disabled:text-neutral-500 disabled:cursor-not-allowed`}
+        aria-invalid={hasError || undefined}
+        className={className ? `pr-12 ${className}` : "pr-12"}
         {...rest}
       />
       <button
         type="button"
+        aria-label={showingPass ? "Ocultar contraseña" : "Mostrar contraseña"}
         onClick={(e) => {
           e.preventDefault();
           setShowingPass(!showingPass);
         }}
-        className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400"
+        className="absolute top-0.5 right-0.5 flex size-11 items-center justify-center rounded-input text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
       >
-        <FontAwesomeIcon icon={showingPass ? faEyeSlash : faEye} />
+        {showingPass ? (
+          <EyeOff size={18} aria-hidden="true" />
+        ) : (
+          <Eye size={18} aria-hidden="true" />
+        )}
       </button>
     </div>
   );

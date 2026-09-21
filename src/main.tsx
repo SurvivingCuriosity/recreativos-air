@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "@/components/ui/sonner";
 import { BrowserRouter } from "react-router";
 import { Router } from "./navigation/Router";
 import api from "./shared/api/http";
@@ -29,11 +29,7 @@ createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
           <WindowProvider>
             <Router />
-            <Toaster
-              toastOptions={{
-                duration: 2000,
-              }}
-            />
+            <Toaster />
           </WindowProvider>
         </BrowserRouter>
       </UIProvider>

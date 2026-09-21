@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { Link, useNavigate } from "react-router";
 import {
   ForgotPasswordSchema,

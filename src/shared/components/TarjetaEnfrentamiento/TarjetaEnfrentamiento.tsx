@@ -1,8 +1,5 @@
-import {
-  faCalendarDays,
-  faLocationDot,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CalendarDays, MapPin } from "lucide-react";
+import { Icon } from "@/shared/ui/Icon";
 import { EstadoEnfrentamiento, type EnfrentamientoDTO } from "recreativos-air-core/enfrentamiento";
 import { useAuth } from "../../api/auth/useAuth";
 import { useGetEquiposUsuario } from "../../api/equipos/hooks/useGetEquipos";
@@ -28,14 +25,14 @@ export const TarjetaEnfrentamiento = ({
       >
         <div className="flex justify-between p-1 text-xs bg-neutral-800 rounded-t-md text-neutral-300 ">
           <div className="text-neutral-300 w-3/12">
-            <FontAwesomeIcon icon={faCalendarDays} className="mr-1" />
+            <Icon icon={CalendarDays} className="mr-1" />
             {enfrentamiento.fecha
               ? new Date(enfrentamiento.fecha).toLocaleDateString()
               : "-"}
           </div>
 
           <div className="text-neutral-300 w-6/12 text-center">
-            <FontAwesomeIcon icon={faLocationDot} className="mr-1" />
+            <Icon icon={MapPin} className="mr-1" />
             {enfrentamiento.ubicacion}
           </div>
 

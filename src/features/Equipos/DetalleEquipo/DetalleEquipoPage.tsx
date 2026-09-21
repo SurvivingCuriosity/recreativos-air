@@ -1,5 +1,5 @@
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { User } from "lucide-react";
+import { Icon } from "@/shared/ui/Icon";
 import { Link, useParams } from "react-router";
 import { useGetEquipoById } from "../../../shared/api/equipos/hooks/useGetEquipoById";
 import { useAuth } from "../../../shared/api/auth/useAuth";
@@ -46,7 +46,7 @@ export const DetalleEquipoPage = () => {
               key={jugador.idUsuario + index}
               className="w-full flex items-center gap-2 h-auto bg-neutral-800 min-w-40 p-2 px-4 rounded-md text-neutral-400"
             >
-              <FontAwesomeIcon icon={faUser} className="mr-1" />
+              <Icon icon={User} className="mr-1" />
               {jugador.nombre}
               {user?.id === jugador.idUsuario && (
                 <p className="text-xs text-primary">(Tú)</p>

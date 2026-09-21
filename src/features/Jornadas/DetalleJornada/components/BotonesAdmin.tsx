@@ -1,6 +1,6 @@
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { Check, X } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import {
   EstadoEnfrentamiento,
   type EnfrentamientoDTO,
@@ -64,14 +64,14 @@ export const BotonesAdmin = ({ enfrentamiento }: Props) => {
           onClick={handleRechazarAdmin}
           disabled={rechazandoAdmin}
           variant="outline"
-          icon={faXmark}
+          icon={X}
         >
           Rechazar y reiniciar
         </Button>
         <Button
           onClick={handleConfirmarAdmin}
           disabled={confirmandoAdmin}
-          icon={faCheck}
+          icon={Check}
         >
           Confirmar resultado
         </Button>

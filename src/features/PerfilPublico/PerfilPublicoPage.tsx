@@ -1,5 +1,5 @@
-import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Mail, Phone } from "lucide-react";
+import { Icon } from "@/shared/ui/Icon";
 import { Link, Navigate, useNavigate, useParams } from "react-router";
 import { Titulo } from "../../packages/components/Titulo/Titulo";
 import { useAuth } from "../../shared/api/auth/useAuth";
@@ -52,13 +52,13 @@ export const PerfilPublicoPage = () => {
           <p className="text-neutral-500">{user?.nombre}</p>
           {isAdmin && (
             <div className="flex items-center gap-2 text-neutral-500">
-              <FontAwesomeIcon icon={faPhone} />
+              <Icon icon={Phone} />
               <p>{user?.movil}</p>
             </div>
           )}
           {isAdmin && (
             <div className="flex items-center gap-2 text-neutral-500">
-              <FontAwesomeIcon icon={faEnvelope} />
+              <Icon icon={Mail} />
               <p>{user?.email}</p>
             </div>
           )}

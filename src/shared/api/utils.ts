@@ -1,6 +1,6 @@
 import type { FieldValues, Path, UseFormSetError } from "react-hook-form";
 import type { ApiErrorPayload } from "./auth/types";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 
 export function handleApiErrors<T extends FieldValues>(
   error: ApiErrorPayload,

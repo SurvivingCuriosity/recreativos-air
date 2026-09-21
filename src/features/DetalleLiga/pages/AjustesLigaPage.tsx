@@ -1,11 +1,6 @@
-import {
-  faFlagCheckered,
-  faPlay,
-  faSave,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { Flag, Play, Save, Trash2 } from "lucide-react";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { Navigate, useNavigate, useParams } from "react-router";
 import {
   EstadoLiga,
@@ -140,14 +135,14 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
       <section className="space-y-3">
         <p className="font-display text-lg text-primary">Estado</p>
         {sinEmpezar && (
-          <Button onClick={handleArrancar} icon={faPlay} disabled={cambiandoEstado}>
+          <Button onClick={handleArrancar} icon={Play} disabled={cambiandoEstado}>
             {cambiandoEstado ? "Arrancando liga..." : "Arrancar liga"}
           </Button>
         )}
         {liga.estadoLiga === EstadoLiga.EnCurso && (
           <Button
             onClick={handleFinalizar}
-            icon={faFlagCheckered}
+            icon={Flag}
             variant="outline"
             disabled={cambiandoEstado}
           >
@@ -157,7 +152,7 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
         {liga.estadoLiga === EstadoLiga.Finalizada && (
           <Button
             onClick={handleReanudar}
-            icon={faPlay}
+            icon={Play}
             variant="outline"
             disabled={cambiandoEstado}
           >
@@ -267,7 +262,7 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
           />
         </FormField>
 
-        <Button onClick={handleGuardar} icon={faSave} disabled={guardando}>
+        <Button onClick={handleGuardar} icon={Save} disabled={guardando}>
           {guardando ? "Guardando..." : "Guardar cambios"}
         </Button>
       </form>
@@ -279,7 +274,7 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
         </p>
         <Button
           onClick={handleEliminar}
-          icon={faTrash}
+          icon={Trash2}
           variant="outline-danger"
           disabled={eliminando}
         >

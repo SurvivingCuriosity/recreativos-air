@@ -1,7 +1,7 @@
-import { faSync } from "@fortawesome/free-solid-svg-icons";
+import { RefreshCw } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useRef } from "react";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { Outlet, useParams } from "react-router";
 import { EstadoEquipoEnLiga, EstadoLiga } from "recreativos-air-core/liga";
 import { Button } from "../../packages/components/Button/Button";
@@ -129,7 +129,7 @@ export function BotonRefrescar({ onClick }: { onClick?: () => void }) {
   }, [qc, onClick]);
 
   return (
-    <Button onClick={handleClick} variant="outline-neutral" icon={faSync}>
+    <Button onClick={handleClick} variant="outline-neutral" icon={RefreshCw}>
       Actualizar
     </Button>
   );

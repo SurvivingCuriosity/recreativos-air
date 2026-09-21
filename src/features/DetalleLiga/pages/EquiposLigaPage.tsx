@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { useNavigate, useParams } from "react-router";
 import { Button } from "../../../packages/components/Button/Button";
 import { useAuth } from "../../../shared/api/auth/useAuth";

@@ -1,4 +1,4 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Plus } from "lucide-react";
 import { useNavigate } from "react-router";
 import { Button } from "../../../packages/components/Button/Button";
 import { useTemporadas } from "../../../shared/api/temporadas/useTemporadas";
@@ -23,7 +23,7 @@ export const AdminTemporadasPage = () => {
         <div className="mt-2">
           <Button
             onClick={() => navigate("/admin-temporadas/nueva")}
-            icon={faPlus}
+            icon={Plus}
           >
             Nueva temporada
           </Button>

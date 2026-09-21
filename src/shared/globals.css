@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 /* Variante `dark:` basada en clase (oscuro por defecto, ver ThemeProvider) */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -27,6 +28,7 @@
   --success: #15803d;
   --info: #0369a1;
   --ring: #b45309;
+  --destructive-solid: #dc2626;
   --radius: 14px;
 
   /* Podio (§4) */
@@ -61,6 +63,7 @@
   --success: #4ade80;
   --info: #7dd3fc;
   --ring: #eb8a1f;
+  --destructive-solid: #dc2626;
 
   color-scheme: dark;
 }
@@ -101,6 +104,8 @@
 
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--foreground);
+  --color-destructive-solid: var(--destructive-solid);
+  --color-hard: var(--hard-shadow-color);
   --color-warning: var(--warning);
   --color-success: var(--success);
   --color-info: var(--info);

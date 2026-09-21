@@ -1,4 +1,4 @@
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { Button } from "../../../packages/components/Button/Button";
 import { useAuth } from "../../api/auth/useAuth";
 import { useInscribirEquipo } from "../../api/ligas/useLigas";

@@ -1,5 +1,5 @@
-import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CalendarDays } from "lucide-react";
+import { Icon } from "@/shared/ui/Icon";
 import type { TemporadaDTO } from "recreativos-air-core/temporada";
 
 const formatFecha = (fecha: string | null) =>
@@ -24,7 +24,7 @@ export const TarjetaTemporadaAdmin = ({
       )}
       <p className="font-display text-xl text-primary">{temporada.nombre}</p>
       <div className="flex items-center gap-2 text-sm text-neutral-500">
-        <FontAwesomeIcon icon={faCalendarDays} />
+        <Icon icon={CalendarDays} />
         <p>
           {formatFecha(temporada.fechaInicio)} - {formatFecha(temporada.fechaFin)}
         </p>

@@ -25,4 +25,9 @@ export default tseslint.config(
       ],
     },
   },
+  {
+    // Primitivos generados por shadcn: exportan variantes (cva) junto a componentes
+    files: ['src/components/ui/**/*.{ts,tsx}'],
+    rules: { 'react-refresh/only-export-components': 'off' },
+  },
 )

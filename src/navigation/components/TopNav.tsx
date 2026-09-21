@@ -1,4 +1,4 @@
-import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import type { LucideIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { BotonRefrescar } from "../../features/DetalleLiga/DetalleLigaLayout";
@@ -15,7 +15,7 @@ import { ThemeToggle } from "../../shared/theme/ThemeToggle";
 export interface TopNavItem {
   label: string;
   href: string;
-  icon?: IconDefinition;
+  icon?: LucideIcon;
   descripcion?: string;
   onlyAdmin?: boolean;
 }

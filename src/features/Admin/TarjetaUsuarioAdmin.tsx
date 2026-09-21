@@ -1,5 +1,5 @@
-import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Mail, Phone } from "lucide-react";
+import { Icon } from "@/shared/ui/Icon";
 import type { UserDTO } from "recreativos-air-core/user";
 
 export const TarjetaUsuarioAdmin = ({ user }: { user: UserDTO }) => {
@@ -32,11 +32,11 @@ export const TarjetaUsuarioAdmin = ({ user }: { user: UserDTO }) => {
         <p className="text-neutral-400 text-xs">({user.nombre})</p>
       </div>
       <div className="flex items-center gap-2 text-sm text-neutral-600">
-        <FontAwesomeIcon icon={faPhone} />
+        <Icon icon={Phone} />
         <p>{user.movil}</p>
       </div>
       <div className="flex items-center gap-2 text-sm text-neutral-600">
-        <FontAwesomeIcon icon={faEnvelope} />
+        <Icon icon={Mail} />
         <p>{user.email}</p>
       </div>
       {!user.verified && <p className="absolute bottom-1 right-1 text-xs text-red-500">Debe verificar correo</p>}

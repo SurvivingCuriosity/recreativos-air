@@ -1,7 +1,15 @@
-// components/ConfirmDialog.tsx
-import { type ReactNode, useEffect } from "react";
-import { useLayerZ } from "../hooks/useLayerZ";
-import { Portal } from "./Portal";
+import { Trash2 } from "lucide-react";
+import type { ReactNode } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 type ConfirmDialogProps = {
   isOpen: boolean;
@@ -14,6 +22,11 @@ type ConfirmDialogProps = {
   icon?: ReactNode;
 };
 
+/**
+ * Diálogo de confirmación destructivo (patrón design/screens/ConfirmDialog.html):
+ * icono en círculo destructive, título display, botones Cancelar (secondary) y
+ * confirmar en rojo sólido.
+ */
 export const ConfirmDialog = ({
   isOpen,
   onConfirm,
@@ -24,48 +37,27 @@ export const ConfirmDialog = ({
   cancelText = "Cancelar",
   icon,
 }: ConfirmDialogProps) => {
-  const z = useLayerZ();
-
-  // bloquear scroll cuando está abierto
-  useEffect(() => {
-    if (!isOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, [isOpen]);
-
   return (
-    <Portal>
-      <div
-        className={`fixed inset-0 flex items-center justify-center transition-opacity duration-300
-          ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-        style={{ zIndex: z }}
-        aria-hidden={!isOpen}
-      >
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" onClick={onCancel} />
-        {/* Dialog */}
-        <div
-          className={`relative bg-neutral-900 rounded-xl shadow-lg p-6 w-full max-w-sm mx-4 transform transition-transform duration-300
-            ${isOpen ? "scale-100" : "scale-95"}`}
-          onClick={(e) => e.stopPropagation()}
-          role="dialog" aria-modal="true"
-        >
-          {icon && <div className="mb-4 text-center">{icon}</div>}
-          <h2 className="text-lg font-semibold text-center mb-2 text-primary">{title}</h2>
-          <p className="text-sm text-neutral-400 text-center mb-4">{description}</p>
-          <div className="flex justify-end gap-2">
-            <button onClick={onCancel}
-              className="px-4 py-2 w-full text-sm rounded border border-neutral-300 hover:bg-neutral-100 text-neutral-400">
-              {cancelText}
-            </button>
-            <button onClick={onConfirm}
-              className="px-4 py-2 w-full text-sm rounded bg-red-600 text-white hover:bg-red-700">
-              {confirmText}
-            </button>
+    <AlertDialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
+      <AlertDialogContent className="max-w-sm">
+        <AlertDialogHeader className="items-center text-center sm:text-center">
+          <div className="flex size-14 items-center justify-center rounded-full border border-destructive/35 bg-destructive/13 text-destructive">
+            {icon ?? <Trash2 size={24} aria-hidden="true" />}
           </div>
-        </div>
-      </div>
-    </Portal>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription className="text-foreground-soft">
+            {description}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="flex-row gap-2 sm:justify-center">
+          <AlertDialogCancel variant="secondary" className="flex-1" onClick={onCancel}>
+            {cancelText}
+          </AlertDialogCancel>
+          <AlertDialogAction variant="destructive" className="flex-1" onClick={onConfirm}>
+            {confirmText}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };

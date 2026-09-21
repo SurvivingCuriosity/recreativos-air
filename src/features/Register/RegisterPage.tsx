@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { Link, useNavigate } from "react-router";
 import { RegisterSchema, type RegisterBody } from "recreativos-air-core/auth";
 import { Button } from "../../packages/components/Button/Button";

@@ -1,6 +1,6 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Plus } from "lucide-react";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { useNavigate } from "react-router";
 import { Button } from "../../packages/components/Button/Button";
 import { FormField } from "../../packages/components/Form/FormField";
@@ -247,7 +247,7 @@ export const CrearLigaPage = () => {
 
         <Button
           onClick={handleCrearLiga}
-          icon={faPlus}
+          icon={Plus}
           disabled={isPending}
         >
           {isPending ? "Creando..." : "Crear liga"}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { toast } from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { useVerifyEmail } from "../../shared/api/auth/hooks";
 import { FormField } from "../../packages/components/Form/FormField";
 import { FormLabel } from "../../packages/components/Form/FormLabel";

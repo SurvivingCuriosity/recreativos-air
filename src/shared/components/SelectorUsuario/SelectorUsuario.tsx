@@ -2,8 +2,8 @@ import type { SearchUserDTO } from "recreativos-air-core/user";
 import { CustomAsyncSelect } from "../../../packages/components/Select/AsyncSelect";
 import { fetchUsers } from "./fetchUsuarios";
 import { useAuth } from "../../../shared/api/auth/useAuth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { Icon } from "@/shared/ui/Icon";
+import { User } from "lucide-react";
 
 export interface OptionType {
   value: string | number;
@@ -49,7 +49,7 @@ export default function SelectorUsuario({
       renderOption={(e)=>{
         return (
           <div className="flex items-center gap-4 p-2 rounded-lg hover:bg-neutral-900">
-            <FontAwesomeIcon icon={faUser} className="text-neutral-300" />
+            <Icon icon={User} className="text-neutral-300" />
             <div className="flex flex-col">
               <p className="text-neutral-300">{e.label}</p>
               <p className="text-neutral-500">{e.nombre}</p>

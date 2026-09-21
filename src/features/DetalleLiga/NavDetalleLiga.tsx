@@ -1,10 +1,4 @@
-import {
-  faCalendarDays,
-  faGear,
-  faInfoCircle,
-  faListOl,
-  faPeopleGroup,
-} from "@fortawesome/free-solid-svg-icons";
+import { CalendarDays, Settings, Info, ListOrdered, Users } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { InlinePicker } from "../../packages/components/InlinePicker/InlinePicker";
@@ -64,11 +58,11 @@ export const NavDetalleLiga = () => {
       >
         <InlinePicker
           options={[
-            { id: 1, label: "", icon: faListOl },
-            { id: 2, label: "", icon: faCalendarDays },
-            { id: 3, label: "", icon: faPeopleGroup },
-            { id: 4, label: "", icon: faInfoCircle },
-            ...(user?.admin ? [{ id: 5, label: "", icon: faGear }] : []),
+            { id: 1, label: "", icon: ListOrdered },
+            { id: 2, label: "", icon: CalendarDays },
+            { id: 3, label: "", icon: Users },
+            { id: 4, label: "", icon: Info },
+            ...(user?.admin ? [{ id: 5, label: "", icon: Settings }] : []),
           ]}
           activeTabId={activeTab}
           onTabClick={handleTabClick}

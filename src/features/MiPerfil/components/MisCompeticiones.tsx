@@ -1,4 +1,4 @@
-import { faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { Trophy } from "lucide-react";
 import { useNavigate } from "react-router";
 import { Button } from "../../../packages/components/Button/Button";
 import { useAuth } from "../../../shared/api/auth/useAuth";
@@ -47,7 +47,7 @@ export const MisCompeticiones = () => {
         <Button
           onClick={() => navigate("/competiciones")}
           variant="outline"
-          icon={faTrophy}
+          icon={Trophy}
         >
           Ver competiciones
         </Button>

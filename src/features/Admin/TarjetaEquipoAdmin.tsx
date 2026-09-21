@@ -1,5 +1,5 @@
-import { faTrophy, faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Trophy, User } from "lucide-react";
+import { Icon } from "@/shared/ui/Icon";
 import type { EquipoDTO } from "recreativos-air-core/equipos";
 import type { LigaDTO } from "recreativos-air-core/liga";
 
@@ -17,7 +17,7 @@ export const TarjetaEquipoAdmin = ({ equipo, ligas }: { equipo: EquipoDTO, ligas
         <p className="underline underline-offset-2 text-neutral-600">Jugadores</p>
         {equipo.jugadores.map((j,i) => (
           <div key={j.idUsuario!+i} className="flex items-center gap-2 text-sm text-neutral-400">
-            <FontAwesomeIcon icon={faUser} />
+            <Icon icon={User} />
             <p className="truncate">{j.nombre}</p>
             {j.idUsuario === null && <p className="text-neutral-600 text-xs truncate">(No registrado)</p>}
           </div>
@@ -27,7 +27,7 @@ export const TarjetaEquipoAdmin = ({ equipo, ligas }: { equipo: EquipoDTO, ligas
         <p className="underline underline-offset-2 text-neutral-600">Liga</p>
         {ligas && ligas.map((l) => (
           <div key={l.id} className="flex items-center gap-2 text-sm text-neutral-400">
-            <FontAwesomeIcon icon={faTrophy} />
+            <Icon icon={Trophy} />
             <p>{l.nombre}</p>
           </div>
         ))}

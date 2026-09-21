@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import { type EnfrentamientoDTO } from "recreativos-air-core/enfrentamiento";
 import { EnfrentamientosAPI } from "./api";
 

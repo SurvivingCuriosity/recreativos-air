@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import type { UpdateUserBody } from "recreativos-air-core/user";
 import type { ErrorResponse } from "../http";
 import { UserApi } from "./api";

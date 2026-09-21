@@ -1,5 +1,5 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "@/shared/lib/toast";
 import type { TemporadaDTO } from "recreativos-air-core/temporada";
 import { Button } from "../../../packages/components/Button/Button";
 import { FormField } from "../../../packages/components/Form/FormField";

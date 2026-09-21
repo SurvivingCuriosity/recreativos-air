@@ -1,16 +1,21 @@
-"use client";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { useCallback, useMemo, useState, type MouseEvent } from "react";
 import {
-  useState,
-  useMemo,
-  useCallback,
-  type MouseEvent,
-} from "react";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import type { Column, DataTableProps, SortState } from "./types";
 
 export function Tabla<T extends object>({
   data,
   columns,
   initialSortState,
+  rowClassName,
 }: DataTableProps<T>) {
   const [sortState, setSortState] = useState<SortState>(
     initialSortState || { columnKey: null, direction: "asc" }
@@ -62,98 +67,86 @@ export function Tabla<T extends object>({
     return cloned;
   }, [data, sortState, columns]);
 
+  const renderCell = (col: Column<T>, row: T, rowIndex: number) => {
+    if (col.cell) {
+      return typeof col.cell === "function"
+        ? col.cell({ row, rowIndex, column: col })
+        : col.cell;
+    }
+    const val = col.accessor ? col.accessor(row) : null;
+    return String(val);
+  };
+
   return (
-    <table
-      className="
-        w-full
-        table-auto
-        border-separate
-        border-spacing-0
-        rounded-lg
-        overflow-hidden
-        shadow-sm
-        text-left
-        text-neutral-400
-        border-neutral-800
-        border
-      "
-    >
-      <thead>
-        <tr>
-          {columns.map((col) => {
-            const isSortable = Boolean(col.sortable);
-            const currentDirection =
-              sortState.columnKey === col.key ? sortState.direction : null;
-
-            const renderHeader =
-              typeof col.header === "function"
-                ? col.header(sortState)
-                : col.header;
-
-            return (
-              <th
-                key={col.key}
-                className="text-center p-1 font-semibold text-sm border-b border-neutral-800 border-r"
-              >
-                {isSortable ? (
-                  <button
-                    onClick={handleSort(col)}
-                    className="mx-auto text-center flex items-center space-x-1 group"
-                  >
-                    <span>{renderHeader}</span>
-                    {sortState.columnKey === col.key && (
-                      <span className="text-xs leading-none">
-                        {currentDirection === "asc" ? "▲" : "▼"}
-                      </span>
-                    )}
-                  </button>
-                ) : (
-                  <span>{renderHeader}</span>
-                )}
-              </th>
-            );
-          })}
-        </tr>
-      </thead>
-      <tbody>
-        {sortedData.map((row, rowIndex) => (
-          <tr key={rowIndex} className="transition-colors">
+    <div className="overflow-hidden rounded-card border border-border bg-card">
+      <Table className="text-sm">
+        <TableHeader className="bg-card-2">
+          <TableRow className="hover:bg-transparent">
             {columns.map((col) => {
-              // Render personalizado si hay 'cell', si no, usamos 'accessor'.
-              if (col.cell) {
-                if (typeof col.cell === "function") {
-                  return (
-                    <td
-                      key={col.key}
-                      className={`${col.header === "Equipo" ? 'max-w-27 truncate text-left' : ''} p-1 border-r text-center text-sm border-b border-neutral-800`}
-                    >
-                      {col.cell({ row, rowIndex, column: col })}
-                    </td>
-                  );
-                }
-                return (
-                  <td
-                    key={col.key}
-                    className="p-1 border-r text-sm text-center border-b border-neutral-800"
-                  >
-                    {col.cell}
-                  </td>
-                );
-              }
+              const isSortable = Boolean(col.sortable);
+              const isActive = sortState.columnKey === col.key;
+              const renderHeader =
+                typeof col.header === "function" ? col.header(sortState) : col.header;
 
-              const val = col.accessor ? col.accessor(row) : null;
               return (
-                <td
+                <TableHead
                   key={col.key}
-                  className="p-1 text-sm border-b border-r text-center border-neutral-800"
+                  aria-sort={
+                    isActive ? (sortState.direction === "asc" ? "ascending" : "descending") : undefined
+                  }
+                  className={cn(
+                    "h-10 px-2 text-center text-xs font-semibold tracking-wide text-muted-foreground uppercase",
+                    col.className
+                  )}
                 >
-                  {String(val)}
-                </td>
+                  {isSortable ? (
+                    <button
+                      type="button"
+                      onClick={handleSort(col)}
+                      className={cn(
+                        "mx-auto flex min-h-10 items-center gap-1 rounded-sm px-1 hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring",
+                        isActive && "text-primary-text",
+                        col.align === "left" && "mx-0"
+                      )}
+                    >
+                      <span>{renderHeader}</span>
+                      {isActive &&
+                        (sortState.direction === "asc" ? (
+                          <ChevronUp size={12} aria-hidden="true" />
+                        ) : (
+                          <ChevronDown size={12} aria-hidden="true" />
+                        ))}
+                    </button>
+                  ) : (
+                    <span>{renderHeader}</span>
+                  )}
+                </TableHead>
               );
             })}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {sortedData.map((row, rowIndex) => (
+            <TableRow
+              key={rowIndex}
+              className={cn("border-border", rowClassName?.(row, rowIndex))}
+            >
+              {columns.map((col) => (
+                <TableCell
+                  key={col.key}
+                  className={cn(
+                    "h-11 px-2 text-center",
+                    col.align === "left" && "text-left",
+                    col.className
+                  )}
+                >
+                  {renderCell(col, row, rowIndex)}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

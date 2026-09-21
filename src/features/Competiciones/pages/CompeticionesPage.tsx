@@ -1,4 +1,4 @@
-import { faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { Trophy } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { Button } from "../../../packages/components/Button/Button";
@@ -67,7 +67,7 @@ export const CompeticionesPage = () => {
           </Message>
         )}
         {user?.admin && (
-          <Button onClick={() => navigate("/crear-liga")} icon={faTrophy}>
+          <Button onClick={() => navigate("/crear-liga")} icon={Trophy}>
             Nueva liga
           </Button>
         )}

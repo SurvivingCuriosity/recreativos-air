@@ -1,6 +1,6 @@
-import { faPen, faPlus, faTrophy, faUsers } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { toast } from "react-hot-toast";
+import { Pencil, Plus, Trophy, Users } from "lucide-react";
+import { Icon } from "@/shared/ui/Icon";
+import { toast } from "@/shared/lib/toast";
 import { useNavigate } from "react-router";
 import { Button } from "../../packages/components/Button/Button";
 import { Titulo } from "../../packages/components/Titulo/Titulo";
@@ -44,7 +44,7 @@ export const MiPerfilPage = () => {
               onClick={() => navigate("/mi-perfil/editar")}
               className="rounded-lg text-primary bg-neutral-950 border border-primary px-3 py-1"
             >
-              <FontAwesomeIcon icon={faPen} className="mr-2" />
+              <Icon icon={Pencil} className="mr-2" />
               Editar
             </button>
             <button
@@ -65,10 +65,10 @@ export const MiPerfilPage = () => {
           {/* Equipos */}
           <div className="md:grow md:w-1/2 p-3 rounded-xl md:p-8 md:bg-neutral-900/60 min-w-0">
             <div className="flex items-center gap-2 pb-2">
-              <FontAwesomeIcon
-                icon={faUsers}
+              <Icon
+                icon={Users}
                 className="text-neutral-300"
-                size="lg"
+                size={20}
               />
               <Titulo
                 variant="h4"
@@ -80,7 +80,7 @@ export const MiPerfilPage = () => {
                 <Button
                   onClick={() => navigate("/crear-equipo")}
                   variant="outline-neutral"
-                  icon={faPlus}
+                  icon={Plus}
                 />
               </div>
             </div>
@@ -91,10 +91,10 @@ export const MiPerfilPage = () => {
           {/* Competiciones */}
           <div className="md:grow md:w-1/2 p-3 rounded-xl md:p-8 md:bg-neutral-900/60 min-w-0">
             <div className="flex items-center gap-2 pb-2">
-              <FontAwesomeIcon
-                icon={faTrophy}
+              <Icon
+                icon={Trophy}
                 className="text-neutral-300"
-                size="lg"
+                size={20}
               />
               <Titulo
                 variant="h4"
@@ -107,7 +107,7 @@ export const MiPerfilPage = () => {
                   <Button
                     onClick={() => navigate("/crear-liga")}
                     variant="outline-neutral"
-                    icon={faPlus}
+                    icon={Plus}
                   />
                 </div>
               )}

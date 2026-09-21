@@ -1,4 +1,4 @@
-import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import type { LucideIcon } from "lucide-react";
 import { useState } from "react";
 import { cn } from "../../utils/cn";
 import { InlinePickerItem } from "./InlinePickerItem";
@@ -7,7 +7,7 @@ import { InlinePickerItem } from "./InlinePickerItem";
 export type InlinePickerSize = 'sm' | 'md' | 'lg';
 
 export interface InlinePickerProps {
-  options: Array<{ id: number; label: string; icon?: IconDefinition }>;
+  options: Array<{ id: number; label: string; icon?: LucideIcon }>;
   activeTabId?: number;
   onTabClick: (id: number) => void;
   size: InlinePickerSize;
@@ -43,13 +43,13 @@ export const InlinePicker = (props: InlinePickerProps) => {
     <nav className="block w-full">
       <div
         className={cn(
-          `mx-auto rounded-xl bg-neutral-900 p-1`,
+          `mx-auto rounded-input border border-border bg-card p-1`,
           containerClassName
         )}
       >
         <ul className="relative flex flex-row justify-between">
           <li
-            className="absolute h-full cursor-pointer rounded-lg bg-neutral-500/20 px-2 text-center transition-transform duration-300 ease-in-out"
+            className="absolute h-full cursor-pointer rounded-[10px] bg-primary/12 px-2 text-center transition-transform duration-300 ease-in-out"
             style={{
               width: `${tabWidth}%`,
               transform: `translateX(${activeIndex * 100}%)`,
