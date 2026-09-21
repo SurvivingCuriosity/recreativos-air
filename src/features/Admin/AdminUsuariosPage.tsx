@@ -1,30 +1,23 @@
 import { useMemo, useState } from "react";
-import { TextInput } from "../../packages/components/TextInput/TextInput";
-import { useGetAllUsers } from "../../shared/api/user/hooks";
-import { TarjetaUsuarioAdmin } from "./TarjetaUsuarioAdmin";
 import { debounce } from "../../packages/utils/debounce";
+import { useGetAllUsers } from "../../shared/api/user/hooks";
+import { Buscador } from "../../shared/components/Buscador/Buscador";
+import { EstadoVacio, SkeletonLista } from "../../shared/components/Estados/Estados";
+import { PageTitle } from "../../shared/components/Titulos/Titulos";
+import { TarjetaUsuarioAdmin } from "./TarjetaUsuarioAdmin";
+
+const normalize = (str: string) =>
+  str
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase();
 
 export const AdminUsuariosPage = () => {
   const { data: usuarios, isLoading } = useGetAllUsers();
   const [search, setSearch] = useState("");
 
-  // 🧠 Debounce para no recalcular el filtro a cada tecla
-  const handleSearch = useMemo(
-    () =>
-      debounce((val: string) => {
-        setSearch(val);
-      }, 300),
-    []
-  );
+  const handleSearch = useMemo(() => debounce((val: string) => setSearch(val), 300), []);
 
-  // 🔤 Función para normalizar (quita tildes y mayúsculas)
-  const normalize = (str: string) =>
-    str
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase();
-
-  // 🔍 Filtrado memoizado
   const usuariosFiltrados = useMemo(() => {
     if (!usuarios) return [];
     if (!search.trim()) return usuarios;
@@ -38,36 +31,26 @@ export const AdminUsuariosPage = () => {
     );
   }, [usuarios, search]);
 
-  if (isLoading)
-    return (
-      <p className="text-center text-neutral-400 p-6 animate-pulse">
-        Cargando usuarios...
-      </p>
-    );
-
   return (
-    <div className="p-3">
-      <div className="sticky top-0 z-10 bg-neutral-950 pb-2">
-        <h1 className="font-display text-2xl text-primary">Lista de usuarios</h1>
-        <div className="mt-2">
-          <TextInput
-            onChangeText={handleSearch}
-            placeholder="Buscar usuario..."
-          />
-        </div>
-      </div>
+    <main className="mx-auto flex w-full max-w-screen-sm flex-col gap-3 px-4 pt-[18px] pb-5">
+      <PageTitle color="primary" className="text-2xl">
+        Lista de usuarios
+      </PageTitle>
+      <Buscador placeholder="Buscar usuario..." onChangeText={handleSearch} />
 
-      {usuariosFiltrados.length === 0 ? (
-        <p className="text-center text-neutral-500 mt-10">
-          No se encontraron usuarios
-        </p>
+      {isLoading ? (
+        <SkeletonLista count={3} height="h-24" label="Cargando usuarios..." />
+      ) : usuariosFiltrados.length === 0 ? (
+        <EstadoVacio className="mt-6 border-0 bg-transparent">No se encontraron usuarios</EstadoVacio>
       ) : (
-        <ul className="space-y-3 mt-3">
+        <ul className="flex flex-col gap-3">
           {usuariosFiltrados.map((u) => (
-            <TarjetaUsuarioAdmin user={u} key={u.id} />
+            <li key={u.id}>
+              <TarjetaUsuarioAdmin user={u} />
+            </li>
           ))}
         </ul>
       )}
-    </div>
+    </main>
   );
 };

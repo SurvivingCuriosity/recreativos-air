@@ -2,47 +2,40 @@ import { Plus } from "lucide-react";
 import { useNavigate } from "react-router";
 import { Button } from "../../../packages/components/Button/Button";
 import { useTemporadas } from "../../../shared/api/temporadas/useTemporadas";
+import { EstadoVacio, SkeletonLista } from "../../../shared/components/Estados/Estados";
+import { PageTitle } from "../../../shared/components/Titulos/Titulos";
 import { TarjetaTemporadaAdmin } from "./TarjetaTemporadaAdmin";
 
 export const AdminTemporadasPage = () => {
   const navigate = useNavigate();
   const { data: temporadas, isLoading } = useTemporadas();
 
-  if (isLoading)
-    return (
-      <p className="text-center text-neutral-400 p-6 animate-pulse">
-        Cargando temporadas...
-      </p>
-    );
-
   return (
-    <div className="p-3 max-w-screen-sm mx-auto w-full">
+    <main className="mx-auto flex w-full max-w-screen-sm flex-col gap-3 px-4 pt-[18px] pb-5">
       <title>Temporadas | Recreativos Air</title>
-      <div className="sticky top-0 z-10 bg-neutral-950 pb-2">
-        <h1 className="font-display text-2xl text-primary">Temporadas</h1>
-        <div className="mt-2">
-          <Button
-            onClick={() => navigate("/admin-temporadas/nueva")}
-            icon={Plus}
-          >
-            Nueva temporada
-          </Button>
-        </div>
-      </div>
+      <PageTitle color="primary" className="text-2xl">
+        Temporadas
+      </PageTitle>
+      <Button onClick={() => navigate("/admin-temporadas/nueva")} icon={Plus}>
+        Nueva temporada
+      </Button>
 
-      {!temporadas?.length ? (
-        <p className="text-center text-neutral-500 mt-10">No hay temporadas</p>
+      {isLoading ? (
+        <SkeletonLista count={2} height="h-20" label="Cargando temporadas..." />
+      ) : !temporadas?.length ? (
+        <EstadoVacio className="mt-6 border-0 bg-transparent">No hay temporadas</EstadoVacio>
       ) : (
-        <ul className="space-y-3 mt-3">
+        <ul className="flex flex-col gap-3">
           {temporadas.map((t) => (
-            <TarjetaTemporadaAdmin
-              key={t.id}
-              temporada={t}
-              onClick={() => navigate(`/admin-temporadas/${t.id}`)}
-            />
+            <li key={t.id}>
+              <TarjetaTemporadaAdmin
+                temporada={t}
+                onClick={() => navigate(`/admin-temporadas/${t.id}`)}
+              />
+            </li>
           ))}
         </ul>
       )}
-    </div>
+    </main>
   );
 };

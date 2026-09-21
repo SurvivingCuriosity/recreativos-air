@@ -1,10 +1,11 @@
 import { CalendarDays } from "lucide-react";
-import { Icon } from "@/shared/ui/Icon";
 import type { TemporadaDTO } from "recreativos-air-core/temporada";
+import { ChipEstado } from "../../../shared/components/ChipEstado/ChipEstado";
 
 const formatFecha = (fecha: string | null) =>
   fecha ? new Date(fecha).toLocaleDateString("es-ES") : "—";
 
+/** TarjetaTemporadaAdmin (design/screens/AdminTemporadas.html). */
 export const TarjetaTemporadaAdmin = ({
   temporada,
   onClick,
@@ -13,22 +14,27 @@ export const TarjetaTemporadaAdmin = ({
   onClick: () => void;
 }) => {
   return (
-    <div
+    <button
+      type="button"
       onClick={onClick}
-      className="bg-neutral-900 p-2 px-4 rounded-lg relative cursor-pointer"
+      className="flex w-full flex-col gap-1.5 rounded-card border border-border bg-card px-3.5 py-3 text-left text-foreground transition-colors hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
     >
-      {temporada.actual && (
-        <p className="absolute -top-1 -right-1 px-1 text-green-400 bg-green-500/20 text-xs rounded-md">
-          Actual
-        </p>
-      )}
-      <p className="font-display text-xl text-primary">{temporada.nombre}</p>
-      <div className="flex items-center gap-2 text-sm text-neutral-500">
-        <Icon icon={CalendarDays} />
-        <p>
+      <span className="flex w-full items-center gap-2">
+        <span className="truncate font-display text-[19px] font-bold text-primary-text">
+          {temporada.nombre}
+        </span>
+        {temporada.actual && (
+          <ChipEstado color="success" className="ml-auto">
+            Actual
+          </ChipEstado>
+        )}
+      </span>
+      <span className="inline-flex items-center gap-2 text-sm text-foreground-soft">
+        <CalendarDays size={14} className="shrink-0" aria-hidden="true" />
+        <span>
           {formatFecha(temporada.fechaInicio)} - {formatFecha(temporada.fechaFin)}
-        </p>
-      </div>
-    </div>
+        </span>
+      </span>
+    </button>
   );
 };

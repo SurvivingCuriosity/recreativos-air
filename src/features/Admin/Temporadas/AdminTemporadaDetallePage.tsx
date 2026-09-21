@@ -1,7 +1,6 @@
 import { Star, Trash2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router";
 import { Button } from "../../../packages/components/Button/Button";
-import { Titulo } from "../../../packages/components/Titulo/Titulo";
 import { useLigas } from "../../../shared/api/ligas/useLigas";
 import {
   useActualizarTemporada,
@@ -9,6 +8,9 @@ import {
   useMarcarTemporadaActual,
   useTemporada,
 } from "../../../shared/api/temporadas/useTemporadas";
+import { ChipEstado } from "../../../shared/components/ChipEstado/ChipEstado";
+import { EstadoVacio, SkeletonLista } from "../../../shared/components/Estados/Estados";
+import { PageTitle } from "../../../shared/components/Titulos/Titulos";
 import { useConfirmDialog } from "../../../shared/context/UIProvider/hooks/useUI";
 import { TemporadaForm } from "./TemporadaForm";
 
@@ -20,8 +22,7 @@ export const AdminTemporadaDetallePage = () => {
   const { data: temporada, isLoading } = useTemporada(id);
   const { data: ligas } = useLigas();
   const { mutate: actualizar, isPending } = useActualizarTemporada();
-  const { mutate: marcarActual, isPending: marcando } =
-    useMarcarTemporadaActual();
+  const { mutate: marcarActual, isPending: marcando } = useMarcarTemporadaActual();
   const { mutate: eliminar, isPending: eliminando } = useEliminarTemporada();
 
   const handleEliminar = async () => {
@@ -36,28 +37,26 @@ export const AdminTemporadaDetallePage = () => {
 
   if (isLoading || !ligas)
     return (
-      <p className="text-center text-neutral-400 p-6 animate-pulse">
-        Cargando temporada...
-      </p>
+      <main className="mx-auto w-full max-w-screen-sm px-4 pt-[18px]">
+        <SkeletonLista count={4} height="h-12" label="Cargando temporada..." />
+      </main>
     );
 
   if (!temporada)
     return (
-      <p className="text-center text-neutral-500 mt-10">
-        Temporada no encontrada
-      </p>
+      <main className="mx-auto w-full max-w-screen-sm px-4 pt-10">
+        <EstadoVacio className="border-0 bg-transparent">Temporada no encontrada</EstadoVacio>
+      </main>
     );
 
   return (
-    <div className="max-w-screen-sm mx-auto p-4 w-full">
+    <main className="mx-auto flex w-full max-w-screen-sm flex-col gap-4 px-4 pt-[18px] pb-5">
       <title>{temporada.nombre} | Recreativos Air</title>
-      <div className="flex items-center gap-3 mb-4">
-        <Titulo variant="h1">{temporada.nombre}</Titulo>
-        {temporada.actual && (
-          <p className="px-1 text-green-400 bg-green-500/20 text-xs rounded-md">
-            Actual
-          </p>
-        )}
+      <div className="flex items-center gap-3">
+        <PageTitle color="primary" className="truncate">
+          {temporada.nombre}
+        </PageTitle>
+        {temporada.actual && <ChipEstado color="success">Actual</ChipEstado>}
       </div>
 
       <TemporadaForm
@@ -68,12 +67,13 @@ export const AdminTemporadaDetallePage = () => {
         onSubmit={(data) => actualizar({ id, data })}
       />
 
-      <div className="flex gap-2 mt-6">
+      <div className="mt-2 flex gap-2">
         <Button
           variant="outline"
           icon={Star}
           disabled={temporada.actual || marcando}
           onClick={() => marcarActual(id)}
+          className="flex-1"
         >
           {temporada.actual ? "Es la actual" : "Marcar como actual"}
         </Button>
@@ -82,10 +82,11 @@ export const AdminTemporadaDetallePage = () => {
           icon={Trash2}
           disabled={eliminando}
           onClick={handleEliminar}
+          className="flex-1"
         >
           Eliminar
         </Button>
       </div>
-    </div>
+    </main>
   );
 };

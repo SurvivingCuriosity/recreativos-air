@@ -1,18 +1,17 @@
 import { useNavigate } from "react-router";
-import { Titulo } from "../../../packages/components/Titulo/Titulo";
 import { useCrearTemporada } from "../../../shared/api/temporadas/useTemporadas";
+import { PageTitle } from "../../../shared/components/Titulos/Titulos";
 import { TemporadaForm } from "./TemporadaForm";
 
+/** Nueva temporada = formulario de Detalle temporada con botón «Crear temporada» (DESIGN.md §8). */
 export const AdminTemporadaNuevaPage = () => {
   const navigate = useNavigate();
   const { mutate: crearTemporada, isPending } = useCrearTemporada();
 
   return (
-    <div className="max-w-screen-sm mx-auto p-4 w-full">
+    <main className="mx-auto flex w-full max-w-screen-sm flex-col gap-4 px-4 pt-[18px] pb-5">
       <title>Nueva temporada | Recreativos Air</title>
-      <Titulo variant="h1" className="mb-4">
-        Nueva temporada
-      </Titulo>
+      <PageTitle color="primary">Nueva temporada</PageTitle>
       <TemporadaForm
         isPending={isPending}
         submitLabel="Crear temporada"
@@ -23,6 +22,6 @@ export const AdminTemporadaNuevaPage = () => {
           )
         }
       />
-    </div>
+    </main>
   );
 };

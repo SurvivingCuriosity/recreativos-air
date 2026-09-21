@@ -68,30 +68,32 @@ export const TemporadaForm = ({
       className="flex flex-col gap-4"
     >
       <FormField>
-        <FormLabel>Nombre</FormLabel>
+        <FormLabel htmlFor="temporada-nombre">Nombre</FormLabel>
         <TextInput
+          id="temporada-nombre"
           placeholder="Nombre de la temporada"
           value={nombre}
           onChangeText={setNombre}
         />
       </FormField>
 
-      <div className="flex gap-2">
+      <div className="grid grid-cols-2 gap-2">
         <FormField>
-          <FormLabel>Fecha inicio</FormLabel>
+          <FormLabel htmlFor="temporada-inicio">Fecha inicio</FormLabel>
           <TextInput
+            id="temporada-inicio"
             type="date"
             value={fechaInicio}
             onChangeText={setFechaInicio}
           />
         </FormField>
         <FormField>
-          <FormLabel>Fecha fin</FormLabel>
-          <TextInput type="date" value={fechaFin} onChangeText={setFechaFin} />
+          <FormLabel htmlFor="temporada-fin">Fecha fin</FormLabel>
+          <TextInput id="temporada-fin" type="date" value={fechaFin} onChangeText={setFechaFin} />
         </FormField>
       </div>
 
-      <div className="bg-neutral-900 border border-neutral-700 p-3 rounded-md">
+      <div className="flex flex-col gap-2.5 rounded-button border border-border bg-card-2 p-3">
         <FormLabel>Ligas de la temporada</FormLabel>
         <CustomMultiSelect
           value={opcionesLigas.filter((o) =>
@@ -105,7 +107,7 @@ export const TemporadaForm = ({
         />
       </div>
 
-      <Button onClick={handleSubmit} disabled={isPending}>
+      <Button type="submit" disabled={isPending}>
         {isPending ? "Guardando..." : submitLabel}
       </Button>
     </form>

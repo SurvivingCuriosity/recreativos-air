@@ -1,4 +1,4 @@
-import { Flag, Play, Plus, Save, Trash2 } from "lucide-react";
+import { Flag, Play, Save, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/shared/lib/toast";
 import { Navigate, useNavigate, useParams } from "react-router";
@@ -21,6 +21,7 @@ import {
   useLigaById,
 } from "../../../shared/api/ligas/useLigas";
 import { useTemporadas } from "../../../shared/api/temporadas/useTemporadas";
+import { EditorUbicaciones } from "../../../shared/components/EditorUbicaciones/EditorUbicaciones";
 import { SelectorTemporada } from "../../../shared/components/SelectorTemporada/SelectorTemporada";
 import { SelectorTipoFutbolin } from "../../../shared/components/SelectorTipoFutbolin/SelectorTipoFutbolin";
 import { useConfirmDialog } from "../../../shared/context/UIProvider/hooks/useUI";
@@ -72,17 +73,7 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
   const [normas, setNormas] = useState(liga.normas);
   const [premio, setPremio] = useState(liga.premio);
   const [ubicaciones, setUbicaciones] = useState<string[]>(liga.ubicaciones);
-  const [ubicacionActual, setUbicacionActual] = useState("");
   const [temporada, setTemporada] = useState(liga.temporada ?? SIN_TEMPORADA);
-
-  const handleAgregarUbicacion = () => {
-    const trimmed = ubicacionActual.trim();
-    if (!trimmed) return toast.error("Introduce una ubicación válida");
-    if (ubicaciones.includes(trimmed))
-      return toast.error("Esa ubicación ya está añadida");
-    setUbicaciones([...ubicaciones, trimmed]);
-    setUbicacionActual("");
-  };
 
   const handleGuardar = () => {
     if (!nombre.trim()) return toast.error("Introduce un nombre válido");
@@ -220,54 +211,7 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
           />
         </FormField>
 
-        <div className="flex flex-col gap-2.5 rounded-button border border-border bg-card-2 p-3">
-          <FormLabel htmlFor="liga-ubicacion">Ubicaciones</FormLabel>
-
-          <div className="flex items-center gap-2">
-            <TextInput
-              id="liga-ubicacion"
-              placeholder="Añadir ubicación..."
-              value={ubicacionActual}
-              onChangeText={setUbicacionActual}
-              className="min-w-0 flex-1"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  handleAgregarUbicacion();
-                }
-              }}
-            />
-            <Button
-              onClick={handleAgregarUbicacion}
-              variant="outline"
-              icon={Plus}
-              aria-label="Añadir ubicación"
-              className="rounded-input"
-            />
-          </div>
-
-          {ubicaciones.length > 0 && (
-            <ul className="flex flex-col gap-2">
-              {ubicaciones.map((u, i) => (
-                <li
-                  key={i}
-                  className="flex min-h-11 items-center justify-between gap-2 rounded-[10px] bg-muted py-0 pr-1 pl-3 text-sm text-foreground-soft"
-                >
-                  <span className="truncate">{u}</span>
-                  <button
-                    type="button"
-                    className="min-h-11 shrink-0 px-2.5 text-[13px] font-semibold text-destructive hover:underline focus-visible:outline-2 focus-visible:outline-ring"
-                    onClick={() =>
-                      setUbicaciones(ubicaciones.filter((_, j) => j !== i))
-                    }
-                  >
-                    Eliminar
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <EditorUbicaciones ubicaciones={ubicaciones} onChange={setUbicaciones} id="liga-ubicacion" />
 
         <FormField>
           <FormLabel>Normas</FormLabel>
