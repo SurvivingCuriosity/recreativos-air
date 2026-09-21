@@ -32,7 +32,7 @@ export const CtaLigasDisponibles = ({
     <div className="animate-fade-in-top mt-3 p-4 rounded-3xl border border-primary/30 bg-neutral-900/80 backdrop-blur-xs flex flex-col gap-2">
       <div className="flex items-center gap-2">
         <FontAwesomeIcon icon={faTrophy} className="text-primary" />
-        <p className="font-cool text-lg text-primary">{titulo}</p>
+        <p className="font-display text-lg text-primary">{titulo}</p>
       </div>
       <p className="text-sm text-neutral-400">{descripcion}</p>
       <Button

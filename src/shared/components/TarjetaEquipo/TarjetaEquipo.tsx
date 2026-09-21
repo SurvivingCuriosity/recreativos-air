@@ -65,7 +65,7 @@ export const TarjetaEquipo = ({ equipo, onClick }: Props) => {
       {/* HEADER */}
       <div className="flex justify-between items-center">
         <p
-          className={`font-cool text-lg font-bold ${
+          className={`font-display text-lg font-bold ${
             esperandoCompañero
               ? "text-amber-400"
               : completado

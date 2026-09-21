@@ -138,7 +138,7 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
   return (
     <div className="animate-fade-in-top space-y-6 pb-6">
       <section className="space-y-3">
-        <p className="font-cool text-lg text-primary">Estado</p>
+        <p className="font-display text-lg text-primary">Estado</p>
         {sinEmpezar && (
           <Button onClick={handleArrancar} icon={faPlay} disabled={cambiandoEstado}>
             {cambiandoEstado ? "Arrancando liga..." : "Arrancar liga"}
@@ -173,7 +173,7 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
         }}
         className="space-y-4"
       >
-        <p className="font-cool text-lg text-primary">Datos de la liga</p>
+        <p className="font-display text-lg text-primary">Datos de la liga</p>
 
         <FormField>
           <FormLabel>Nombre</FormLabel>
@@ -273,7 +273,7 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
       </form>
 
       <section className="border border-red-500/30 rounded-md p-3 space-y-2">
-        <p className="font-cool text-lg text-red-400">Zona de peligro</p>
+        <p className="font-display text-lg text-red-400">Zona de peligro</p>
         <p className="text-xs text-neutral-500">
           Se eliminará la liga y todos sus enfrentamientos.
         </p>

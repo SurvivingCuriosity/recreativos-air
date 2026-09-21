@@ -19,7 +19,7 @@ export const AdminTemporadasPage = () => {
     <div className="p-3 max-w-screen-sm mx-auto w-full">
       <title>Temporadas | Recreativos Air</title>
       <div className="sticky top-0 z-10 bg-neutral-950 pb-2">
-        <h1 className="font-cool text-2xl text-primary">Temporadas</h1>
+        <h1 className="font-display text-2xl text-primary">Temporadas</h1>
         <div className="mt-2">
           <Button
             onClick={() => navigate("/admin-temporadas/nueva")}

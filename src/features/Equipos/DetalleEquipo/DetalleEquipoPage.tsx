@@ -22,7 +22,7 @@ export const DetalleEquipoPage = () => {
 
   return (
     <div className="max-w-screen-sm mx-auto p-4 h-full z-4">
-      <h1 className="font-cool text-3xl font-bold text-primary mb-4">
+      <h1 className="font-display text-3xl font-bold text-primary mb-4">
         {equipo.nombre}
       </h1>
       <ul className="border-neutral-700 flex flex-col items-start justify-center gap-3">

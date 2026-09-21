@@ -28,7 +28,7 @@ export const TarjetaUsuarioAdmin = ({ user }: { user: UserDTO }) => {
         </svg>
       </button>
       <div className="flex items-center gap-2">
-        <p className="font-cool text-xl text-primary">{user.username}</p>
+        <p className="font-display text-xl text-primary">{user.username}</p>
         <p className="text-neutral-400 text-xs">({user.nombre})</p>
       </div>
       <div className="flex items-center gap-2 text-sm text-neutral-600">

@@ -28,10 +28,10 @@ export const DetalleJornadaPage = () => {
 
   return (
     <div className="p-4 flex flex-col gap-3 w-full max-w-screen-sm mx-auto">
-      <div className="relative flex flex-col gap-8 items-center text-xl font-black font-cool text-primary w-full overflow-x-hidden">
-        <p className="uppercase font-cool mr-auto truncate w-full text-left">{enfrentamiento.equipoA.nombre}</p> 
-        <span className="text-neutral-700 font-cool text-4xl absolute top-1/2 -translate-y-1/2">vs</span> 
-        <p className="uppercase font-cool ml-auto truncate w-full text-right">{enfrentamiento.equipoB.nombre}</p>
+      <div className="relative flex flex-col gap-8 items-center text-xl font-black font-display text-primary w-full overflow-x-hidden">
+        <p className="uppercase font-display mr-auto truncate w-full text-left">{enfrentamiento.equipoA.nombre}</p> 
+        <span className="text-neutral-700 font-display text-4xl absolute top-1/2 -translate-y-1/2">vs</span> 
+        <p className="uppercase font-display ml-auto truncate w-full text-right">{enfrentamiento.equipoB.nombre}</p>
       </div>
 
       {/* Datos básicos */}

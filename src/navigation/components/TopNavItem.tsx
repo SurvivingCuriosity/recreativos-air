@@ -30,7 +30,7 @@ export const TopNavItem = ({
         />
       )}
       <div>
-        <p className="font-cool text-base">{item?.label}</p>
+        <p className="font-display text-base">{item?.label}</p>
         {item?.descripcion && <p>{item?.descripcion}</p>}
       </div>
     </div>

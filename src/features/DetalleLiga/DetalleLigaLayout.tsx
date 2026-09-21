@@ -86,7 +86,7 @@ export const DetalleLigaLayout = () => {
             alt={liga.nombre}
             className="size-9"
           />
-          <h1 className="font-cool text-2xl font-bold text-primary">
+          <h1 className="font-display text-2xl font-bold text-primary">
             {liga.nombre}
           </h1>
           <ChipEstadoLiga estado={liga.estadoLiga} className="ml-auto" />

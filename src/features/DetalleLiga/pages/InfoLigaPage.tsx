@@ -15,7 +15,7 @@ export const InfoLigaPage = () => {
 
         {liga?.normas && (
           <>
-            <p className="mt-4 z-2 font-cool text-xl py-1 font-neutral-950">
+            <p className="mt-4 z-2 font-display text-xl py-1 font-neutral-950">
               Normas
             </p>
             <p className="text-neutral-400 whitespace-pre-wrap">{liga?.normas}</p>
@@ -24,7 +24,7 @@ export const InfoLigaPage = () => {
 
         {liga?.ubicaciones && liga.ubicaciones.length > 0 && (
           <>
-            <p className="mt-4 z-2 font-cool text-xl py-1 font-neutral-950">
+            <p className="mt-4 z-2 font-display text-xl py-1 font-neutral-950">
               Ubicaciones
             </p>
             {liga?.ubicaciones.map((ubicacion, index) => (
@@ -36,7 +36,7 @@ export const InfoLigaPage = () => {
         )}
         {liga?.premio && (
           <>
-            <p className="mt-4 z-2 font-cool text-xl py-1 font-neutral-950">
+            <p className="mt-4 z-2 font-display text-xl py-1 font-neutral-950">
               Premio
             </p>
             <p className="text-neutral-400 whitespace-pre-wrap">{liga?.premio}</p>

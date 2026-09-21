@@ -31,7 +31,7 @@ export const MiPerfilPage = () => {
       <div className="p-3 flex flex-col gap-4 justify-start h-full max-w-screen-lg mx-auto w-full">
         <div className="flex justify-between bg-neutral-900 rounded-xl relative p-3 md:p-6">
           <span>
-            <Titulo variant="h2" className="font-cool">
+            <Titulo variant="h2" className="font-display">
               {user?.username}
             </Titulo>
 
@@ -72,7 +72,7 @@ export const MiPerfilPage = () => {
               />
               <Titulo
                 variant="h4"
-                className="font-cool text-neutral-300! tracking-widest"
+                className="font-display text-neutral-300! tracking-widest"
               >
                 Equipos
               </Titulo>
@@ -98,7 +98,7 @@ export const MiPerfilPage = () => {
               />
               <Titulo
                 variant="h4"
-                className="font-cool text-neutral-300! tracking-widest"
+                className="font-display text-neutral-300! tracking-widest"
               >
                 Competiciones
               </Titulo>

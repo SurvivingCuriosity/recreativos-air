@@ -92,7 +92,7 @@ export const TarjetaEquipoLigaAdmin = ({
         onClick={() => setIsOpened(!isOpened)}
       >
         <div className="grow flex flex-col gap-1">
-          <p className="font-cool text-primary tracking-tight font-extrabold text-lg">
+          <p className="font-display text-primary tracking-tight font-extrabold text-lg">
             {equipoLiga.equipo.nombre}
           </p>
           <div className="flex items-center gap-2 text-neutral-400">

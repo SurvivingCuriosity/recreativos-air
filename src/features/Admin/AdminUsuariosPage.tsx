@@ -48,7 +48,7 @@ export const AdminUsuariosPage = () => {
   return (
     <div className="p-3">
       <div className="sticky top-0 z-10 bg-neutral-950 pb-2">
-        <h1 className="font-cool text-2xl text-primary">Lista de usuarios</h1>
+        <h1 className="font-display text-2xl text-primary">Lista de usuarios</h1>
         <div className="mt-2">
           <TextInput
             onChangeText={handleSearch}

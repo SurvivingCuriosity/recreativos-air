@@ -42,7 +42,7 @@ export const AdminEquiposPage = () => {
 
   return (
     <div className="p-3">
-      <h1 className="font-cool text-2xl text-primary sticky top-0 z-10 bg-neutral-950 pb-2">
+      <h1 className="font-display text-2xl text-primary sticky top-0 z-10 bg-neutral-950 pb-2">
         Lista de equipos
       </h1>
       <div className="mt-2">

@@ -46,7 +46,7 @@ export const PerfilPublicoPage = () => {
     <div className="p-4 flex flex-col gap-4 justify-start h-full">
       <div className="flex justify-between relative p-3 rounded-xl bg-neutral-900">
         <span>
-          <Titulo variant="h2" className="font-cool">
+          <Titulo variant="h2" className="font-display">
             {user?.username}
           </Titulo>
           <p className="text-neutral-500">{user?.nombre}</p>
@@ -77,7 +77,7 @@ export const PerfilPublicoPage = () => {
         <div className="my-2 md:bg-neutral-900/80 rounded-xl md:p-6 grow">
           <Titulo
             variant="h4"
-            className="font-cool text-neutral-300! tracking-widest underline underline-offset-2 mb-4"
+            className="font-display text-neutral-300! tracking-widest underline underline-offset-2 mb-4"
           >
             Equipos
           </Titulo>
@@ -101,7 +101,7 @@ export const PerfilPublicoPage = () => {
         <div className="my-2 md:bg-neutral-900/80 rounded-xl md:p-6 grow">
           <Titulo
             variant="h4"
-            className="font-cool text-neutral-300! tracking-widest underline underline-offset-2 mb-4"
+            className="font-display text-neutral-300! tracking-widest underline underline-offset-2 mb-4"
           >
             Competiciones
           </Titulo>

@@ -1,110 +1,248 @@
 @import "tailwindcss";
 
-@layer base {
-    * {
-        font-family: "Inter", sans-serif;
-        user-select: none;
-        scroll-behavior: smooth;
-    }
+/* Variante `dark:` basada en clase (oscuro por defecto, ver ThemeProvider) */
+@custom-variant dark (&:where(.dark, .dark *));
 
-    .font-cool {
-        font-family: "Zen Dots", sans-serif;
-    }
+/* ------------------------------------------------------------------
+   Tokens (design/DESIGN.md §3)
+   ------------------------------------------------------------------ */
+:root {
+  /* CLARO */
+  --background: #fafafa;
+  --card: #ffffff;
+  --card-2: #f5f5f5;
+  --muted: #f1f1f1;
+  --border: #dedede;
+  --input: #bdbdbd;
+  --foreground: #171717;
+  --foreground-soft: #404040;
+  --muted-foreground: #5a5a5a;
+  --primary: #eb8a1f;
+  --primary-hi: #ffb04d;
+  --primary-foreground: #1a0f02;
+  --primary-text: #b45309;
+  --secondary-neon: #be185d;
+  --destructive: #b91c1c;
+  --warning: #854d0e;
+  --success: #15803d;
+  --info: #0369a1;
+  --ring: #b45309;
+  --radius: 14px;
 
-    /* Quitar flechas en number input */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+  /* Podio (§4) */
+  --podium-1: #fcd34d;
+  --podium-2: #cbd5e1;
+  --podium-3: #f0a36b;
 
-    /* Quitar flechas en number input */
-    input[type=number] {
-        -moz-appearance: textfield;
-    }
+  /* Sombra dura del modo claro (sustituye al glow) */
+  --hard-shadow-color: #171717;
 
-
-    .animate {
-        animation: tri-right linear forwards;
-        animation-timeline: view();
-    }
-
-
-    @keyframes tri-right {
-        0% {
-            opacity: 0;
-            transform: translateX(-200px)translateY(-400px)scale(100%);
-        }
-
-        70% {
-            opacity: 1;
-            transform: translateX(200px)translateY(0px)scale(110%);
-        }
-
-
-        100% {
-            opacity: 0;
-            transform: translateX(-200px)translateY(200px)scale(100%);
-        }
-    }
+  color-scheme: light;
 }
 
-@theme {
+.dark {
+  /* OSCURO (por defecto) */
+  --background: #0a0a0a;
+  --card: #161616;
+  --card-2: #111111;
+  --muted: #202020;
+  --border: #2c2c2c;
+  --input: #3a3a3a;
+  --foreground: #fafafa;
+  --foreground-soft: #d4d4d4;
+  --muted-foreground: #a3a3a3;
+  --primary: #eb8a1f;
+  --primary-hi: #ffb04d;
+  --primary-foreground: #1a0f02;
+  --primary-text: #ffa63d;
+  --secondary-neon: #ff4fa3;
+  --destructive: #ff7a85;
+  --warning: #fcd34d;
+  --success: #4ade80;
+  --info: #7dd3fc;
+  --ring: #eb8a1f;
 
-    /* --color-neutral-950: #001f13;
-    --color-neutral-900: #003422;
-    --color-neutral-800: #004d35;
-    --color-neutral-700: #006748;
-    --color-neutral-600: #1d7a58;
-    --color-neutral-500: #439573;
-    --color-neutral-400: #60b18e;
-    --color-neutral-300: #7dcea9;
-    --color-neutral-200: #9aecc6;
-    --color-neutral-100: #dcffed;
-    --color-neutral-50: #dcffed; 
-    --color-primary: #f1da0c;*/
+  color-scheme: dark;
+}
 
-    /* --color-neutral-50: #fae6d3;
-    --color-neutral-100: #f3caa0;
-    --color-neutral-200: #eeba80;
-    --color-neutral-300: #e79b47;
-    --color-neutral-400: #e07912;
-    --color-neutral-500: #96510c;
-    --color-neutral-600: #442700;
-    --color-neutral-700: #3c2100;
-    --color-neutral-800: #281500;
-    --color-neutral-900: #1c0d00; */
-    --color-primary: #eb8a1f;
-    --color-primary2: #ea8e44;
+/* ------------------------------------------------------------------
+   Exposición de tokens a Tailwind (bg-card, text-primary-text, …)
+   ------------------------------------------------------------------ */
+@theme inline {
+  --font-sans: "Albert Sans", system-ui, sans-serif;
+  --font-display: "Chakra Petch", "Albert Sans", system-ui, sans-serif;
 
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-foreground-soft: var(--foreground-soft);
+  --color-card: var(--card);
+  --color-card-2: var(--card-2);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--card);
+  --color-popover-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
-    --animate-fade-in-top: fade-in-top 0.5s ease-out both;
-    --animate-in-right: in-right 0.5s ease-in-out both;
+  --color-primary: var(--primary);
+  --color-primary-hi: var(--primary-hi);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-text: var(--primary-text);
+  /* compat temporal con el gradiente del Button antiguo (se retira en Fase 1) */
+  --color-primary2: var(--primary-hi);
 
-    @keyframes fade-in-top {
-        0% {
-            transform: translateY(-15px);
-            opacity: 0;
-        }
+  --color-secondary: var(--muted);
+  --color-secondary-foreground: var(--foreground);
+  --color-secondary-neon: var(--secondary-neon);
+  --color-accent: var(--muted);
+  --color-accent-foreground: var(--foreground);
 
-        ,
-        to: {
-            transform: translateY(0);
-            opacity: 1;
-        }
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--foreground);
+  --color-warning: var(--warning);
+  --color-success: var(--success);
+  --color-info: var(--info);
+
+  --color-podium-1: var(--podium-1);
+  --color-podium-2: var(--podium-2);
+  --color-podium-3: var(--podium-3);
+
+  /* Radios (§3): 22 TarjetaLiga · 16–20 tarjetas/diálogos · 14 botones · 12 inputs · 6 chips */
+  --radius-chip: 6px;
+  --radius-input: 12px;
+  --radius-button: var(--radius);
+  --radius-card: 16px;
+  --radius-card-lg: 20px;
+  --radius-liga: 22px;
+
+  /* Glow (solo oscuro, ver reglas §3) y sombra dura (claro) */
+  --shadow-glow-primary: 0 0 12px rgb(235 138 31 / 0.28), inset 0 1px 0 rgb(255 255 255 / 0.4);
+  --shadow-glow-focus: 0 0 10px rgb(235 138 31 / 0.3);
+  --shadow-hard: 3px 3px 0 var(--hard-shadow-color);
+  --shadow-hard-lg: 4px 4px 0 var(--hard-shadow-color);
+
+  --animate-fade-in-top: fade-in-top 0.5s ease-out both;
+  --animate-in-right: in-right 0.5s ease-in-out both;
+
+  @keyframes fade-in-top {
+    from {
+      transform: translateY(-15px);
+      opacity: 0;
     }
-
-    @keyframes in-right {
-        0% {
-            transform: translateX(80px);
-        }
-
-        ,
-        to: {
-            transform: translateY(0);
-        }
+    to {
+      transform: translateY(0);
+      opacity: 1;
     }
+  }
 
+  @keyframes in-right {
+    from {
+      transform: translateX(80px);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}
 
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+@layer base {
+  * {
+    border-color: var(--color-border);
+    outline-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
+  }
 
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Display: h1/h2, nombres de liga/equipo, botones, marcadores (§2) */
+  h1,
+  h2 {
+    font-family: var(--font-display);
+  }
+
+  h1 {
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-weight: 700;
+  }
+
+  h2 {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+  }
+
+  /* Quitar flechas en number input */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Utilidades de marca (glow en oscuro · sombra dura en claro)
+   ------------------------------------------------------------------ */
+@utility text-glow-brand {
+  /* h1 / palabra de marca */
+  text-shadow: 2px 2px 0 rgb(235 138 31 / 0.85);
+  .dark & {
+    text-shadow: 0 0 12px rgb(235 138 31 / 0.3);
+  }
+}
+
+@utility text-glow-liga {
+  /* nombre de liga */
+  text-shadow: none;
+  .dark & {
+    text-shadow: 0 0 10px rgb(235 138 31 / 0.3);
+  }
+}
+
+@utility ring-logo {
+  /* anillo del logo en el header */
+  box-shadow: 0 0 0 2px var(--color-background), 0 0 0 3px var(--hard-shadow-color);
+  .dark & {
+    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 3px var(--color-primary),
+      0 0 10px rgb(235 138 31 / 0.3);
+  }
+}
+
+@utility border-gradient-liga {
+  /* borde degradado de TarjetaLiga (§3) */
+  border: 1px solid transparent;
+  background: linear-gradient(var(--color-card), var(--color-card)) padding-box,
+    linear-gradient(135deg, rgb(235 138 31 / 0.9), rgb(255 79 163 / 0.55)) border-box;
+}
+
+@utility bg-gradient-progress {
+  background: linear-gradient(90deg, #eb8a1f, #ff4fa3);
 }

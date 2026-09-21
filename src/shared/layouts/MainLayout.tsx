@@ -52,7 +52,7 @@ export const MainLayout = () => {
 
   return (
     <>
-      <div className="bg-neutral-950 text-neutral-50 min-h-svh flex flex-col">
+      <div className="bg-background text-foreground min-h-svh flex flex-col">
         <TopNav content={content} />
         <AvisoPerfilSinNombre />
         <div className="relative mx-auto flex flex-col items-center flex-1 w-full">

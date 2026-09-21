@@ -76,7 +76,7 @@ export const TarjetaLiga = ({ liga, onClick }: TarjetaLigaProps) => {
               alt={liga.nombre}
               className="size-9"
             />
-            <p className="text-lg lg:text-2xl font-bold text-primary font-cool">
+            <p className="text-lg lg:text-2xl font-bold text-primary font-display">
               {liga.nombre}
             </p>
           </div>

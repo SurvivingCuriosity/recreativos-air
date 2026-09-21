@@ -22,7 +22,7 @@ export const TarjetaTemporadaAdmin = ({
           Actual
         </p>
       )}
-      <p className="font-cool text-xl text-primary">{temporada.nombre}</p>
+      <p className="font-display text-xl text-primary">{temporada.nombre}</p>
       <div className="flex items-center gap-2 text-sm text-neutral-500">
         <FontAwesomeIcon icon={faCalendarDays} />
         <p>

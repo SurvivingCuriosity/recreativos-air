@@ -10,7 +10,7 @@ export const TarjetaEquipoAdmin = ({ equipo, ligas }: { equipo: EquipoDTO, ligas
     <div className="bg-neutral-900 p-2 px-4 rounded-lg relative">
       
       <p className="text-xs text-neutral-500">{equipo.id}</p>
-      <p className="font-cool text-xl text-primary">{equipo.nombre}</p>
+      <p className="font-display text-xl text-primary">{equipo.nombre}</p>
       <div className="flex items-start justify-between">
 
       <div className="w-2/3">

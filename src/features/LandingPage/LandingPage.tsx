@@ -81,7 +81,7 @@ export const LandingPage = () => {
         </div>
       ) : isLoggedIn ? (
         <div className="max-w-11/12 md:min-w-md md:max-w-3xl">
-          <p className="font-cool text-primary text-2xl font-black my-3">
+          <p className="font-display text-primary text-2xl font-black my-3">
             Mis ligas
           </p>
           {loadingLigas ? (
@@ -153,7 +153,7 @@ export const LandingPage = () => {
       <a
         href="https://www.futbolin.app"
         target="_blank"
-        className="bg-neutral-900/70 backdrop-blur-xs block rounded-3xl font-cool p-4 min-w-80 text-center text-xs mt-auto"
+        className="bg-neutral-900/70 backdrop-blur-xs block rounded-3xl font-display p-4 min-w-80 text-center text-xs mt-auto"
       >
         ¡ Encuentra futbolines cerca !
         <img

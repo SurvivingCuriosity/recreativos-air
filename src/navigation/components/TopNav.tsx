@@ -10,6 +10,7 @@ import type {
 } from "../../shared/layouts/MainLayout";
 import { EnfrentamientosPendientes } from "../../features/Jornadas/DetalleJornada/components/EnfrentamientosPendientes";
 import { useConteoEnfrentamientosPendientes } from "../../shared/api/enfrentamientos/hooks";
+import { ThemeToggle } from "../../shared/theme/ThemeToggle";
 
 export interface TopNavItem {
   label: string;
@@ -29,14 +30,17 @@ export const TopNav = ({
   return (
     <header
       className={`relative z-3 h-14 p-2 border-b ${
-        isAdmin ? "border-primary" : "border-neutral-700"
+        isAdmin ? "border-primary" : "border-border"
       } w-full block`}
     >
       <nav className="max-w-screen-lg mx-auto flex items-center justify-between z-6">
         <Link to="/" className="z-6 relative">
           <img src={"/logo.png"} alt="logo" className="size-10" />
         </Link>
-        <HamburgerMenu content={content} />
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <HamburgerMenu content={content} />
+        </div>
       </nav>
     </header>
   );

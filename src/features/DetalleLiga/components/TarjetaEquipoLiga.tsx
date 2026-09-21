@@ -19,7 +19,7 @@ export const TarjetaEquipoLiga = ({ equipoLiga, onClick }: Props) => {
       onClick={onClick}
     >
       <div className="flex items-center">
-        <p className="font-cool text-primary tracking-tight font-extrabold text-lg grow w-full">
+        <p className="font-display text-primary tracking-tight font-extrabold text-lg grow w-full">
           {equipoLiga.equipo.nombre}
         </p>
 

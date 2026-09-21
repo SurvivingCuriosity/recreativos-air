@@ -9,6 +9,7 @@ import api from "./shared/api/http";
 import { WindowProvider } from "./shared/context/WindowProvider";
 import "./shared/globals.css";
 import { UIProvider } from "./shared/context/UIProvider/components/UIProviders";
+import { ThemeProvider } from "./shared/theme/ThemeProvider";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,6 +24,7 @@ export const queryClient = new QueryClient({
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
       <UIProvider>
         <BrowserRouter>
           <WindowProvider>
@@ -35,6 +37,7 @@ createRoot(document.getElementById("root")!).render(
           </WindowProvider>
         </BrowserRouter>
       </UIProvider>
+      </ThemeProvider>
       {import.meta.env.DEV && (
         <ReactQueryDevtools buttonPosition={"bottom-left"} />
       )}

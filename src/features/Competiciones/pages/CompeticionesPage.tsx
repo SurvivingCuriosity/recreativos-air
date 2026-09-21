@@ -40,7 +40,7 @@ export const CompeticionesPage = () => {
     <>
       <title>Competiciones | Recreativos Air</title>
       <div className="max-w-screen-md mx-auto flex flex-col items-center justify-start p-4 h-full gap-3">
-        <h1 className="text-3xl font-bold font-cool sticky top-0 bg-neutral-950 pb-2 w-full">Competiciones</h1>
+        <h1 className="text-3xl font-bold font-display sticky top-0 bg-neutral-950 pb-2 w-full">Competiciones</h1>
         <div className="w-full">
           <SelectorTemporada
             temporadas={temporadas ?? []}
