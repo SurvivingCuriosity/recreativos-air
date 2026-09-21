@@ -1,24 +1,25 @@
 import { Save } from "lucide-react";
 import { useState } from "react";
-import { toast } from "@/shared/lib/toast";
 import { useNavigate } from "react-router";
 import type { UserDTO } from "recreativos-air-core/user";
+import { toast } from "@/shared/lib/toast";
 import { Button } from "../../packages/components/Button/Button";
 import { FormField } from "../../packages/components/Form/FormField";
 import { FormLabel } from "../../packages/components/Form/FormLabel";
 import { TextInput } from "../../packages/components/TextInput/TextInput";
-import { Titulo } from "../../packages/components/Titulo/Titulo";
 import { useAuth } from "../../shared/api/auth/useAuth";
 import { useUpdateMe } from "../../shared/api/user/hooks";
+import { SkeletonLista } from "../../shared/components/Estados/Estados";
+import { PageTitle } from "../../shared/components/Titulos/Titulos";
 
 export const EditarPerfilPage = () => {
   const { user } = useAuth();
 
   if (!user)
     return (
-      <p className="text-neutral-400 text-center p-10 animate-pulse">
-        Cargando perfil...
-      </p>
+      <main className="mx-auto w-full max-w-screen-sm px-4 pt-[18px]">
+        <SkeletonLista count={4} height="h-12" label="Cargando perfil..." />
+      </main>
     );
 
   return <EditarPerfilForm key={user.id} user={user} />;
@@ -50,55 +51,65 @@ const EditarPerfilForm = ({ user }: { user: UserDTO }) => {
   };
 
   return (
-    <div className="max-w-screen-sm mx-auto p-4 w-full">
+    <main className="mx-auto flex w-full max-w-screen-sm flex-col gap-4 px-4 pt-[18px] pb-5">
       <title>Editar perfil | Recreativos Air</title>
-      <Titulo variant="h1" className="mb-4">
-        Editar perfil
-      </Titulo>
+      <PageTitle color="primary">Editar perfil</PageTitle>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           handleGuardar();
         }}
-        className="space-y-4"
+        className="flex flex-col gap-4"
       >
         <FormField>
-          <FormLabel>Nombre de usuario</FormLabel>
+          <FormLabel htmlFor="perfil-username">Nombre de usuario</FormLabel>
           <TextInput
+            id="perfil-username"
             placeholder="Nombre de usuario"
+            autoComplete="username"
             value={username}
             onChangeText={setUsername}
           />
         </FormField>
 
         <FormField>
-          <FormLabel>Nombre</FormLabel>
+          <FormLabel htmlFor="perfil-nombre">Nombre</FormLabel>
           <TextInput
+            id="perfil-nombre"
             placeholder="Tu nombre"
+            autoComplete="given-name"
             value={nombre}
             onChangeText={setNombre}
           />
         </FormField>
 
         <FormField>
-          <FormLabel>Móvil</FormLabel>
+          <FormLabel htmlFor="perfil-movil">Móvil</FormLabel>
           <TextInput
+            id="perfil-movil"
             type="tel"
             placeholder="Número de móvil"
+            autoComplete="tel-national"
             value={movil}
             onChangeText={setMovil}
           />
         </FormField>
 
         <FormField>
-          <FormLabel>Email</FormLabel>
-          <TextInput value={user.email} onChangeText={() => {}} disabled />
+          <FormLabel htmlFor="perfil-email">Email</FormLabel>
+          <TextInput
+            id="perfil-email"
+            value={user.email}
+            onChangeText={() => {}}
+            disabled
+            className="bg-muted text-muted-foreground opacity-100"
+          />
         </FormField>
 
-        <Button onClick={handleGuardar} icon={Save} disabled={isPending}>
+        <Button type="submit" icon={Save} disabled={isPending}>
           {isPending ? "Guardando..." : "Guardar cambios"}
         </Button>
       </form>
-    </div>
+    </main>
   );
 };

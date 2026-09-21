@@ -10,10 +10,10 @@ import {
 } from "recreativos-air-core/equipos";
 import type { SearchUserDTO } from "recreativos-air-core/user";
 import { Button } from "../../packages/components/Button/Button";
-import { FormField } from "../../packages/components/Form/FormField";
 import { FormLabel } from "../../packages/components/Form/FormLabel";
 import { TextInput } from "../../packages/components/TextInput/TextInput";
-import { Titulo } from "../../packages/components/Titulo/Titulo";
+import { PageTitle } from "../../shared/components/Titulos/Titulos";
+import { RadioCards } from "../../shared/components/RadioCard/RadioCard";
 import { useAuth } from "../../shared/api/auth/useAuth";
 import { useCrearEquipo } from "../../shared/api/equipos/hooks/useCrearEquipo";
 import SelectorUsuario from "../../shared/components/SelectorUsuario/SelectorUsuario";
@@ -173,180 +173,144 @@ export const CrearEquipoPage = () => {
   };
 
   return (
-    <div className="max-w-screen-md mx-auto p-4 pt-1">
-      <Titulo variant="h2" className="mb-2 text-center font-extrabold">
+    <main className="mx-auto flex w-full max-w-screen-md flex-1 flex-col gap-[18px] px-4 pt-[18px] pb-5">
+      <PageTitle color="primary" align="center">
         Crear equipo
-      </Titulo>
+      </PageTitle>
 
       {esAdmin && (
-        <div className="flex flex-row gap-3 mb-4">
-          <div className="bg-neutral-800 p-2 rounded-md flex flex-col">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="radio"
-                name="modoCrearEquipo"
-                value="bots"
-                checked={modoCrearEquipo === "bots"}
-                onChange={() => setModoCrearEquipo("bots")}
-                className="accent-primary"
-              />
-              <span className="text-neutral-400">Equipo de bots</span>
-            </label>
-          </div>
-
-          <div className="bg-neutral-800 p-2 rounded-md flex flex-col">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="radio"
-                name="modoCrearEquipo"
-                value="normal"
-                className="accent-primary"
-                checked={modoCrearEquipo === "normal"}
-                onChange={() => setModoCrearEquipo("normal")}
-              />
-              <span className="text-neutral-400">Equipo para mi</span>
-            </label>
-          </div>
-        </div>
+        <RadioCards
+          name="modoCrearEquipo"
+          ariaLabel="Tipo de equipo"
+          value={modoCrearEquipo}
+          onChange={setModoCrearEquipo}
+          options={[
+            { value: "bots", label: "Equipo de bots" },
+            { value: "normal", label: "Equipo para mi" },
+          ]}
+        />
       )}
 
-      <div className="flex flex-col gap-2">
-        {/* NOMBRE DEL EQUIPO */}
-        <FormField row border>
-          <FormLabel>Nombre: </FormLabel>
-          <TextInput
-            placeholder="Ej: Los Titanes"
-            value={equipoNombre}
-            onChangeText={setEquipoNombre}
+      {/* NOMBRE DEL EQUIPO */}
+      <div className="flex items-center gap-3 border-b border-border pb-3.5">
+        <FormLabel htmlFor="equipo-nombre">Nombre: </FormLabel>
+        <TextInput
+          id="equipo-nombre"
+          placeholder="Ej: Los Titanes"
+          value={equipoNombre}
+          onChangeText={setEquipoNombre}
+          className="min-w-0 flex-1"
+        />
+      </div>
+
+      {/* COLOR */}
+      <div className="flex items-center gap-3 border-b border-border pb-3.5">
+        <FormLabel htmlFor="equipo-color">Color (opcional): </FormLabel>
+        <input
+          id="equipo-color"
+          type="color"
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
+          className="size-11 cursor-pointer rounded-[10px] border border-input bg-card p-0 [&::-webkit-color-swatch]:rounded-[8px] [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch-wrapper]:p-1"
+        />
+      </div>
+
+      {/* AGREGAR JUGADORES */}
+      <div className="flex flex-col gap-2.5 border-b border-border pb-3.5">
+        <FormLabel>Agregar jugadores</FormLabel>
+        <RadioCards
+          name="modoAgregar"
+          ariaLabel="Tipo de jugador"
+          value={modoAgregar}
+          onChange={setModoAgregar}
+          options={[
+            ...(modoCrearEquipo !== "bots"
+              ? [{ value: "registrado" as const, label: "Usuario registrado" }]
+              : []),
+            { value: "manual" as const, label: "Usuario no registrado" },
+          ]}
+        />
+        {modoAgregar === "registrado" ? (
+          <SelectorUsuario
+            onSelect={handleSelectUsuario}
+            disabled={isPending}
+            placeholder="Buscar usuario..."
           />
-        </FormField>
-
-        {/* COLOR */}
-        <FormField row border>
-          <FormLabel>Color (opcional): </FormLabel>
-          <input
-            type="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-            className="overflow-hidden size-10 rounded-lg border-0"
-          />
-        </FormField>
-
-        <FormField border>
-          <FormLabel>Agregar jugadores</FormLabel>
-          <div className="mt-2 space-y-3">
-            {/* RADIO: Selección de tipo */}
-            <div className="flex flex-col gap-3 mb-2">
-              {/* Usuario registrado */}
-              <div className="flex flex-row gap-2">
-                {modoCrearEquipo !== "bots" && (
-                  <div className="bg-neutral-800 p-2 rounded-md flex flex-col">
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="modoAgregar"
-                        value="registrado"
-                        checked={modoAgregar === "registrado"}
-                        onChange={() => setModoAgregar("registrado")}
-                        className="accent-primary"
-                      />
-                      <span className="text-xs text-neutral-400">
-                        Usuario registrado
-                      </span>
-                    </label>
-                  </div>
-                )}
-
-                {/* Usuario no registrado */}
-                <div className="bg-neutral-800 p-2 rounded-md flex flex-col">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="modoAgregar"
-                      value="manual"
-                      className="accent-primary"
-                      checked={modoAgregar === "manual"}
-                      onChange={() => setModoAgregar("manual")}
-                    />
-                    <span className="text-xs text-neutral-400">
-                      Usuario no registrado
-                    </span>
-                  </label>
-                </div>
-              </div>
-              {modoAgregar === "registrado" ? (
-                <SelectorUsuario
-                  onSelect={handleSelectUsuario}
-                  disabled={isPending}
-                  placeholder="Buscar usuario..."
-                />
-              ) : (
-                <div className="flex items-center gap-2">
-                  <TextInput
-                    placeholder="Nombre del jugador sin cuenta"
-                    value={nombreManual}
-                    onChangeText={setNombreManual}
-                    disabled={modoAgregar !== "manual"}
-                  />
-                  <div className="w-12">
-                    <Button onClick={handleAgregarManual} disabled={isPending} icon={Plus} variant="outline-neutral"/>
-                  </div>
-                </div>
-              )}
-            </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <TextInput
+              placeholder="Nombre del jugador sin cuenta"
+              aria-label="Nombre del jugador sin cuenta"
+              value={nombreManual}
+              onChangeText={setNombreManual}
+              disabled={modoAgregar !== "manual"}
+              className="min-w-0 flex-1"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleAgregarManual();
+                }
+              }}
+            />
+            <Button
+              onClick={handleAgregarManual}
+              disabled={isPending}
+              icon={Plus}
+              variant="outline-neutral"
+              aria-label="Añadir jugador"
+            />
           </div>
-        </FormField>
+        )}
+      </div>
 
-        {/* JUGADORES */}
-        <FormField>
-          <FormLabel>Jugadores ({jugadores.length}/3)</FormLabel>
-          {/* Lista de jugadores */}
-
-          <ul className="mt-3 divide-y divide-neutral-800 flex flex-row overflow-x-auto gap-2">
-            {jugadores.length === 0 ? (
-              <p className="text-neutral-500 text-xs p-4 text-center w-full">
-                Agrega jugadores
-              </p>
-            ) : (
-              jugadores.map((j, i) => (
+      {/* JUGADORES */}
+      <div className="flex flex-col gap-2.5">
+        <FormLabel>Jugadores ({jugadores.length}/3)</FormLabel>
+        {jugadores.length === 0 ? (
+          <p className="p-4 text-center text-xs text-muted-foreground">Agrega jugadores</p>
+        ) : (
+          <ul className="flex flex-wrap gap-2">
+            {jugadores.map((j, i) => {
+              const soyYo = loggedInUser?.id === j.idUsuario;
+              return (
                 <li
                   key={i}
-                  className={`flex justify-between items-center py-2 text-sm rounded-md px-2 bg-neutral-800/50 relative w-fit`}
+                  className="flex min-h-15 items-center gap-3 rounded-input border border-border bg-card py-2 pr-2 pl-3 text-sm"
                 >
-                  <div className="">
-                    <p className="text-neutral-200 font-medium truncate max-w-20">
+                  <div className="flex min-w-0 flex-col gap-0.5">
+                    <p className="max-w-40 truncate font-semibold text-foreground">
                       {j.nombre}
                       {j.suplente && (
-                        <span className="ml-2 text-primary text-xs font-semibold">
+                        <span className="ml-1.5 text-xs font-semibold text-primary-text">
                           (Suplente)
                         </span>
                       )}
                     </p>
-
-                    <p className="text-xs text-neutral-500">
+                    <p className="text-xs text-muted-foreground">
                       {j.idUsuario ? "Registrado" : "Sin cuenta"}
                     </p>
                   </div>
-                  {loggedInUser?.id === j.idUsuario && (
-                    <p className="bg-primary text-black p-1 px-2 text-sm rounded mr-auto mx-2">
+                  {soyYo ? (
+                    <span className="rounded-chip bg-primary px-2 py-[3px] text-xs font-bold text-primary-foreground">
                       Tú
-                    </p>
-                  )}
-                  {j.idUsuario !== loggedInUser?.id && (
-                    <div className="ml-2 w-fit">
-                      <Button
-                        onClick={() => handleEliminarJugador(i)}
-                        disabled={isPending}
-                        variant="outline"
-                        icon={Trash2}
-                      />
-                    </div>
+                    </span>
+                  ) : (
+                    <Button
+                      onClick={() => handleEliminarJugador(i)}
+                      disabled={isPending}
+                      variant="outline"
+                      icon={Trash2}
+                      aria-label={`Eliminar a ${j.nombre}`}
+                    />
                   )}
                 </li>
-              ))
-            )}
+              );
+            })}
           </ul>
-        </FormField>
+        )}
+      </div>
+
+      <div className="mt-auto flex pt-2">
         <Button
           variant="primary"
           onClick={handleCrearEquipo}
@@ -356,6 +320,6 @@ export const CrearEquipoPage = () => {
           {isPending ? "Creando equipo..." : "Crear equipo"}
         </Button>
       </div>
-    </div>
+    </main>
   );
 };

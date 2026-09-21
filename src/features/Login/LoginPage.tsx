@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "@/shared/lib/toast";
 import { Link, useLocation, useNavigate } from "react-router";
 import { LoginSchema, type LoginBody } from "recreativos-air-core/auth";
+import { toast } from "@/shared/lib/toast";
 import { Button } from "../../packages/components/Button/Button";
 import { FormField } from "../../packages/components/Form/FormField";
 import { FormLabel } from "../../packages/components/Form/FormLabel";
@@ -10,6 +10,13 @@ import { PasswordInput } from "../../packages/components/TextInput/PasswordInput
 import { TextInput } from "../../packages/components/TextInput/TextInput";
 import { useLogin } from "../../shared/api/auth/hooks";
 import type { ErrorResponse } from "../../shared/api/http";
+import {
+  AuthCard,
+  AuthMain,
+  AuthTitle,
+  FieldError,
+  authLinkClass,
+} from "../../shared/components/Auth/AuthCard";
 
 export const LoginPage = () => {
   const { mutateAsync: login, isPending } = useLogin();
@@ -17,7 +24,6 @@ export const LoginPage = () => {
   const location = useLocation();
   const from = (location.state as { from?: string })?.from || "/competiciones";
 
-  // Inicializamos el form con validación de Zod
   const {
     control,
     handleSubmit,
@@ -47,85 +53,68 @@ export const LoginPage = () => {
         toast.error(res.message);
       }
     } catch (err: unknown) {
-      console.log(err);
       toast.error((err as ErrorResponse).message);
     }
   };
 
   return (
-    <>
-      <main className="h-full w-full p-4 max-w-screen-lg mx-auto flex flex-col justify-center">
-        <form
-          autoComplete="on"
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 sm:bg-neutral-900 shadow-md rounded-xl p-2 sm:p-6 sm:border border-neutral-800 max-w-lg mx-auto w-full"
-        >
-          <h1 className="text-2xl font-bold text-center">Iniciar sesión</h1>
+    <AuthMain>
+      <AuthCard autoComplete="on" onSubmit={handleSubmit(onSubmit)}>
+        <AuthTitle>Iniciar sesión</AuthTitle>
 
-          <FormField>
-            <FormLabel htmlFor="login-email">Email</FormLabel>
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  id="login-email"
-                  name="email"
-                  placeholder="test@test.com"
-                  autoComplete="username"
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  hasError={!!errors.email}
-                  autoFocus
-                />
-              )}
-            />
-            {errors.email && (
-              <p className="text-red-500 text-xs">{errors.email.message}</p>
+        <FormField>
+          <FormLabel htmlFor="login-email">Email</FormLabel>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                id="login-email"
+                name="email"
+                placeholder="test@test.com"
+                autoComplete="username"
+                value={field.value}
+                onChangeText={field.onChange}
+                hasError={!!errors.email}
+                autoFocus
+              />
             )}
-          </FormField>
+          />
+          <FieldError>{errors.email?.message}</FieldError>
+        </FormField>
 
-          <FormField>
-            <FormLabel htmlFor="login-password">Contraseña</FormLabel>
-            <Controller
-              name="password"
-              control={control}
-              render={({ field }) => (
-                <PasswordInput
-                  id="login-password"
-                  name="password"
-                  placeholder="********"
-                  autoComplete="current-password"
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  hasError={!!errors.password}
-                />
-              )}
-            />
-            {errors.password && (
-              <p className="text-red-500 text-xs">{errors.password.message}</p>
+        <FormField>
+          <FormLabel htmlFor="login-password">Contraseña</FormLabel>
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <PasswordInput
+                id="login-password"
+                name="password"
+                placeholder="********"
+                autoComplete="current-password"
+                value={field.value}
+                onChangeText={field.onChange}
+                hasError={!!errors.password}
+              />
             )}
-          </FormField>
+          />
+          <FieldError>{errors.password?.message}</FieldError>
+        </FormField>
 
-          <Link
-            to="/reset-password"
-            className="mr-auto underline text-sm text-neutral-400 mt-2"
-          >
-            He olvidado mi contraseña
-          </Link>
+        <Link to="/reset-password" className={`${authLinkClass} self-start`}>
+          He olvidado mi contraseña
+        </Link>
 
-          <Button disabled={isPending} type="submit">
-            Entrar
-          </Button>
+        <Button disabled={isPending} type="submit">
+          Entrar
+        </Button>
 
-          <Link
-            to="/register"
-            className="mx-auto underline text-sm text-neutral-600 mt-2"
-          >
-            ¿No tienes cuenta? Regístrate
-          </Link>
-        </form>
-      </main>
-    </>
+        <Link to="/register" className={`${authLinkClass} self-center`}>
+          ¿No tienes cuenta? Regístrate
+        </Link>
+      </AuthCard>
+    </AuthMain>
   );
 };

@@ -1,15 +1,19 @@
-import { Pencil, Plus, Trophy, Users } from "lucide-react";
-import { Icon } from "@/shared/ui/Icon";
-import { toast } from "@/shared/lib/toast";
+import { LogOut, Pencil, Plus, Trophy, Users } from "lucide-react";
 import { useNavigate } from "react-router";
+import { toast } from "@/shared/lib/toast";
 import { Button } from "../../packages/components/Button/Button";
-import { Titulo } from "../../packages/components/Titulo/Titulo";
 import { useLogout } from "../../shared/api/auth/hooks";
 import { useAuth } from "../../shared/api/auth/useAuth";
+import { ChipEstado } from "../../shared/components/ChipEstado/ChipEstado";
+import { SectionTitle } from "../../shared/components/Titulos/Titulos";
+import { BotonRefrescar } from "../DetalleLiga/DetalleLigaLayout";
 import { MisCompeticiones } from "./components/MisCompeticiones";
 import { MisEquipos } from "./components/MisEquipos";
-import { BotonRefrescar } from "../DetalleLiga/DetalleLigaLayout";
-import { LogOut } from "lucide-react";
+
+/** Botón «+» circular de cabecera de sección (44 px). */
+const BotonMas = ({ label, onClick }: { label: string; onClick: () => void }) => (
+  <Button variant="outline-neutral" icon={Plus} onClick={onClick} aria-label={label} />
+);
 
 export const MiPerfilPage = () => {
   const navigate = useNavigate();
@@ -30,94 +34,79 @@ export const MiPerfilPage = () => {
   return (
     <>
       <title>Mi perfil | Recreativos Air</title>
-      <div className="p-3 flex flex-col gap-4 justify-start h-full max-w-screen-lg mx-auto w-full">
-        <div className="flex justify-between bg-neutral-900 rounded-xl relative p-3 md:p-6">
-          <span>
-            <Titulo variant="h2" className="font-display">
-              {user?.username}
-            </Titulo>
-
-            <p className="text-neutral-500">{user?.nombre}</p>
-            <p className="text-neutral-500">{user?.email}</p>
-            <p className="text-neutral-500">{user?.movil}</p>
-          </span>
-          <div className="flex flex-col items-end gap-2 mt-auto z-1">
-            <button
-              onClick={() => navigate("/mi-perfil/editar")}
-              className="rounded-lg text-primary bg-neutral-950 border border-primary px-3 py-1"
-            >
-              <Icon icon={Pencil} className="mr-2" />
-              Editar
-            </button>
-          </div>
-          {user?.admin && (
-            <p className="absolute -top-2 -left-2 bg-primary text-black text-xs size-min p-0.5 px-2 rounded-md font-bold">
-              ADMIN
-            </p>
-          )}
-        </div>
-
-        <div className="flex flex-col md:flex-row w-full md:gap-3">
-          {/* Equipos */}
-          <div className="md:grow md:w-1/2 p-3 rounded-xl md:p-8 md:bg-neutral-900/60 min-w-0">
-            <div className="flex items-center gap-2 pb-2">
-              <Icon
-                icon={Users}
-                className="text-neutral-300"
-                size={20}
-              />
-              <Titulo
-                variant="h4"
-                className="font-display text-neutral-300! tracking-widest"
-              >
-                Equipos
-              </Titulo>
-              <div className="w-min ml-auto">
-                <Button
-                  onClick={() => navigate("/crear-equipo")}
-                  variant="outline-neutral"
-                  icon={Plus}
-                />
-              </div>
+      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-[22px] px-4 pt-[18px] pb-5 lg:gap-7 lg:px-6 lg:pt-8">
+        {/* Cabecera del usuario (design/screens/MiPerfil.html) */}
+        <section className="flex items-end justify-between gap-3 rounded-[18px] border border-border bg-card p-3.5 lg:rounded-card-lg lg:p-6">
+          <div className="flex min-w-0 flex-col gap-[3px]">
+            <div className="mb-1 flex flex-wrap items-center gap-2">
+              <h1 className="truncate font-display text-[28px] leading-none font-bold text-primary-text text-glow-liga lg:text-[34px]">
+                {user?.username}
+              </h1>
+              {user?.admin && <ChipEstado color="primary">ADMIN</ChipEstado>}
             </div>
-
-            <MisEquipos idUsuario={user?.id || ""} />
+            <span className="text-foreground-soft">{user?.nombre}</span>
+            <span className="truncate text-muted-foreground">{user?.email}</span>
+            <span className="text-muted-foreground">{user?.movil}</span>
           </div>
+          <div className="flex shrink-0 gap-2">
+            <Button
+              variant="outline"
+              icon={Pencil}
+              className="w-auto"
+              onClick={() => navigate("/mi-perfil/editar")}
+            >
+              Editar
+            </Button>
+            <Button
+              variant="outline-danger"
+              icon={LogOut}
+              className="hidden w-auto lg:inline-flex"
+              onClick={handleLogout}
+            >
+              Salir
+            </Button>
+          </div>
+        </section>
+
+        <div className="grid gap-[22px] lg:grid-cols-2 lg:items-start lg:gap-4">
+          {/* Equipos */}
+          <section className="flex min-w-0 flex-col gap-2.5 lg:rounded-card-lg lg:border lg:border-border lg:bg-card-2 lg:p-6">
+            <SectionTitle
+              icon={Users}
+              right={<BotonMas label="Crear equipo" onClick={() => navigate("/crear-equipo")} />}
+            >
+              Equipos
+            </SectionTitle>
+            <MisEquipos idUsuario={user?.id || ""} />
+          </section>
 
           {/* Competiciones */}
-          <div className="md:grow md:w-1/2 p-3 rounded-xl md:p-8 md:bg-neutral-900/60 min-w-0">
-            <div className="flex items-center gap-2 pb-2">
-              <Icon
-                icon={Trophy}
-                className="text-neutral-300"
-                size={20}
-              />
-              <Titulo
-                variant="h4"
-                className="font-display text-neutral-300! tracking-widest"
-              >
-                Competiciones
-              </Titulo>
-              {user?.admin && (
-                <div className="w-min ml-auto">
-                  <Button
-                    onClick={() => navigate("/crear-liga")}
-                    variant="outline-neutral"
-                    icon={Plus}
-                  />
-                </div>
-              )}
-            </div>
+          <section className="flex min-w-0 flex-col gap-2.5 lg:rounded-card-lg lg:border lg:border-border lg:bg-card-2 lg:p-6">
+            <SectionTitle
+              icon={Trophy}
+              right={
+                user?.admin ? (
+                  <BotonMas label="Crear liga" onClick={() => navigate("/crear-liga")} />
+                ) : undefined
+              }
+            >
+              Competiciones
+            </SectionTitle>
             <MisCompeticiones />
-          </div>
+          </section>
         </div>
-        <div className="mt-auto flex flex-col gap-2 pt-4">
+
+        {/* Actualizar y Salir al final (DESIGN.md §6.2 / §6.11) */}
+        <div className="mt-auto flex flex-col gap-2 pt-2 lg:hidden">
           <BotonRefrescar />
           <Button variant="outline-danger" icon={LogOut} onClick={handleLogout}>
             Salir
           </Button>
         </div>
-      </div>
+        <div className="hidden lg:flex">
+          <BotonRefrescar />
+        </div>
+      </main>
     </>
   );
 };

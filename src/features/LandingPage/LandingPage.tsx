@@ -1,16 +1,37 @@
 import { Link, useNavigate } from "react-router";
 import { EstadoLiga, type LigaDTO } from "recreativos-air-core/liga";
+import { cn } from "@/lib/utils";
 import { Button } from "../../packages/components/Button/Button";
 import { useAuth } from "../../shared/api/auth/useAuth";
-import fondo from "../../shared/assets/tsunami.jpg";
-import { TarjetaLiga } from "../../shared/components/TarjetaLiga/TarjetaLiga";
-import { TELEFONO_ALBERTO } from "../../shared/db/telefono";
 import { useLigas } from "../../shared/api/ligas/useLigas";
 import { useTemporadaActual } from "../../shared/api/temporadas/useTemporadas";
+import fondo from "../../shared/assets/tsunami.jpg";
+import { authLinkClass } from "../../shared/components/Auth/AuthCard";
+import { EstadoError, SkeletonTarjetaLiga } from "../../shared/components/Estados/Estados";
+import { TarjetaLiga } from "../../shared/components/TarjetaLiga/TarjetaLiga";
+import { SectionTitle } from "../../shared/components/Titulos/Titulos";
+import { TELEFONO_ALBERTO } from "../../shared/db/telefono";
 import { useLigasDeUsuario } from "../../shared/hooks/useLigasDeUsuario";
-import { CtaLigasDisponibles } from "./CtaLigasDisponibles";
-import { ButtonWhatsapp } from "./ButtonWhatsapp";
 import { EnfrentamientosPendientes } from "../Jornadas/DetalleJornada/components/EnfrentamientosPendientes";
+import { ButtonWhatsapp } from "./ButtonWhatsapp";
+import { CtaLigasDisponibles } from "./CtaLigasDisponibles";
+import { TeToca } from "./TeToca";
+
+/** Pie con el enlace a futbolin.app (DESIGN.md §6.2: pie de Home/Landing). */
+const FooterFutbolin = ({ className }: { className?: string }) => (
+  <a
+    href="https://www.futbolin.app"
+    target="_blank"
+    rel="noreferrer"
+    className={cn(
+      "relative mt-auto flex w-full flex-col items-center gap-2.5 rounded-liga border border-border bg-card/85 p-4 font-display text-[13px] font-semibold tracking-[0.04em] text-foreground backdrop-blur-xs lg:w-auto lg:flex-row lg:gap-4 lg:px-6",
+      className
+    )}
+  >
+    <span>¡ Encuentra futbolines cerca !</span>
+    <img src="/logo-futbol-in.png" alt="futbolin.app" className="w-[150px] lg:w-24" />
+  </a>
+);
 
 export const LandingPage = () => {
   const navigate = useNavigate();
@@ -45,127 +66,125 @@ export const LandingPage = () => {
     navigate(`/competiciones/${idLiga}/clasificacion`);
   };
 
+  const heroInvitado = !isLoading && !isLoggedIn;
+
   return (
-    <main className="p-4 pt-8 h-full w-full relative flex-1 flex flex-col items-center justify-between pb-18">
-      <img
-        src={fondo}
-        alt="fondo"
-        className="h-svh w-full inset-0 object-cover object-center fixed pointer-events-none -z-1"
-      />
-      <div className="h-svh w-full inset-0 fixed pointer-events-none -z-1 bg-black/20" />
-
-      <h1
-        className="
-          font-black
-          text-neutral-50
-          text-center font-neutral-950
-          bg-center bg-cover bg-no-repeat
-          bg-clip-text
-          leading-none
-          text-4xl
-          md:text-4xl
-          xl:text-5xl
-          2xl:text-6xl
-          animate-fade-in-top
-        "
+    <main className="relative flex w-full flex-1 flex-col">
+      {/* Hero: foto con degradado hacia el fondo (design/screens/Home.html) */}
+      <div
+        aria-hidden="true"
+        className={cn(
+          "pointer-events-none absolute inset-x-0 top-0 overflow-hidden",
+          heroInvitado ? "bottom-0" : "h-[300px] lg:h-[260px]"
+        )}
       >
-        Recreativos <span className="text-primary">AIR</span>
-      </h1>
-      <p className="text-neutral-400 text-balance text-center animate-fade-in-top text-sm mt-4">
-        Empresa especializada en futbolines Tsunami e Infinity en la provincia
-        de Salamanca.
-      </p>
+        <img
+          src={fondo}
+          alt=""
+          className={cn(
+            "h-full w-full object-cover",
+            heroInvitado ? "object-[72%_center] opacity-80" : "object-right opacity-55 lg:object-[center_35%] lg:opacity-60"
+          )}
+        />
+        <div
+          className={cn(
+            "absolute inset-0",
+            heroInvitado
+              ? "bg-[linear-gradient(180deg,rgb(from_var(--color-background)_r_g_b/0.55),rgb(from_var(--color-background)_r_g_b/0.2)_45%,rgb(from_var(--color-background)_r_g_b/0.85))]"
+              : "bg-[linear-gradient(180deg,rgb(from_var(--color-background)_r_g_b/0.35),var(--color-background)_92%)]"
+          )}
+        />
+      </div>
 
-      {isLoading ? (
-        <div className="flex items-center justify-center flex-1">
-          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-        </div>
-      ) : isLoggedIn ? (
-        <div className="max-w-11/12 md:min-w-md md:max-w-3xl">
-          {user?.admin && <EnfrentamientosPendientes />}
-          <p className="font-display text-primary text-2xl font-black my-3">
-            Mis ligas
+      <div
+        className={cn(
+          "relative flex w-full flex-1 flex-col items-center gap-[22px] px-4 pb-5",
+          heroInvitado ? "pt-10" : "pt-7 lg:pt-12"
+        )}
+      >
+        <div className="flex flex-col items-center gap-2.5 text-center">
+          <h1 className="animate-fade-in-top font-display text-[38px] leading-none font-bold tracking-[0.01em] text-foreground uppercase lg:text-6xl">
+            Recreativos{" "}
+            <span className="text-primary-text [text-shadow:0_0_14px_rgb(235_138_31/0.45)]">
+              AIR
+            </span>
+          </h1>
+          <p className="max-w-80 animate-fade-in-top text-sm leading-[1.45] text-balance text-foreground-soft lg:max-w-none lg:text-[15px]">
+            Empresa especializada en futbolines Tsunami e Infinity en la provincia
+            de Salamanca.
           </p>
-          {loadingLigas ? (
-            <ul className="pb-3 flex overflow-x-auto gap-2 snap-x rounded-lg">
-              {["qwe", "qweo", "qweu"]?.map((l) => (
-                <div
-                  key={l}
-                  className="w-11/12 md:w-full shrink-0 snap-center rounded-xl"
-                >
-                  <div className="animate-pulse max-w-80 h-30 shrink-0 justify-between border overflow-hidden md:p-4 p-1.5 relative bg-neutral-900 rounded-lg border-neutral-800 z-0">
-                    Cargando...
-                  </div>
-                </div>
-              ))}
-            </ul>
-          ) : errorLigas ? (
-            <p className="text-red-500 text-center">
-              Error al cargar las ligas: {errorLigas.message}
-            </p>
-          ) : (
-            <ul className="pb-3 flex overflow-x-auto gap-2 snap-x rounded-lg">
-              {ligas?.map((l) => (
-                <div
-                  key={l.id}
-                  className={`${ligas.length > 1 ? "w-11/12" : "w-full"} shrink-0 snap-center rounded-xl`}
-                >
-                  <TarjetaLiga
-                    key={l.id}
-                    liga={l}
-                    onClick={() => handleNavigateLiga(l.id)}
-                  />
-                </div>
-              ))}
-            </ul>
-          )}
-          {sinLigasActivas && !loadingLigas && (
-            <CtaLigasDisponibles
-              ligasDisponibles={ligasDisponibles}
-              tieneLigas={!!ligas?.length}
-              temporadaActual={temporadaActual}
-            />
-          )}
         </div>
-      ) : (
-        <div className="w-full flex flex-col gap-2 max-w-lg">
-          <div className="mt-5 flex flex-col items-center gap-4">
-            <div className="flex w-full gap-2">
 
-            <Button>
-              <Link to="/login" className="w-full">
-                Entrar 🚀
-              </Link>
-            </Button>
-            <Button variant="outline">
-              <Link to="/register">No tengo cuenta</Link>
-            </Button>
+        {isLoading ? (
+          <div className="flex flex-1 items-center justify-center" role="status" aria-label="Cargando">
+            <div className="size-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+          </div>
+        ) : isLoggedIn ? (
+          <div className="grid w-full max-w-3xl gap-6 lg:max-w-none lg:grid-cols-[2fr_3fr] lg:items-start lg:gap-8 lg:px-2">
+            <div className="flex flex-col gap-[22px]">
+              {user?.admin ? <EnfrentamientosPendientes /> : <TeToca />}
             </div>
-
-            <Link
-              to="/reset-password"
-              className="text-neutral-400 text-sm underline"
-            >
+            <section className="flex w-full min-w-0 flex-col gap-2.5">
+              <SectionTitle>Mis ligas</SectionTitle>
+              {loadingLigas ? (
+                <SkeletonTarjetaLiga label="Cargando..." />
+              ) : errorLigas ? (
+                <EstadoError>Error al cargar las ligas: {errorLigas.message}</EstadoError>
+              ) : (
+                <ul
+                  className={cn(
+                    "flex snap-x gap-2.5 overflow-x-auto pb-2 lg:grid lg:grid-cols-2 lg:overflow-visible",
+                    ligas && ligas.length > 1 && "-mr-4 lg:mr-0"
+                  )}
+                >
+                  {ligas?.map((l) => (
+                    <li
+                      key={l.id}
+                      className={cn(
+                        "shrink-0 snap-center lg:w-auto",
+                        ligas.length > 1 ? "w-[88%]" : "w-full"
+                      )}
+                    >
+                      <TarjetaLiga liga={l} onClick={() => handleNavigateLiga(l.id)} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {sinLigasActivas && !loadingLigas && (
+                <CtaLigasDisponibles
+                  ligasDisponibles={ligasDisponibles}
+                  tieneLigas={!!ligas?.length}
+                  temporadaActual={temporadaActual}
+                />
+              )}
+            </section>
+          </div>
+        ) : (
+          <div className="flex w-full max-w-lg flex-col items-center gap-2">
+            <div className="mt-2 flex w-full gap-2">
+              <Button as="a" href="/login" onClick={() => navigate("/login")}>
+                Entrar 🚀
+              </Button>
+              <Button
+                as="a"
+                href="/register"
+                variant="outline"
+                onClick={() => navigate("/register")}
+                className="bg-background/60"
+              >
+                No tengo cuenta
+              </Button>
+            </div>
+            <Link to="/reset-password" className={`${authLinkClass} text-foreground`}>
               He olvidado mi contraseña
             </Link>
           </div>
-        </div>
-      )}
+        )}
 
-      <a
-        href="https://www.futbolin.app"
-        target="_blank"
-        className="bg-neutral-900/70 backdrop-blur-xs block rounded-3xl font-display p-4 min-w-80 text-center text-xs mt-auto"
-      >
-        ¡ Encuentra futbolines cerca !
-        <img
-          src="/logo-futbol-in.png"
-          alt="logo"
-          className="w-fit max-w-32 mx-auto"
-        />
-      </a>
+        <FooterFutbolin className={cn(!heroInvitado && "lg:mt-4")} />
 
-      {!isLoggedIn && <ButtonWhatsapp numero={TELEFONO_ALBERTO} />}
+        {heroInvitado && <ButtonWhatsapp numero={TELEFONO_ALBERTO} />}
+      </div>
     </main>
   );
 };

@@ -20,7 +20,7 @@ export const EscudoEquipo = ({
 }: {
   nombre: string;
   color?: string | null;
-  size?: 32 | 40 | 44;
+  size?: 32 | 40 | 44 | 52;
   className?: string;
 }) => {
   const base = color?.trim() || "var(--color-primary)";
@@ -32,6 +32,7 @@ export const EscudoEquipo = ({
         size === 32 && "size-8 text-xs",
         size === 40 && "size-10 text-[15px]",
         size === 44 && "size-11 text-base",
+        size === 52 && "size-13 text-[19px]",
         className
       )}
       style={{

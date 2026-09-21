@@ -1,8 +1,7 @@
-import { Trophy } from "lucide-react";
+import { Info, Trophy } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { Button } from "../../../packages/components/Button/Button";
-import { Message } from "../../../packages/components/Message/Message";
 import { useAuth } from "../../../shared/api/auth/useAuth";
 import { useGetEquiposUsuario } from "../../../shared/api/equipos/hooks/useGetEquipos";
 import { useLigas } from "../../../shared/api/ligas/useLigas";
@@ -11,10 +10,16 @@ import {
   useTemporadas,
 } from "../../../shared/api/temporadas/useTemporadas";
 import {
+  EstadoError,
+  EstadoVacio,
+  SkeletonTarjetaLiga,
+} from "../../../shared/components/Estados/Estados";
+import {
   OPCION_TODAS,
   SelectorTemporada,
 } from "../../../shared/components/SelectorTemporada/SelectorTemporada";
 import { TarjetaLiga } from "../../../shared/components/TarjetaLiga/TarjetaLiga";
+import { PageTitle } from "../../../shared/components/Titulos/Titulos";
 
 export const CompeticionesPage = () => {
   const navigate = useNavigate();
@@ -36,65 +41,72 @@ export const CompeticionesPage = () => {
   const { user } = useAuth();
   const { data: equiposUsuario } = useGetEquiposUsuario(user?.id || "");
 
+  const cargando = isLoading || cargandoActual;
+
   return (
     <>
       <title>Competiciones | Recreativos Air</title>
-      <div className="max-w-screen-md mx-auto flex flex-col items-center justify-start p-4 h-full gap-3">
-        <h1 className="text-3xl font-bold font-display sticky top-0 bg-neutral-950 pb-2 w-full">Competiciones</h1>
-        <div className="w-full">
-          <SelectorTemporada
-            temporadas={temporadas ?? []}
-            value={temporadaFiltro}
-            onSelect={setTemporadaSeleccionada}
-            incluirOpcionTodas
-            incluirOpcionSinTemporada={!!user?.admin}
-          />
-        </div>
+      <main className="mx-auto flex w-full max-w-screen-md flex-col gap-3.5 px-4 pt-[18px] pb-5">
+        <PageTitle className="text-[30px]">Competiciones</PageTitle>
+
+        <SelectorTemporada
+          temporadas={temporadas ?? []}
+          value={temporadaFiltro}
+          onSelect={setTemporadaSeleccionada}
+          incluirOpcionTodas
+          incluirOpcionSinTemporada={!!user?.admin}
+        />
+
         {equiposUsuario?.length === 0 && (
-          <Message variant="info" className="w-full mb-2">
-            <>
+          <div className="flex gap-2.5 rounded-input border border-border bg-card px-3 py-2.5 text-[13px] leading-[1.45] text-foreground-soft">
+            <Info size={18} className="mt-px shrink-0 text-muted-foreground" aria-hidden="true" />
+            <div className="flex flex-col gap-1">
               <p>
                 No perteneces a ningún equipo. Debes crear un equipo para poder
                 inscribirte a las competiciones
               </p>
               <Link
                 to="/crear-equipo"
-                className="text-primary underline text-sm"
+                className="inline-flex min-h-6 w-fit items-center font-bold text-primary-text underline underline-offset-2"
               >
                 Crear equipo
               </Link>
-            </>
-          </Message>
+            </div>
+          </div>
         )}
+
         {user?.admin && (
           <Button onClick={() => navigate("/crear-liga")} icon={Trophy}>
             Nueva liga
           </Button>
         )}
-        {isLoading && <p>Cargando...</p>}
-        {error && <p>Error al cargar {String(error)}</p>}
 
-        {ligas?.length === 0 ? (
-          <p className="text-center p-10 text-neutral-400">No hay ligas</p>
+        {cargando ? (
+          <div className="flex flex-col gap-3.5">
+            <SkeletonTarjetaLiga />
+            <SkeletonTarjetaLiga />
+          </div>
+        ) : error ? (
+          <EstadoError>Error al cargar {String(error)}</EstadoError>
+        ) : ligas?.length === 0 ? (
+          <EstadoVacio className="border-0 bg-transparent py-10">No hay ligas</EstadoVacio>
         ) : (
-          <ul className="flex flex-row flex-wrap gap-4 w-full h-11/12 overflow-y-auto pt-2 justify-center">
+          <ul className="flex w-full flex-col gap-3.5">
             {ligas?.map((liga, index) => (
-              <span
-                style={{ animationDelay: `${index * 0.1}s` }}
+              <li
                 key={liga.id}
-                className="animate-fade-in-top w-full"
+                style={{ animationDelay: `${index * 0.1}s` }}
+                className="w-full animate-fade-in-top"
               >
                 <TarjetaLiga
                   liga={liga}
-                  onClick={() =>
-                    navigate(`/competiciones/${liga.id}/clasificacion`)
-                  }
+                  onClick={() => navigate(`/competiciones/${liga.id}/clasificacion`)}
                 />
-              </span>
+              </li>
             ))}
           </ul>
         )}
-      </div>
+      </main>
     </>
   );
 };

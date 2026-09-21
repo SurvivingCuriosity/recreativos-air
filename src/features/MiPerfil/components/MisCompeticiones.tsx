@@ -1,10 +1,17 @@
 import { Trophy } from "lucide-react";
 import { useNavigate } from "react-router";
+import { cn } from "@/lib/utils";
 import { Button } from "../../../packages/components/Button/Button";
 import { useAuth } from "../../../shared/api/auth/useAuth";
 import { useLigas } from "../../../shared/api/ligas/useLigas";
+import {
+  EstadoError,
+  EstadoVacio,
+  SkeletonTarjetaLiga,
+} from "../../../shared/components/Estados/Estados";
 import { TarjetaLiga } from "../../../shared/components/TarjetaLiga/TarjetaLiga";
 
+/** Mis competiciones: lista vertical si ≤3, carrusel si hay más (DESIGN.md §6.11). */
 export const MisCompeticiones = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -15,17 +22,10 @@ export const MisCompeticiones = () => {
     error: errorLigas,
   } = useLigas();
 
-  if (loadingLigas)
-    return (
-      <p className="text-center p-8 text-neutral-500">Cargando ligas...</p>
-    );
+  if (loadingLigas) return <SkeletonTarjetaLiga label="Cargando ligas..." />;
 
   if (errorLigas)
-    return (
-      <p className="text-center p-8 text-red-500">
-        Ups... {String(errorLigas || "Algo pasó")}
-      </p>
-    );
+    return <EstadoError>Ups... {String(errorLigas || "Algo pasó")}</EstadoError>;
 
   const ligasEnLasQueEstaInscrito = ligas?.filter((l) =>
     l.equipos.some((e) =>
@@ -34,39 +34,39 @@ export const MisCompeticiones = () => {
   );
 
   if (ligasEnLasQueEstaInscrito === undefined)
-    return (
-      <p className="text-center p-8 text-red-500">
-        Ups... error ligas=undefined
-      </p>
-    );
+    return <EstadoError>Ups... error ligas=undefined</EstadoError>;
 
   if (ligasEnLasQueEstaInscrito.length === 0)
     return (
-      <div className="text-neutral-300 p-4 text-center bg-neutral-800/90 rounded-lg">
-        <p className="p-3">No inscrito a ninguna competición</p>
-        <Button
-          onClick={() => navigate("/competiciones")}
-          variant="outline"
-          icon={Trophy}
-        >
-          Ver competiciones
-        </Button>
-      </div>
+      <EstadoVacio
+        action={
+          <Button
+            onClick={() => navigate("/competiciones")}
+            variant="outline"
+            icon={Trophy}
+            className="w-auto"
+          >
+            Ver competiciones
+          </Button>
+        }
+      >
+        No inscrito a ninguna competición
+      </EstadoVacio>
     );
 
+  const carrusel = ligasEnLasQueEstaInscrito.length > 3;
+
   return (
-    <ul className="pb-3 flex overflow-x-auto gap-4 mt-2 snap-x rounded-lg ">
+    <ul
+      className={cn(
+        "flex w-full gap-2.5",
+        carrusel ? "-mr-4 snap-x overflow-x-auto pb-2 lg:mr-0" : "flex-col"
+      )}
+    >
       {ligasEnLasQueEstaInscrito.map((l) => (
-        <div
-          key={l.id}
-          className="w-[87%] max-w-96 shrink-0 snap-center rounded-xl"
-        >
-          <TarjetaLiga
-            key={l.id}
-            liga={l}
-            onClick={() => navigate(`/competiciones/${l.id}/clasificacion`)}
-          />
-        </div>
+        <li key={l.id} className={cn(carrusel && "w-[88%] max-w-96 shrink-0 snap-center")}>
+          <TarjetaLiga liga={l} onClick={() => navigate(`/competiciones/${l.id}/clasificacion`)} />
+        </li>
       ))}
     </ul>
   );

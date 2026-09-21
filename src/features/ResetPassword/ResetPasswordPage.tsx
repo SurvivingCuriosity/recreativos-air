@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "@/shared/lib/toast";
 import { Link, useNavigate } from "react-router";
 import {
   ForgotPasswordSchema,
@@ -9,6 +8,7 @@ import {
   type ForgotPasswordBody,
   type ResetPasswordBody,
 } from "recreativos-air-core/auth";
+import { toast } from "@/shared/lib/toast";
 import { Button } from "../../packages/components/Button/Button";
 import { FormField } from "../../packages/components/Form/FormField";
 import { FormLabel } from "../../packages/components/Form/FormLabel";
@@ -16,6 +16,16 @@ import { PasswordInput } from "../../packages/components/TextInput/PasswordInput
 import { TextInput } from "../../packages/components/TextInput/TextInput";
 import { useForgotPassword, useResetPassword } from "../../shared/api/auth/hooks";
 import type { ErrorResponse } from "../../shared/api/http";
+import {
+  AuthCard,
+  AuthMain,
+  AuthText,
+  AuthTitle,
+  FieldError,
+  StepIndicator,
+  authLinkClass,
+} from "../../shared/components/Auth/AuthCard";
+import { CodeInput } from "../../shared/components/Auth/CodeInput";
 
 // ─── Paso 1: solicitar código ────────────────────────────────────────────────
 
@@ -46,14 +56,10 @@ const StepEmail = ({ onSuccess }: StepEmailProps) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 bg-neutral-900 shadow-md rounded-xl p-6 border border-neutral-800 max-w-md mx-auto w-full"
-    >
-      <h1 className="text-2xl font-bold text-center">Recuperar contraseña</h1>
-      <p className="text-center text-neutral-500 text-sm">
-        Introduce tu correo y te enviaremos un código de recuperación
-      </p>
+    <AuthCard onSubmit={handleSubmit(onSubmit)}>
+      <AuthTitle>Recuperar contraseña</AuthTitle>
+      <AuthText>Introduce tu correo y te enviaremos un código de recuperación</AuthText>
+      <StepIndicator step={1} />
 
       <FormField>
         <FormLabel htmlFor="forgot-email">Email</FormLabel>
@@ -73,19 +79,17 @@ const StepEmail = ({ onSuccess }: StepEmailProps) => {
             />
           )}
         />
-        {errors.email && (
-          <p className="text-red-500 text-xs">{errors.email.message}</p>
-        )}
+        <FieldError>{errors.email?.message}</FieldError>
       </FormField>
 
       <Button disabled={isPending} type="submit">
         Enviar código
       </Button>
 
-      <Link to="/login" className="mx-auto underline text-sm text-neutral-600 mt-2">
+      <Link to="/login" className={`${authLinkClass} self-center`}>
         Volver al inicio de sesión
       </Link>
-    </form>
+    </AuthCard>
   );
 };
 
@@ -124,14 +128,12 @@ const StepReset = ({ email, onBack }: StepResetProps) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 bg-neutral-900 shadow-md rounded-xl p-6 border border-neutral-800 max-w-md mx-auto w-full"
-    >
-      <h1 className="text-2xl font-bold text-center">Nueva contraseña</h1>
-      <p className="text-center text-neutral-500 text-sm">
+    <AuthCard onSubmit={handleSubmit(onSubmit)}>
+      <AuthTitle>Nueva contraseña</AuthTitle>
+      <AuthText>
         Hemos enviado un código de 6 dígitos a <strong>{email}</strong>
-      </p>
+      </AuthText>
+      <StepIndicator step={2} />
 
       <FormField>
         <FormLabel htmlFor="reset-code">Código</FormLabel>
@@ -139,23 +141,16 @@ const StepReset = ({ email, onBack }: StepResetProps) => {
           name="code"
           control={control}
           render={({ field }) => (
-            <TextInput
+            <CodeInput
               id="reset-code"
-              autoComplete="one-time-code"
-              placeholder="123456"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              maxLength={6}
               value={field.value}
-              onChangeText={field.onChange}
+              onChange={field.onChange}
               hasError={!!errors.code}
               autoFocus
             />
           )}
         />
-        {errors.code && (
-          <p className="text-red-500 text-xs">{errors.code.message}</p>
-        )}
+        <FieldError>{errors.code?.message}</FieldError>
       </FormField>
 
       <FormField>
@@ -175,9 +170,7 @@ const StepReset = ({ email, onBack }: StepResetProps) => {
             />
           )}
         />
-        {errors.password && (
-          <p className="text-red-500 text-xs">{errors.password.message}</p>
-        )}
+        <FieldError>{errors.password?.message}</FieldError>
       </FormField>
 
       <FormField>
@@ -197,23 +190,17 @@ const StepReset = ({ email, onBack }: StepResetProps) => {
             />
           )}
         />
-        {errors.confirmPassword && (
-          <p className="text-red-500 text-xs">{errors.confirmPassword.message}</p>
-        )}
+        <FieldError>{errors.confirmPassword?.message}</FieldError>
       </FormField>
 
       <Button disabled={isPending} type="submit">
         Cambiar contraseña
       </Button>
 
-      <button
-        type="button"
-        onClick={onBack}
-        className="mx-auto underline text-sm text-neutral-600 mt-2"
-      >
+      <button type="button" onClick={onBack} className={`${authLinkClass} self-center`}>
         Volver a introducir el correo
       </button>
-    </form>
+    </AuthCard>
   );
 };
 
@@ -229,12 +216,12 @@ export const ResetPasswordPage = () => {
   };
 
   return (
-    <main className="h-full w-full p-4 max-w-screen-lg mx-auto flex flex-col justify-center">
+    <AuthMain className="max-w-md">
       {step === "email" ? (
         <StepEmail onSuccess={handleEmailSuccess} />
       ) : (
         <StepReset email={email} onBack={() => setStep("email")} />
       )}
-    </main>
+    </AuthMain>
   );
 };
