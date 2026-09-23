@@ -90,7 +90,7 @@ export const CaminoALaLiga = ({
 
   if (cerrado) return null;
 
-  const titulo = tieneLigasPasadas ? "¡Apúntate a la liga!" : "Aún no estás en ninguna liga";
+  const titulo = tieneLigasPasadas ? "Tus ligas han terminado" : "Aún no estás en ninguna liga";
 
   const descripcionLigas =
     ligasAbiertas > 0
