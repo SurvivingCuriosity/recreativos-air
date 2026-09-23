@@ -14,7 +14,7 @@ import { useTareas } from "./useTareas";
 
 const plural = (n: number, s: string, p: string) => (n === 1 ? s : p);
 
-/** Saludo «Hola, {nombre}» con subtítulo solo si hay tareas. */
+/** Saludo «Hola, {nombre}» con el resumen de tareas debajo. */
 export const Saludo = ({
   nombre,
   tareas,
@@ -28,12 +28,14 @@ export const Saludo = ({
     <h1 className="font-display text-[30px] leading-[1.1] font-bold normal-case tracking-normal text-foreground">
       Hola, <span className="text-primary-text text-glow-liga">{nombre}</span>
     </h1>
-    {tareas > 0 && (
+    {tareas > 0 ? (
       <p className="text-sm text-foreground-soft">
         {admin
           ? `Tienes ${tareas} ${plural(tareas, "tarea", "tareas")} de administración`
           : `Tienes ${tareas} ${plural(tareas, "tarea pendiente", "tareas pendientes")}`}
       </p>
+    ) : (
+      <p className="text-xs text-muted-foreground">Sin tareas pendientes</p>
     )}
   </div>
 );
