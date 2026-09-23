@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router";
 import { cn } from "@/lib/utils";
 import { useAuth } from "../../shared/api/auth/useAuth";
-import { useConteoEnfrentamientosPendientes } from "../../shared/api/enfrentamientos/hooks";
+import { useConteoTareasAdmin } from "../../shared/hooks/useConteoTareasAdmin";
 import {
   NAV_ADMIN_ICON,
   NAV_ADMIN_LABEL,
@@ -49,7 +49,7 @@ export const BottomNav = () => {
   const { user, isLoggedIn } = useAuth();
   const { pathname } = useLocation();
   const isAdmin = !!user?.admin;
-  const pendientes = useConteoEnfrentamientosPendientes();
+  const pendientes = useConteoTareasAdmin();
   const [sheetOpen, setSheetOpen] = useState(false);
   const AdminIcon = NAV_ADMIN_ICON;
 

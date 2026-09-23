@@ -7,14 +7,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { useConteoEnfrentamientosPendientes } from "../../shared/api/enfrentamientos/hooks";
+import { useConteoTareasAdmin } from "../../shared/hooks/useConteoTareasAdmin";
 import { ADMIN_LINKS, NAV_ADMIN_ICON, NAV_ADMIN_LABEL, isAdminRoute } from "../navContent";
 import { BadgePendientes } from "./BadgePendientes";
 
 /** Desplegable «Admin» del header desktop (DESIGN.md §6.3). */
 export const AdminMenu = () => {
   const { pathname } = useLocation();
-  const pendientes = useConteoEnfrentamientosPendientes();
+  const pendientes = useConteoTareasAdmin();
   const AdminIcon = NAV_ADMIN_ICON;
   const active = isAdminRoute(pathname);
 

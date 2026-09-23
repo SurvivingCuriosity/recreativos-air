@@ -1,0 +1,100 @@
+import { Check, Plus, Trophy } from "lucide-react";
+import type { ReactNode } from "react";
+import { useNavigate } from "react-router";
+import { cn } from "@/lib/utils";
+import { Button } from "../../packages/components/Button/Button";
+
+type EstadoPaso = "hecho" | "actual" | "pendiente";
+
+const Paso = ({
+  n,
+  estado,
+  titulo,
+  children,
+}: {
+  n: number;
+  estado: EstadoPaso;
+  titulo: string;
+  children?: ReactNode;
+}) => (
+  <li className="flex gap-3">
+    <span
+      className={cn(
+        "inline-flex size-7 shrink-0 items-center justify-center rounded-full font-display text-sm font-bold",
+        estado === "hecho" && "border border-success/40 bg-success/15 text-success",
+        estado === "actual" &&
+          "bg-primary text-primary-foreground dark:shadow-[0_0_10px_rgb(235_138_31/0.35)]",
+        estado === "pendiente" && "border border-input text-muted-foreground"
+      )}
+    >
+      {estado === "hecho" ? <Check size={16} aria-hidden="true" /> : n}
+    </span>
+    <div className="flex flex-1 flex-col gap-2 pt-[3px]">
+      <span
+        className={cn(
+          "font-display text-base",
+          estado === "actual"
+            ? "font-bold text-foreground"
+            : estado === "hecho"
+              ? "font-semibold text-foreground-soft"
+              : "font-semibold text-muted-foreground"
+        )}
+      >
+        {titulo}
+      </span>
+      {estado === "actual" && children}
+    </div>
+  </li>
+);
+
+export interface CaminoProps {
+  tieneEquipo: boolean;
+  tieneLigasPasadas: boolean;
+  ligasAbiertas: number;
+  temporada?: string;
+}
+
+/** Camino a la liga (sustituye a CtaLigasDisponibles). Solo sin liga activa. */
+export const CaminoALaLiga = ({
+  tieneEquipo,
+  tieneLigasPasadas,
+  ligasAbiertas,
+  temporada,
+}: CaminoProps) => {
+  const navigate = useNavigate();
+  const pasoActual = tieneEquipo ? 2 : 1;
+
+  const titulo = tieneLigasPasadas ? "Tus ligas han terminado" : "Aún no estás en ninguna liga";
+
+  const descripcionLigas =
+    ligasAbiertas > 0
+      ? `Hay ${ligasAbiertas} ${ligasAbiertas === 1 ? "liga abierta" : "ligas abiertas"} a inscripción${temporada ? ` en ${temporada}` : ""}.`
+      : "Ahora mismo no hay ligas abiertas a inscripción. Estate atento a las próximas competiciones.";
+
+  return (
+    <section className="flex flex-col gap-3.5 rounded-card-lg border border-primary/35 bg-card p-4">
+      <div className="flex items-center gap-2 text-primary-text">
+        <Trophy size={18} aria-hidden="true" />
+        <h2 className="font-display text-lg font-bold normal-case tracking-normal">{titulo}</h2>
+      </div>
+      <ol className="flex flex-col gap-3.5">
+        <Paso n={1} estado={pasoActual > 1 ? "hecho" : "actual"} titulo="Crea tu equipo">
+          <Button icon={Plus} onClick={() => navigate("/crear-equipo")} className="h-[46px]">
+            Crear equipo
+          </Button>
+        </Paso>
+        <Paso n={2} estado={pasoActual === 2 ? "actual" : "pendiente"} titulo="Inscríbete en una liga">
+          <span className="text-[13px] text-foreground-soft">{descripcionLigas}</span>
+          <Button
+            variant={ligasAbiertas > 0 ? "primary" : "outline"}
+            onClick={() => navigate("/competiciones")}
+            className="h-[46px]"
+          >
+            {ligasAbiertas > 0 ? "Ver ligas disponibles" : "Ver competiciones"}
+          </Button>
+        </Paso>
+        <Paso n={3} estado="pendiente" titulo="Esperando confirmación..." />
+      </ol>
+    </section>
+  );
+};
