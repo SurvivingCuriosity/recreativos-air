@@ -1,5 +1,5 @@
-import { Check, Plus, Trophy } from "lucide-react";
-import type { ReactNode } from "react";
+import { Check, Plus, Trophy, X } from "lucide-react";
+import { useState, type ReactNode } from "react";
 import { useNavigate } from "react-router";
 import { cn } from "@/lib/utils";
 import { Button } from "../../packages/components/Button/Button";
@@ -52,7 +52,18 @@ export interface CaminoProps {
   tieneLigasPasadas: boolean;
   ligasAbiertas: number;
   temporada?: string;
+  /** Clave de sessionStorage para recordar que se ha cerrado (por usuario). */
+  storageKey?: string;
 }
+
+const leerCerrado = (key?: string) => {
+  if (!key) return false;
+  try {
+    return sessionStorage.getItem(key) === "1";
+  } catch {
+    return false;
+  }
+};
 
 /** Camino a la liga (sustituye a CtaLigasDisponibles). Solo sin liga activa. */
 export const CaminoALaLiga = ({
@@ -60,9 +71,24 @@ export const CaminoALaLiga = ({
   tieneLigasPasadas,
   ligasAbiertas,
   temporada,
+  storageKey,
 }: CaminoProps) => {
   const navigate = useNavigate();
+  const [cerrado, setCerrado] = useState(() => leerCerrado(storageKey));
   const pasoActual = tieneEquipo ? 2 : 1;
+
+  const cerrar = () => {
+    setCerrado(true);
+    if (storageKey) {
+      try {
+        sessionStorage.setItem(storageKey, "1");
+      } catch {
+        /* sessionStorage no disponible */
+      }
+    }
+  };
+
+  if (cerrado) return null;
 
   const titulo = tieneLigasPasadas ? "Tus ligas han terminado" : "Aún no estás en ninguna liga";
 
@@ -72,11 +98,19 @@ export const CaminoALaLiga = ({
       : "Ahora mismo no hay ligas abiertas a inscripción. Estate atento a las próximas competiciones.";
 
   return (
-    <section className="flex flex-col gap-3.5 rounded-card-lg border border-primary/35 bg-card p-4">
-      <div className="flex items-center gap-2 text-primary-text">
+    <section className="relative flex flex-col gap-3.5 rounded-card-lg border border-primary/35 bg-card p-4">
+      <div className="flex items-center gap-2 pr-10 text-primary-text">
         <Trophy size={18} aria-hidden="true" />
         <h2 className="font-display text-lg font-bold normal-case tracking-normal">{titulo}</h2>
       </div>
+      <button
+        type="button"
+        onClick={cerrar}
+        aria-label="Cerrar"
+        className="absolute top-1.5 right-1.5 flex size-11 items-center justify-center rounded-input text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring"
+      >
+        <X size={18} aria-hidden="true" />
+      </button>
       <ol className="flex flex-col gap-3.5">
         <Paso n={1} estado={pasoActual > 1 ? "hecho" : "actual"} titulo="Crea tu equipo">
           <Button icon={Plus} onClick={() => navigate("/crear-equipo")} className="h-[46px]">

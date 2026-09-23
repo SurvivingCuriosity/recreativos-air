@@ -6,7 +6,7 @@ import { EstadoError } from "../../shared/components/Estados/Estados";
 import { ContadorSeccion, SectionTitle } from "../../shared/components/Titulos/Titulos";
 import { FooterFutbolin } from "../LandingPage/FooterFutbolin";
 import { CaminoALaLiga } from "./CaminoALaLiga";
-import { LigasAnteriores } from "./LigasAnteriores";
+import { EnlaceLigasAnteriores } from "./LigasAnteriores";
 import { ListaTareas, SubtituloGrupo, TareaItem } from "./Tareas";
 import { TarjetaLigaHero } from "./TarjetaLigaHero";
 import { useLigasUsuarioHome } from "./useLigasUsuarioHome";
@@ -128,6 +128,7 @@ export const HomePage = () => {
                 tieneLigasPasadas={pasadas.length > 0}
                 ligasAbiertas={ligasAbiertas}
                 temporada={temporadaActual?.nombre}
+                storageKey={`home-camino-cerrado:${user?.id ?? ""}`}
               />
             </div>
           )}
@@ -150,8 +151,8 @@ export const HomePage = () => {
           )}
 
           {!tieneLigaActiva && pasadas.length > 0 && (
-            <div className="animate-fade-in-top" {...anim(i++)}>
-              <LigasAnteriores ligas={pasadas} userId={user?.id} />
+            <div className="flex animate-fade-in-top" {...anim(i++)}>
+              <EnlaceLigasAnteriores />
             </div>
           )}
         </>
