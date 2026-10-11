@@ -37,7 +37,7 @@ const EnlaceEquipo = ({
   </Link>
 );
 
-export const DetalleJornadaPage = () => {
+export const DetalleEnfrentamientoPage = () => {
   const { id: idEnfrentamiento } = useParams();
   const { user } = useAuth();
   const { data: enfrentamiento, isLoading } = useEnfrentamientoById(idEnfrentamiento || "");

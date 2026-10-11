@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes, useParams } from "react-router";
 import { CompeticionesPage } from "../features/Competiciones/pages/CompeticionesPage";
 import { CrearEquipoPage } from "../features/CrearEquipo/CrearEquipoPage";
 import { CrearLigaPage } from "../features/CrearLiga/CrearLigaPage";
@@ -9,7 +9,7 @@ import { InfoLigaPage } from "../features/DetalleLiga/pages/InfoLigaPage";
 import { JornadasLigaPage } from "../features/DetalleLiga/pages/JornadasLigaPage";
 import { AjustesLigaPage } from "../features/DetalleLiga/pages/AjustesLigaPage";
 import { DetalleEquipoPage } from "../features/Equipos/DetalleEquipo/DetalleEquipoPage";
-import { DetalleJornadaPage } from "../features/Jornadas/DetalleJornada/DetalleJornadaPage";
+import { DetalleEnfrentamientoPage } from "../features/Enfrentamientos/DetalleEnfrentamiento/DetalleEnfrentamientoPage";
 import { LandingPage } from "../features/LandingPage/LandingPage";
 import { LoginPage } from "../features/Login/LoginPage";
 import { MiPerfilPage } from "../features/MiPerfil/MiPerfilPage";
@@ -26,6 +26,12 @@ import { ResetPasswordPage } from "../features/ResetPassword/ResetPasswordPage";
 import { AdminTemporadasPage } from "../features/Admin/Temporadas/AdminTemporadasPage";
 import { AdminTemporadaNuevaPage } from "../features/Admin/Temporadas/AdminTemporadaNuevaPage";
 import { AdminTemporadaDetallePage } from "../features/Admin/Temporadas/AdminTemporadaDetallePage";
+
+// Ruta antigua del detalle de enfrentamiento
+const RedirigirEnfrentamiento = () => {
+  const { id } = useParams();
+  return <Navigate to={`/enfrentamientos/${id}`} replace />;
+};
 
 export const Router = () => {
   return (
@@ -49,7 +55,8 @@ export const Router = () => {
           <Route path="mi-perfil/editar" element={<EditarPerfilPage />} />
           <Route path="crear-equipo" element={<CrearEquipoPage />} />
           <Route path="equipos/:id" element={<DetalleEquipoPage />} />
-          <Route path="jornadas/:id" element={<DetalleJornadaPage />} />
+          <Route path="enfrentamientos/:id" element={<DetalleEnfrentamientoPage />} />
+          <Route path="jornadas/:id" element={<RedirigirEnfrentamiento />} />
           <Route path="competiciones/:id" element={<DetalleLigaLayout />}>
             <Route path="info" element={<InfoLigaPage />} />
             <Route path="jornadas" element={<JornadasLigaPage />} />

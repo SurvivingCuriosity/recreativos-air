@@ -195,7 +195,7 @@ const ResultadoCard = ({ tarea }: { tarea: Extract<Tarea, { tipo: "resultado" }>
       meta={`Resultado propuesto por ${propuso.nombre}${liga ? ` · ${liga.nombre}` : ""}`}
       acciones={
         <Link
-          to={`/jornadas/${enf.id}`}
+          to={`/enfrentamientos/${enf.id}`}
           className="inline-flex h-11 flex-1 items-center justify-center gap-1.5 rounded-button border border-primary bg-primary/5 px-3.5 font-display text-[15px] font-bold text-primary-text hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
           <span>Revisar resultado</span>
@@ -214,7 +214,7 @@ const AdminResultadoRow = ({ tarea }: { tarea: Extract<Tarea, { tipo: "admin-res
       icon={ShieldCheck}
       titulo={`${enf.equipoA.nombre} vs ${enf.equipoB.nombre}`}
       meta={`${formatMarcador(enf)}${liga ? ` · ${liga.nombre}` : ""}`}
-      href={`/jornadas/${enf.id}`}
+      href={`/enfrentamientos/${enf.id}`}
     />
   );
 };

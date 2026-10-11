@@ -1,12 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/shared/lib/toast";
 import type {
+  ActualizarJornadaBody,
   ActualizarLigaBody,
+  CambiarEstadoLigaBody,
   CrearLigaBody,
   GetLigasQuery,
   LigaDTO,
+  RecalcularJornadasBody,
 } from "recreativos-air-core/liga";
 import { LigasAPI } from "./api";
+
+type ErrorConMensaje = { response?: { data?: { message?: string } } };
+const mensajeError = (e: ErrorConMensaje, fallback: string) =>
+  e?.response?.data?.message || fallback;
 
 // 🔁 Obtener todas las ligas
 export const useLigas = (
@@ -105,6 +112,7 @@ export const useAprobarInscripcion = () => {
     onSuccess: (_, { ligaId }) => {
       toast.success("Inscripción actualizada");
       queryClient.invalidateQueries({ queryKey: ["ligas", ligaId] });
+      queryClient.invalidateQueries({ queryKey: ["enfrentamientosliga", ligaId] });
     },
     onError: () => toast.error("Error al actualizar la inscripción"),
   });
@@ -115,18 +123,54 @@ export const useCambiarEstadoLiga = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      ligaId,
-      nuevoEstado,
-    }: {
-      ligaId: string;
-      nuevoEstado: string;
-    }) => LigasAPI.cambiarEstado(ligaId, nuevoEstado),
+    mutationFn: ({ ligaId, data }: { ligaId: string; data: CambiarEstadoLigaBody }) =>
+      LigasAPI.cambiarEstado(ligaId, data),
     onSuccess: (_, { ligaId }) => {
       toast.success("Estado de la liga actualizado");
       queryClient.invalidateQueries({ queryKey: ["ligas", ligaId] });
+      queryClient.invalidateQueries({ queryKey: ["enfrentamientosliga", ligaId] });
+      queryClient.invalidateQueries({ queryKey: ["clasificacion", ligaId] });
     },
-    onError: () => toast.error("Error al cambiar el estado de la liga"),
+    onError: (e: ErrorConMensaje) =>
+      toast.error(mensajeError(e, "Error al cambiar el estado de la liga")),
+  });
+};
+
+export const useActualizarJornada = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      ligaId,
+      numero,
+      data,
+    }: {
+      ligaId: string;
+      numero: number;
+      data: ActualizarJornadaBody;
+    }) => LigasAPI.actualizarJornada(ligaId, numero, data),
+    onSuccess: (_, { ligaId }) => {
+      toast.success("Jornada actualizada");
+      queryClient.invalidateQueries({ queryKey: ["ligas", ligaId] });
+    },
+    onError: (e: ErrorConMensaje) =>
+      toast.error(mensajeError(e, "Error al actualizar la jornada")),
+  });
+};
+
+export const useRecalcularJornadas = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ ligaId, data }: { ligaId: string; data: RecalcularJornadasBody }) =>
+      LigasAPI.recalcularJornadas(ligaId, data),
+    onSuccess: (_, { ligaId }) => {
+      toast.success("Fechas de jornadas recalculadas");
+      queryClient.invalidateQueries({ queryKey: ["ligas", ligaId] });
+      queryClient.invalidateQueries({ queryKey: ["enfrentamientosliga", ligaId] });
+    },
+    onError: (e: ErrorConMensaje) =>
+      toast.error(mensajeError(e, "Error al recalcular las jornadas")),
   });
 };
 
@@ -139,6 +183,7 @@ export const useEliminarEquipoDeLiga = () => {
     onSuccess: (_, { ligaId }) => {
       toast.success("Equipo eliminado correctamente");
       queryClient.invalidateQueries({ queryKey: ["ligas", ligaId] });
+      queryClient.invalidateQueries({ queryKey: ["enfrentamientosliga", ligaId] });
     },
     onError: () => toast.error("Error al eliminar el equipo de la liga"),
   });

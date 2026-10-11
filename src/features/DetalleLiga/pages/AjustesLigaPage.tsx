@@ -1,4 +1,4 @@
-import { Flag, Play, Save, Trash2 } from "lucide-react";
+import { CalendarDays, Flag, Play, Save, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/shared/lib/toast";
 import { Navigate, useNavigate, useParams } from "react-router";
@@ -19,6 +19,7 @@ import {
   useCambiarEstadoLiga,
   useEliminarLiga,
   useLigaById,
+  useRecalcularJornadas,
 } from "../../../shared/api/ligas/useLigas";
 import { useTemporadas } from "../../../shared/api/temporadas/useTemporadas";
 import { EditorUbicaciones } from "../../../shared/components/EditorUbicaciones/EditorUbicaciones";
@@ -26,6 +27,8 @@ import { SelectorTemporada } from "../../../shared/components/SelectorTemporada/
 import { SelectorTipoFutbolin } from "../../../shared/components/SelectorTipoFutbolin/SelectorTipoFutbolin";
 import { useConfirmDialog } from "../../../shared/context/UIProvider/hooks/useUI";
 import { SkeletonLista } from "../../../shared/components/Estados/Estados";
+import { hoyISO } from "../../../shared/lib/jornadas";
+import { DialogArrancarLiga } from "../components/DialogArrancarLiga";
 
 const TituloAjustes = ({ children, tono = "primary" }: { children: React.ReactNode; tono?: "primary" | "danger" }) => (
   <h2
@@ -62,8 +65,17 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
   const { mutate: cambiarEstadoLiga, isPending: cambiandoEstado } =
     useCambiarEstadoLiga();
   const { mutate: eliminarLiga, isPending: eliminando } = useEliminarLiga();
+  const { mutate: recalcularJornadas, isPending: recalculando } =
+    useRecalcularJornadas();
 
   const sinEmpezar = liga.estadoLiga === EstadoLiga.SinEmpezar;
+  const [dialogoArrancar, setDialogoArrancar] = useState(false);
+  const [fechaPrimeraJornada, setFechaPrimeraJornada] = useState(
+    liga.jornadas[0]?.fechaInicio ?? hoyISO()
+  );
+  const [duracionJornada, setDuracionJornada] = useState(
+    String(liga.duracionJornadaDias ?? 7)
+  );
 
   const [nombre, setNombre] = useState(liga.nombre);
   const [descripcion, setDescripcion] = useState(liga.descripcion);
@@ -92,15 +104,35 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
     });
   };
 
-  const handleArrancar = async () => {
+  const handleArrancar = (datos: {
+    fechaPrimeraJornada: string;
+    duracionJornadaDias: number;
+  }) => {
+    cambiarEstadoLiga(
+      { ligaId: liga.id, data: { nuevoEstado: EstadoLiga.EnCurso, ...datos } },
+      { onSuccess: () => setDialogoArrancar(false) }
+    );
+  };
+
+  const handleRecalcularJornadas = async () => {
+    const dias = Number(duracionJornada);
+    if (!fechaPrimeraJornada) return toast.error("Indica la fecha de la primera jornada");
+    if (!Number.isInteger(dias) || dias < 1)
+      return toast.error("La duración debe ser de al menos 1 día");
+
     const ok = await confirm({
-      title: "¿Arrancar la liga?",
-      description:
-        "Se generarán los enfrentamientos y los usuarios podrán comenzar a introducir resultados",
-      confirmText: "Arrancar liga",
+      title: "¿Recalcular las fechas de todas las jornadas?",
+      description: liga.jornadas.length
+        ? "Se sobrescribirán las fechas editadas manualmente"
+        : "Esta liga no tiene calendario: se numerarán sus enfrentamientos por jornadas",
+      confirmText: "Recalcular",
       variant: "default",
     });
-    if (ok) cambiarEstadoLiga({ ligaId: liga.id, nuevoEstado: EstadoLiga.EnCurso });
+    if (ok)
+      recalcularJornadas({
+        ligaId: liga.id,
+        data: { fechaPrimeraJornada, duracionJornadaDias: dias },
+      });
   };
 
   const handleFinalizar = async () => {
@@ -111,7 +143,10 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
       confirmText: "Finalizar liga",
     });
     if (ok)
-      cambiarEstadoLiga({ ligaId: liga.id, nuevoEstado: EstadoLiga.Finalizada });
+      cambiarEstadoLiga({
+        ligaId: liga.id,
+        data: { nuevoEstado: EstadoLiga.Finalizada },
+      });
   };
 
   const handleReanudar = async () => {
@@ -121,7 +156,8 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
       confirmText: "Reanudar liga",
       variant: "default",
     });
-    if (ok) cambiarEstadoLiga({ ligaId: liga.id, nuevoEstado: EstadoLiga.EnCurso });
+    if (ok)
+      cambiarEstadoLiga({ ligaId: liga.id, data: { nuevoEstado: EstadoLiga.EnCurso } });
   };
 
   const handleEliminar = async () => {
@@ -139,9 +175,21 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
       <section className="flex flex-col gap-2.5">
         <TituloAjustes>Estado</TituloAjustes>
         {sinEmpezar && (
-          <Button onClick={handleArrancar} icon={Play} disabled={cambiandoEstado}>
-            {cambiandoEstado ? "Arrancando liga..." : "Arrancar liga"}
-          </Button>
+          <>
+            <Button
+              onClick={() => setDialogoArrancar(true)}
+              icon={Play}
+              disabled={cambiandoEstado}
+            >
+              {cambiandoEstado ? "Arrancando liga..." : "Arrancar liga"}
+            </Button>
+            <DialogArrancarLiga
+              open={dialogoArrancar}
+              onOpenChange={setDialogoArrancar}
+              onConfirmar={handleArrancar}
+              pending={cambiandoEstado}
+            />
+          </>
         )}
         {liga.estadoLiga === EstadoLiga.EnCurso && (
           <Button
@@ -164,6 +212,46 @@ const AjustesLigaForm = ({ liga }: { liga: LigaDTO }) => {
           </Button>
         )}
       </section>
+
+      {!sinEmpezar && (
+        <section className="flex flex-col gap-4">
+          <TituloAjustes>Jornadas</TituloAjustes>
+          <p className="text-[13px] text-foreground-soft">
+            {liga.jornadas.length
+              ? `${liga.jornadas.length} jornadas. Recalcular asigna las fechas de todas a partir de la primera.`
+              : "Esta liga no tiene calendario de jornadas. Recalcular numerará sus enfrentamientos."}
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            <FormField>
+              <FormLabel>Primera jornada</FormLabel>
+              <TextInput
+                type="date"
+                value={fechaPrimeraJornada}
+                onChangeText={setFechaPrimeraJornada}
+              />
+            </FormField>
+            <FormField>
+              <FormLabel>Duración (días)</FormLabel>
+              <TextInput
+                type="number"
+                inputMode="numeric"
+                min={1}
+                max={365}
+                value={duracionJornada}
+                onChangeText={setDuracionJornada}
+              />
+            </FormField>
+          </div>
+          <Button
+            onClick={handleRecalcularJornadas}
+            icon={CalendarDays}
+            variant="outline"
+            disabled={recalculando}
+          >
+            {recalculando ? "Recalculando..." : "Recalcular fechas"}
+          </Button>
+        </section>
+      )}
 
       <form
         onSubmit={(e) => {

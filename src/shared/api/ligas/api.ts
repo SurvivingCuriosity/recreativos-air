@@ -1,9 +1,12 @@
 import type { EquipoDTO } from "recreativos-air-core/equipos";
 import type {
+  ActualizarJornadaBody,
   ActualizarLigaBody,
+  CambiarEstadoLigaBody,
   CrearLigaBody,
   GetLigasQuery,
   LigaDTO,
+  RecalcularJornadasBody,
 } from "recreativos-air-core/liga";
 import type { TableRow } from "../../../features/DetalleLiga/components/ClasificacionLiga";
 import api from "../http";
@@ -61,8 +64,25 @@ export const LigasAPI = {
     return res.data.data;
   },
 
-  async cambiarEstado(ligaId: string, nuevoEstado: string): Promise<LigaDTO> {
-    const res = await api.patch(`/ligas/${ligaId}/estado`, { nuevoEstado });
+  async cambiarEstado(ligaId: string, data: CambiarEstadoLigaBody): Promise<LigaDTO> {
+    const res = await api.patch(`/ligas/${ligaId}/estado`, data);
+    return res.data.data;
+  },
+
+  async actualizarJornada(
+    ligaId: string,
+    numero: number,
+    data: ActualizarJornadaBody
+  ): Promise<LigaDTO> {
+    const res = await api.patch(`/ligas/${ligaId}/jornadas/${numero}`, data);
+    return res.data.data;
+  },
+
+  async recalcularJornadas(
+    ligaId: string,
+    data: RecalcularJornadasBody
+  ): Promise<LigaDTO> {
+    const res = await api.post(`/ligas/${ligaId}/jornadas/recalcular`, data);
     return res.data.data;
   },
 

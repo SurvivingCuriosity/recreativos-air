@@ -23,9 +23,7 @@ export type Tarea =
   | { tipo: "admin-resultado"; id: string; enfrentamiento: EnfrentamientoDTO; liga?: LigaDTO }
   | { tipo: "admin-inscripcion"; id: string; liga: LigaDTO; equipoLiga: EquipoEnLigaDTO };
 
-/** Marcador «10–7 · 8–10 · …» (guion corto, tabular en la UI). */
-export const formatMarcador = (enf: EnfrentamientoDTO) =>
-  enf.partidos.map((p) => `${p.golesA}–${p.golesB}`).join(" · ");
+export { formatMarcador } from "../../shared/lib/jornadas";
 
 const porFecha = (a: EnfrentamientoDTO, b: EnfrentamientoDTO) => {
   const ta = a.fecha ? new Date(a.fecha).getTime() : Number.MAX_SAFE_INTEGER;
